@@ -1,8 +1,8 @@
-name: Laravel DEV
+name: Laravel deploy PROD
 on:
   push:
     branches:
-      - develop
+      - main
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
@@ -10,8 +10,8 @@ jobs:
     - uses: huaxk/postgis-action@v1
       with:
         postgresql version: '11'  # See https://https://hub.docker.com/r/mdillon/postgis for available versions, if it is not specified, use the default value 'latest'
-        postgresql user: 'root'  # This optional environment variable is used in conjunction with postgresql password to set a user and its password. This variable will create the specified user with superuser power and a database with the same name. If it is not specified, then the default user of 'postgres' will be used.
-        postgresql db: 'pap'  # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of postgresql user will be used.
+        postgresql user: 'postgres'  # This optional environment variable is used in conjunction with postgresql password to set a user and its password. This variable will create the specified user with superuser power and a database with the same name. If it is not specified, then the default user of 'postgres' will be used.
+        postgresql db: 'eumadb'  # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of postgresql user will be used.
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
@@ -33,4 +33,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         key: ${{ secrets.SSHKEY }}
-        script: "cd /var/www/html/dev.eumadb.webmapp.it && ./scripts/deploy_dev.sh"
+        script: "cd /var/www/html/prod.eumadb.webmapp.it && ./scripts/deploy_prod.sh"
