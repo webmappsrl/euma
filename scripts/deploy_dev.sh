@@ -38,6 +38,7 @@ php artisan optimize
 # npm run prod
 cd vendor/laravel/nova && npm install
 # Exit maintenance mode
+cd /var/www/html/dev.eumadb.webmapp.it
 php artisan up
 
 echo "Deployment finished!"
