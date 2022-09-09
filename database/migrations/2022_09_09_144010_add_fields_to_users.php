@@ -15,8 +15,8 @@ class AddFieldsToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('is_admin')->default(false);
-
-            $table->foreignId('member_id')->nullable()->unsigned();
+            
+            $table->foreignId('member_id')->nullable();
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
@@ -30,6 +30,7 @@ class AddFieldsToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('is_admin');
+            $table->dropForeign(['member_id']);
         });
     }
 }

@@ -19,5 +19,10 @@ class UserSeeder extends Seeder
             'email' => 'team@webmapp.it',
             'password' => bcrypt('webmapp'),
         ])->markEmailAsVerified();
+        User::factory()->create([
+            'name' => 'EUMA',
+            'email' => 'euma@webmapp.it',
+            'password' => bcrypt('webmapp'),
+        ])->markEmailAsVerified();
     }
 }
