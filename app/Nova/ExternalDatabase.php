@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 
 class ExternalDatabase extends Resource
 {
@@ -42,9 +43,9 @@ class ExternalDatabase extends Resource
     {
         return [
             ID::make()->sortable(),
-            // NovaTabTranslatable::make([
-            //     Text::make(__('Name'), 'name'),
-            // ]),
+            NovaTabTranslatable::make([
+                Text::make(__('Name'), 'name'),
+            ]),
         ];
     }
 
