@@ -23,6 +23,15 @@ class CreateExternalDatabasesTable extends Migration
             $table->enum('offline',['yes', 'no', 'commercial'])->nullable();
             $table->enum('download',['yes', 'no', 'commercial'])->nullable();
             $table->enum('scope',['global', 'continental', 'state','regional','local'])->nullable();
+            $table->enum('contribution',['users_self_service', 'users_self_service_administered', 'fully_administered'])->nullable();
+            $table->string('languages')->nullable();
+            $table->string('editor')->nullable();
+            $table->string('editor_contact')->nullable();
+            $table->string('characteristic')->nullable();
+            $table->boolean('user_ascent_log')->default(false);
+            $table->boolean('user_ascent_download')->default(false);
+            $table->boolean('protection_info')->default(false);
+            
         });
     }
 

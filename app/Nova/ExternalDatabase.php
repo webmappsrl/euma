@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\MultiSelect;
 use Laravel\Nova\Fields\Select;
 
@@ -72,6 +73,18 @@ class ExternalDatabase extends Resource
                 'regional' => 'Regional',
                 'local' => 'Local',
             ])->displayUsingLabels(),
+            Select::make(__('Scope'), 'scope')->hideFromIndex()->options([
+                'users_self_service' => 'Users self service',
+                'users_self_service_administered' => 'Users self service administered',
+                'fully_administered' => 'Fully administered',
+            ])->displayUsingLabels(),
+            Text::make(__('Languages'), 'languages'),
+            Text::make(__('Editor'), 'editor'),
+            Text::make(__('Editor contact'), 'editor_contact'),
+            Text::make(__('Characteristic'), 'characteristic'),
+            Boolean::make('user_ascent_log'),
+            Boolean::make('user_ascent_download'),
+            Boolean::make('protection_info'),
         ];
     }
 
