@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Laravel\Nova\Fields\MultiSelect;
+use Laravel\Nova\Fields\Select;
 
 class ExternalDatabase extends Resource
 {
@@ -44,8 +46,32 @@ class ExternalDatabase extends Resource
         return [
             ID::make()->sortable(),
             NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name'),
+                Text::make(__('Name'), 'name')->sortable(),
             ]),
+            Text::make(__('URL'), 'url'),
+            Text::make(__('Mobile APP name'), 'mobile_app_name'),
+            MultiSelect::make(__('Mobile APP OS'), 'mobile_app_os')->hideFromIndex()->options([
+                'ios' => 'IOS',
+                'android' => 'Android',
+                'other' => 'Other'
+            ]),
+            Select::make(__('Offline'), 'offline')->hideFromIndex()->options([
+                'yes' => 'Yes',
+                'no' => 'No',
+                'commercial' => 'Commercial',
+            ])->displayUsingLabels(),
+            Select::make(__('Download'), 'download')->hideFromIndex()->options([
+                'yes' => 'Yes',
+                'no' => 'No',
+                'commercial' => 'Commercial',
+            ])->displayUsingLabels(),
+            Select::make(__('Scope'), 'scope')->hideFromIndex()->options([
+                'global' => 'Global',
+                'continental' => 'Continental',
+                'state' => 'State',
+                'regional' => 'Regional',
+                'local' => 'Local',
+            ])->displayUsingLabels(),
         ];
     }
 
