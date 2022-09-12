@@ -17,7 +17,8 @@ class ClimbingRockTypeFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name(),
+            'description' => $this->faker->text(100)
         ];
     }
 }

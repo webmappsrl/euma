@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MemberSeeder::class,
             UserSeeder::class,
-            ClimbingStyleSeeder::class
+            ClimbingStyleSeeder::class,
+            ClimbingRockTypeSeeder::class
         ]);
     }
 }
