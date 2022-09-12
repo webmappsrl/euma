@@ -46,7 +46,7 @@ class ClimbingRockType extends Resource
             ID::make()->sortable(),
             NovaTabTranslatable::make([
                 Text::make(__('Name'), 'name')->rules('required')->sortable(),
-                Textarea::make(__('Description'), 'description')->sortable(),
+                Textarea::make(__('Description'), 'description'),
             ]),
         ];
     }
