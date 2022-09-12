@@ -3,19 +3,20 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Code;
+use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Trail extends Resource
+class ClimbingStyle extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Trail::class;
+    public static $model = \App\Models\ClimbingStyle::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -30,7 +31,7 @@ class Trail extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','name'
     ];
 
     /**
@@ -43,8 +44,10 @@ class Trail extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make(__('URL'), 'url'),
-            Code::make(__('Geobox location'), 'geobox_location'),
+            NovaTabTranslatable::make([
+                Text::make(__('Name'), 'name')->rules('required')->sortable(),
+                Textarea::make(__('Description'), 'description')->sortable(),
+            ]),
         ];
     }
 

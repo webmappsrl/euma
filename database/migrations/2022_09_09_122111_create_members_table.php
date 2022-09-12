@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name_en')->nullable();
-            $table->string('name_orig')->nullable();
-            $table->string('acronym')->nullable();
-            $table->string('country')->nullable();
+            $table->string('name_en');
+            $table->string('name_orig');
+            $table->string('acronym');
+            $table->string('country');
             $table->text('web')->nullable();
             $table->integer('members')->nullable();
-            $table->integer('since')->nullable();
-            $table->string('type')->nullable();
+            $table->integer('since');
+            $table->string('type');
         });
     }
 

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trails', function (Blueprint $table) {
+        Schema::create('climbing_styles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('url');
-            // $table->multiLineString('geometry');
-            // $table->geometry('geometry');
-            $table->jsonb('geobox_location');
+            $table->string('name');
+            $table->text('description')->nullable();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trails');
+        Schema::dropIfExists('climbing_styles');
     }
 };

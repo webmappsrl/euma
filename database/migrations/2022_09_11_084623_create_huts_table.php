@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('huts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->text('description')->nullable();
-            $table->point('geometry')->nullable();
-            $table->jsonb('geobox_location')->nullable();
-            $table->integer('elevation')->nullable();
-            $table->integer('geobox_elevation')->nullable();
+            $table->point('geometry');
+            $table->jsonb('geobox_location');
+            $table->integer('elevation');
+            $table->integer('geobox_elevation');
             $table->text('url')->nullable();
             $table->integer('geobox_feature_image')->nullable();
             $table->boolean('managed')->default(false);
