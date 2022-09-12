@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -43,8 +44,14 @@ class Trail extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make(__('URL'), 'url'),
-            Code::make(__('Geobox location'), 'geobox_location'),
+            NovaTabTranslatable::make([
+                Text::make(__('Name'), 'name')->sortable(),
+            ]),
+            Text::make(__('REF'), 'ref'),
+            Text::make(__('URL'), 'url')->rules('required'),
+            Text::make(__('Source geojson url'), 'source_geojson_url'),
+            Text::make(__('Source gpx url'), 'source_gpx_url'),
+            //TODO: ADD Trail GEOMETRY
         ];
     }
 

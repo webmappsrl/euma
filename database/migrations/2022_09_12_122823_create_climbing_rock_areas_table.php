@@ -28,7 +28,7 @@ return new class extends Migration
             $table->point('parking_position')->nullable();
             $table->integer('location_quality')->nullable();
             $table->integer('routes_number')->nullable();
-            $table->text('nearest_town')->nullable();
+            $table->text('geobox_closest_town')->nullable();
             $table->integer('elevation')->nullable();
             $table->integer('geobox_elevation');
             $table->jsonb('geobox_location');

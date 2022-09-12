@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('trails', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name')->nullable();
+            $table->string('ref')->nullable();
             $table->text('url');
-            // $table->multiLineString('geometry');
-            // $table->geometry('geometry');
+            $table->text('source_geojson_url');
+            $table->text('source_gpx_url');
+            $table->geometry('geometry');
             $table->jsonb('geobox_location');
         });
     }

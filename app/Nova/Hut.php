@@ -57,9 +57,7 @@ class Hut extends Resource
             //     'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
             //     'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
             // ]),
-            Code::make(__('Geobox location'), 'geobox_location'),
             Number::make(__('Elevation'),'elevation'),
-            Number::make(__('Geobox elevation'),'geobox_elevation'),
             Text::make(__('URL'), 'url'),
             // TODO: Relation Featured Image
             Boolean::make(__('Managed'),'managed'),

@@ -62,11 +62,15 @@ class ClimbingRockArea extends Resource
             // ]),
 
             Text::make(__('Local rules url'),'local_rules_url')->rules('required'),
-            Textarea::make(__('Local rules description'), 'local_rules_description'),
+            NovaTabTranslatable::make([
+                Textarea::make(__('Local rules description'), 'local_rules_description'),
+            ]),
             // TODO: local_rules_document upload file
-
+            
             Boolean::make(__('Local restricions'),'local_restricions'),
-            Textarea::make(__('Local restrictions desctription'), 'local_restrictions_desctription')->sortable(),
+            NovaTabTranslatable::make([
+                Textarea::make(__('Local restrictions desctription'), 'local_restrictions_desctription')->sortable(),
+            ]),
 
             // TODO: parking_position MapPoint
 
@@ -77,10 +81,7 @@ class ClimbingRockArea extends Resource
             ])->displayUsingLabels(),
 
             Number::make(__('Routes number'),'routes_number'),
-            Text::make(__('Nearest town'), 'nearest_town'),
             Number::make(__('Elevation'),'elevation'),
-            Number::make(__('Geobox elevation'),'geobox_elevation')->rules('required'),
-            Code::make(__('Geobox location'), 'geobox_location')->rules('required'),
         ];
     }
 
