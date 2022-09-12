@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "867c8f244af3098d14423c8b7d1ea0a3",
+    "content-hash": "37c9c23e48053cf5680a1241b15465aa",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -6720,6 +6720,51 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "wm/map-point",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmappsrl/map-point.git",
+                "reference": "eeefa17baaac73d210d2fafd02c6ff4a3fd0e54b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmappsrl/map-point/zipball/eeefa17baaac73d210d2fafd02c6ff4a3fd0e54b",
+                "reference": "eeefa17baaac73d210d2fafd02c6ff4a3fd0e54b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wm\\MapPoint\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wm\\MapPoint\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/webmappsrl/map-point/issues",
+                "source": "https://github.com/webmappsrl/map-point/tree/v0.0.1"
+            },
+            "time": "2022-08-25T12:09:25+00:00"
         }
     ],
     "packages-dev": [

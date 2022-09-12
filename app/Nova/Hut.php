@@ -8,17 +8,19 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\MultiSelect;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Textarea;
+use Wm\MapPoint\MapPoint;
 
-class ExternalDatabase extends Resource
+class Hut extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ExternalDatabase::class;
+    public static $model = \App\Models\Hut::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,43 +50,25 @@ class ExternalDatabase extends Resource
             ID::make()->sortable(),
             NovaTabTranslatable::make([
                 Text::make(__('Name'), 'name')->sortable(),
+                Textarea::make(__('Description'), 'description')->sortable(),
             ]),
+            // MapPoint::make('geometry')->withMeta([
+            //     'center' => ["42", "10"],
+            //     'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
+            //     'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+            // ]),
+            Code::make(__('Geobox location'), 'geobox_location'),
+            Number::make(__('Elevation'),'elevation'),
+            Number::make(__('Geobox elevation'),'geobox_elevation'),
             Text::make(__('URL'), 'url'),
-            Text::make(__('Mobile APP name'), 'mobile_app_name'),
-            MultiSelect::make(__('Mobile APP OS'), 'mobile_app_os')->hideFromIndex()->options([
-                'ios' => 'IOS',
-                'android' => 'Android',
-                'other' => 'Other'
-            ]),
-            Select::make(__('Offline'), 'offline')->hideFromIndex()->options([
-                'yes' => 'Yes',
-                'no' => 'No',
-                'commercial' => 'Commercial',
-            ])->displayUsingLabels(),
-            Select::make(__('Download'), 'download')->hideFromIndex()->options([
-                'yes' => 'Yes',
-                'no' => 'No',
-                'commercial' => 'Commercial',
-            ])->displayUsingLabels(),
-            Select::make(__('Scope'), 'scope')->hideFromIndex()->options([
-                'global' => 'Global',
-                'continental' => 'Continental',
-                'state' => 'State',
-                'regional' => 'Regional',
-                'local' => 'Local',
-            ])->displayUsingLabels(),
-            Select::make(__('Scope'), 'scope')->hideFromIndex()->options([
-                'users_self_service' => 'Users self service',
-                'users_self_service_administered' => 'Users self service administered',
-                'fully_administered' => 'Fully administered',
-            ])->displayUsingLabels(),
-            Text::make(__('Languages'), 'languages'),
-            Text::make(__('Editor'), 'editor'),
-            Text::make(__('Editor contact'), 'editor_contact'),
-            Text::make(__('Characteristic'), 'characteristic'),
-            Boolean::make(__('User ascent log'),'user_ascent_log'),
-            Boolean::make(__('User ascent download'),'user_ascent_download'),
-            Boolean::make(__('Protection info'),'protection_info'),
+            // TODO: Relation Featured Image
+            Boolean::make(__('Managed'),'managed'),
+            Text::make(__('Address'),'address'),
+            Text::make(__('Operating name'),'operating_name'),
+            Text::make(__('Operating email'),'operating_email'),
+            Text::make(__('Operating phone'),'operating_phone'),
+            Text::make(__('Owner'),'owner'),
+
         ];
     }
 

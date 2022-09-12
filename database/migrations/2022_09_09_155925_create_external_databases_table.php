@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExternalDatabasesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class CreateExternalDatabasesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name')->nullable();
-            $table->string('url')->nullable();
+            $table->text('url')->nullable();
             $table->string('mobile_app_name')->nullable();
             $table->json('mobile_app_os')->nullable();
             $table->enum('offline',['yes', 'no', 'commercial'])->nullable();
@@ -44,4 +44,4 @@ class CreateExternalDatabasesTable extends Migration
     {
         Schema::dropIfExists('external_databases');
     }
-}
+};

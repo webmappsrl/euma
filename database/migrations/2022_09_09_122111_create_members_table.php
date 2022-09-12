@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Members extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -20,7 +20,7 @@ class Members extends Migration
             $table->string('name_orig')->nullable();
             $table->string('acronym')->nullable();
             $table->string('country')->nullable();
-            $table->string('web')->nullable();
+            $table->text('web')->nullable();
             $table->integer('members')->nullable();
             $table->integer('since')->nullable();
             $table->string('type')->nullable();
@@ -36,4 +36,4 @@ class Members extends Migration
     {
         Schema::dropIfExists('members');
     }
-}
+};
