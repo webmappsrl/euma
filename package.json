@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "build-map-multi-linestring": "cd nova-components/MapMultiLinestring && npm run dev",
+        "build-map-multi-linestring-prod": "cd nova-components/MapMultiLinestring && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.27",

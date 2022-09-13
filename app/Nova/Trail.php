@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Wm\MapMultiLinestring\MapMultiLinestring;
 
 class Trail extends Resource
 {
@@ -52,6 +53,12 @@ class Trail extends Resource
             Text::make(__('Source geojson url'), 'source_geojson_url'),
             Text::make(__('Source gpx url'), 'source_gpx_url'),
             //TODO: ADD Trail GEOMETRY
+            MapMultiLinestring::make('geometry')->withMeta([
+                'center' => ["43", "10"],
+                'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+            ]),
+            Code::make('geobox_location')
         ];
     }
 

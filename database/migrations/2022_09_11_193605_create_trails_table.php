@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('ref')->nullable();
             $table->text('url');
-            $table->text('source_geojson_url');
-            $table->text('source_gpx_url');
+            $table->text('source_geojson_url')->nullable();
+            $table->text('source_gpx_url')->nullable();
             $table->geometry('geometry');
             $table->jsonb('geobox_location');
         });
