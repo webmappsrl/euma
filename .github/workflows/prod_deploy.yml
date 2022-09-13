@@ -10,6 +10,7 @@ jobs:
       postgres:
         image: postgis/postgis:10-2.5
         env:
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: eumadb
         ports:
           - 5432:5432
