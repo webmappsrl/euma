@@ -2,10 +2,7 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
@@ -18,8 +15,7 @@
         "league/flysystem-aws-s3-v3": "^3.3",
         "spatie/db-dumper": "^3.3",
         "spatie/laravel-translatable": "^6.0",
-        "wm/map-point": "^0.0.1",
-        "wm/map-multi-linstring": "*"
+        "wm/map-point": "^0.0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -76,10 +72,7 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/MapMultiLinstring"
         }
     ]
+
 }
