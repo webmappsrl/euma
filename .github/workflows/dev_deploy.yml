@@ -31,6 +31,8 @@ jobs:
       run: php artisan key:generate
     - name: Migrate
       run: php artisan migrate:fresh --seed
+      env:
+          PGPASSWORD: password
     - name: Laravel Tests
       run: php artisan test
     - name: Deploy to server

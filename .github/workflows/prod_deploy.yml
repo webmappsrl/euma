@@ -29,6 +29,8 @@ jobs:
       run: php artisan key:generate
     - name: Migrate
       run: php artisan migrate
+      env:
+          PGPASSWORD: password
     - name: Laravel Tests
       run: php artisan test
     - name: Deploy to server
