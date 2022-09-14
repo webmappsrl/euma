@@ -73,7 +73,7 @@ class ExternalDatabase extends Resource
                 'regional' => 'Regional',
                 'local' => 'Local',
             ])->displayUsingLabels(),
-            Select::make(__('Scope'), 'scope')->hideFromIndex()->options([
+            Select::make(__('Contribution'), 'contribution')->hideFromIndex()->options([
                 'users_self_service' => 'Users self service',
                 'users_self_service_administered' => 'Users self service administered',
                 'fully_administered' => 'Fully administered',
