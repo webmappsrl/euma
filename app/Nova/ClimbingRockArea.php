@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Number;
@@ -50,29 +52,33 @@ class ClimbingRockArea extends Resource
         return [
             ID::make()->sortable(),
             NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->sortable()->rules('required'),
-                Textarea::make(__('Description'), 'description'),
-                Text::make(__('Alternative name'), 'alternative_name')->rules('required'),
+                Text::make(__('Name'), 'name')->sortable(),
+                Textarea::make(__('Description'), 'description')->hideFromIndex(),
+                Text::make(__('Alternative name'), 'alternative_name'),
             ]),
 
-            // MapPoint::make('geometry')->withMeta([
-            //     'center' => ["42", "10"],
-            //     'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-            //     'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
-            // ]),
+            MapPoint::make('geometry')->withMeta([
+                'center' => ["42", "10"],
+                'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+            ]),
 
-            Text::make(__('Local rules url'),'local_rules_url')->rules('required'),
+            Text::make(__('Local rules url'),'local_rules_url')->rules('required','url')->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Local rules description'), 'local_rules_description'),
-            ]),
+            ])->hideFromIndex(),
             // TODO: local_rules_document upload file
             
-            Boolean::make(__('Local restricions'),'local_restricions'),
+            Boolean::make(__('Local restricions'),'local_restricions')->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Local restrictions desctription'), 'local_restrictions_desctription')->sortable(),
-            ]),
+            ])->hideFromIndex(),
 
-            // TODO: parking_position MapPoint
+            MapPoint::make(__('Parking position'),'parking_position')->withMeta([
+                'center' => ["42", "10"],
+                'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+            ])->hideFromIndex(),
 
             Select::make(__('Location quality'), 'location_quality')->hideFromIndex()->options([
                 1 => 'Good routes, but a bad area a quarry',
@@ -82,6 +88,12 @@ class ClimbingRockArea extends Resource
 
             Number::make(__('Routes number'),'routes_number'),
             Number::make(__('Elevation'),'elevation'),
+
+            BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
+            BelongsToMany::make(__('External Databases'),'ExternalDatabases')->hideFromIndex(),
+            BelongsToMany::make(__('Climbing Styles'),'ClimbingStyles')->hideFromIndex(),
+            BelongsToMany::make(__('Climbing Rock Types'),'ClimbingRockTypes')->hideFromIndex(),
+
         ];
     }
 

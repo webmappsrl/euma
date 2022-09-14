@@ -27,4 +27,16 @@ class ExternalDatabase extends Model
     protected $casts = [
         'mobile_app_os' => 'array',
     ];
+
+    public function climbingRockAreas(){
+        return $this->belongsToMany(ClimbingRockArea::class);
+    }
+    
+    public function huts(){
+        return $this->belongsToMany(Hut::class);
+    }
+    
+    public function trails(){
+        return $this->hasMany(Trail::class);
+    }
 }

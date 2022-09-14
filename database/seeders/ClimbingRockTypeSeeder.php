@@ -33,10 +33,6 @@ class ClimbingRockTypeSeeder extends Seeder
         ]);
         ClimbingRockType::factory()->create([
             'name' => 'General volcanic rocks',
-            'description' => 'Low'
-        ]);
-        ClimbingRockType::factory()->create([
-            'name' => 'Schist',
             'description' => 'Rhyolite, dolerite, tuff'
         ]);
         ClimbingRockType::factory()->create([

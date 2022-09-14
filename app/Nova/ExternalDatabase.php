@@ -25,7 +25,7 @@ class ExternalDatabase extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -49,7 +49,7 @@ class ExternalDatabase extends Resource
             NovaTabTranslatable::make([
                 Text::make(__('Name'), 'name')->sortable(),
             ]),
-            Text::make(__('URL'), 'url'),
+            Text::make(__('URL'), 'url')->rules('required','url')->hideFromIndex(),
             Text::make(__('Mobile APP name'), 'mobile_app_name'),
             MultiSelect::make(__('Mobile APP OS'), 'mobile_app_os')->hideFromIndex()->options([
                 'ios' => 'IOS',
@@ -80,11 +80,11 @@ class ExternalDatabase extends Resource
             ])->displayUsingLabels(),
             Text::make(__('Languages'), 'languages'),
             Text::make(__('Editor'), 'editor'),
-            Text::make(__('Editor contact'), 'editor_contact'),
-            Text::make(__('Characteristic'), 'characteristic'),
-            Boolean::make(__('User ascent log'),'user_ascent_log'),
-            Boolean::make(__('User ascent download'),'user_ascent_download'),
-            Boolean::make(__('Protection info'),'protection_info'),
+            Text::make(__('Editor contact'), 'editor_contact')->hideFromIndex(),
+            Text::make(__('Characteristic'), 'characteristic')->hideFromIndex(),
+            Boolean::make(__('User ascent log'),'user_ascent_log')->hideFromIndex(),
+            Boolean::make(__('User ascent download'),'user_ascent_download')->hideFromIndex(),
+            Boolean::make(__('Protection info'),'protection_info')->hideFromIndex(),
         ];
     }
 

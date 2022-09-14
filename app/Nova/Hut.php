@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Number;
@@ -50,22 +52,24 @@ class Hut extends Resource
             ID::make()->sortable(),
             NovaTabTranslatable::make([
                 Text::make(__('Name'), 'name')->sortable(),
-                Textarea::make(__('Description'), 'description')->sortable(),
+                Textarea::make(__('Description'), 'description')->sortable()->hideFromIndex(),
             ]),
-            // MapPoint::make('geometry')->withMeta([
-            //     'center' => ["42", "10"],
-            //     'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-            //     'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
-            // ]),
-            Number::make(__('Elevation'),'elevation'),
-            Text::make(__('URL'), 'url'),
+            MapPoint::make('geometry')->withMeta([
+                'center' => ["51", "4"],
+                'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+            ])->rules('required'),
+            Number::make(__('Elevation'),'elevation')->rules('required'),
+            Text::make(__('URL'), 'url')->hideFromIndex(),
             // TODO: Relation Featured Image
             Boolean::make(__('Managed'),'managed'),
-            Text::make(__('Address'),'address'),
-            Text::make(__('Operating name'),'operating_name'),
-            Text::make(__('Operating email'),'operating_email'),
-            Text::make(__('Operating phone'),'operating_phone'),
+            Text::make(__('Address'),'address')->hideFromIndex(),
+            Text::make(__('Operating name'),'operating_name')->hideFromIndex(),
+            Text::make(__('Operating email'),'operating_email')->hideFromIndex(),
+            Text::make(__('Operating phone'),'operating_phone')->hideFromIndex(),
             Text::make(__('Owner'),'owner'),
+            BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
+            BelongsToMany::make(__('External Databases'),'ExternalDatabases'),
 
         ];
     }

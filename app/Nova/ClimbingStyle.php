@@ -23,7 +23,7 @@ class ClimbingStyle extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -45,7 +45,7 @@ class ClimbingStyle extends Resource
         return [
             ID::make()->sortable(),
             NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->rules('required')->sortable(),
+                Text::make(__('Name'), 'name')->sortable(),
                 Textarea::make(__('Description'), 'description')->sortable(),
             ]),
         ];

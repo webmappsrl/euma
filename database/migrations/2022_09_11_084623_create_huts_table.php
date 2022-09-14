@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->point('geometry');
-            $table->jsonb('geobox_location');
+            $table->jsonb('geobox_location')->nullable();
             $table->integer('elevation');
-            $table->integer('geobox_elevation');
+            $table->integer('geobox_elevation')->nullable();
             $table->text('url')->nullable();
             $table->integer('geobox_feature_image')->nullable();
             $table->boolean('managed')->default(false);
