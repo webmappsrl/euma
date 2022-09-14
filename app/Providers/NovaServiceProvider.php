@@ -2,7 +2,20 @@
 
 namespace App\Providers;
 
+use App\Nova\Hut;
+use App\Nova\Trail;
+use App\Nova\ClimbingRockArea;
+use App\Nova\ClimbingRockType;
+use App\Nova\ClimbingStyle;
+use App\Nova\ExternalDatabase;
+use App\Nova\Member;
 use Illuminate\Support\Facades\Gate;
+use App\Nova\User;
+use Illuminate\Http\Request;
+use Laravel\Nova\Nova\Dashboards\Main;
+use Laravel\Nova\Menu\Menu;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -16,6 +29,26 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::mainMenu(function (Request $request) {
+            return [
+                // MenuSection::dashboard(Main::class)->icon('chart-bar'),
+
+                MenuSection::make('Content', [
+                    MenuItem::resource(Hut::class),
+                    MenuItem::resource(Trail::class),
+                    MenuItem::resource(ClimbingRockArea::class),
+                ])->icon('document-text')->collapsable(),
+
+                MenuSection::make('Admin', [
+                    MenuItem::resource(ClimbingRockType::class),
+                    MenuItem::resource(ClimbingStyle::class),
+                    MenuItem::resource(ExternalDatabase::class),
+                    MenuItem::resource(Member::class),
+                    MenuItem::resource(User::class),
+                ])->icon('user')->collapsable(),
+            ];
+        });
     }
 
     /**
