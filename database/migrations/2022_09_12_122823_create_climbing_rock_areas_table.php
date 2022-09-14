@@ -30,8 +30,11 @@ return new class extends Migration
             $table->integer('routes_number')->nullable();
             $table->text('geobox_closest_town')->nullable();
             $table->integer('elevation')->nullable();
-            $table->integer('geobox_elevation');
-            $table->jsonb('geobox_location');
+            $table->integer('geobox_elevation')->nullable();
+            $table->jsonb('geobox_location')->nullable();
+
+            $table->foreignId('member_id');
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
 

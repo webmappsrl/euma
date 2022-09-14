@@ -19,4 +19,16 @@ class Member extends Model
         'since',
         'type'
     ];
+
+    public function huts(){
+        return $this->hasMany(Hut::class);
+    }
+    
+    public function trails(){
+        return $this->hasMany(Trail::class);
+    }
+    
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }

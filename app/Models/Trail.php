@@ -20,4 +20,12 @@ class Trail extends Model
         'geometry',
         'geobox_location',
     ];
+
+    public function externalDatabases(){
+        return $this->belongsToMany(ExternalDatabase::class);
+    }
+
+    public function member() {
+        return $this->belongsTo(Member::class);
+    }
 }

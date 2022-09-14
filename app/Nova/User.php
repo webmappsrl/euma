@@ -66,7 +66,7 @@ class User extends Resource
                 ->updateRules('nullable', Rules\Password::defaults()),
 
             Boolean::make('is_admin'),
-            BelongsTo::make('Member')->nullable()
+            BelongsTo::make('Member')->searchable()->nullable()
         ];
     }
 

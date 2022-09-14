@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('source_geojson_url')->nullable();
             $table->text('source_gpx_url')->nullable();
             $table->geometry('geometry');
-            $table->jsonb('geobox_location');
+            $table->jsonb('geobox_location')->nullable();
         });
     }
 

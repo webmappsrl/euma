@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -43,14 +44,18 @@ class Member extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name_en'),
-            Text::make('name_orig'),
-            Text::make('acronym'),
-            Text::make('country'),
-            Text::make('web'),
-            Number::make('members'),
-            Number::make('since'),
-            Text::make('type')
+            Text::make(__('Name en'),'name_en')->rules('required'),
+            Text::make(__('Name Orig'),'name_orig')->rules('required')->hideFromIndex(),
+            Text::make(__('Acronym'),'acronym')->rules('required'),
+            Text::make(__('Country'),'country')->rules('required'),
+            Text::make(__('Web'),'web')->hideFromIndex(),
+            Number::make(__('Members'),'members'),
+            Number::make(__('Since'),'since')->rules('required'),
+            Select::make(__('Type'), 'type')->hideFromIndex()->options([
+                'FULL' => 'FULL',
+                'ASSOCIATED' => 'ASSOCIATED',
+                'COLLABORATING' => 'COLLABORATING'
+            ])->displayUsingLabels()->rules('required'),
         ];
     }
 

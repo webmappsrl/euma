@@ -39,4 +39,20 @@ class ClimbingRockArea extends Model
         'geobox_elevation',
 
     ];
+
+    public function climbingStyles(){
+        return $this->belongsToMany(ClimbingStyle::class);
+    }
+    
+    public function climbingRockTypes(){
+        return $this->belongsToMany(ClimbingRockType::class);
+    }
+    
+    public function member() {
+        return $this->belongsTo(Member::class);
+    }
+    
+    public function externalDatabases(){
+        return $this->belongsToMany(ExternalDatabase::class);
+    }
 }

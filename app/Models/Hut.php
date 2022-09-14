@@ -32,4 +32,12 @@ class Hut extends Model
         'operating_phone',
         'owner',
     ];
+
+    public function member() {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function externalDatabases(){
+        return $this->belongsToMany(ExternalDatabase::class);
+    }
 }
