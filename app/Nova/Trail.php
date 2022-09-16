@@ -57,7 +57,8 @@ class Trail extends Resource
             MapMultiLinestring::make('geometry')->withMeta([
                 'center' => ["43", "10"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
+                'defaultZoom' => 10
             ]),
             BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
             BelongsToMany::make(__('External Databases'),'ExternalDatabases')->hideFromIndex(),

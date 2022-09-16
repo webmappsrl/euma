@@ -57,7 +57,10 @@ class Hut extends Resource
             MapPoint::make('geometry')->withMeta([
                 'center' => ["51", "4"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
+                'minZoom' => 8,
+                'maxZoom' => 17,
+                'defaultZoom' => 13
             ])->rules('required'),
             Number::make(__('Elevation'),'elevation')->rules('required'),
             Text::make(__('URL'), 'url')->hideFromIndex(),

@@ -12,6 +12,9 @@ import L from "leaflet";
 const DEFAULT_TILES = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const DEFAULT_ATTRIBUTION = '<a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>';
 const DEFAULT_CENTER = [0, 0];
+const DEFAULT_MINZOOM = 8;
+const DEFAULT_MAXZOOM = 17;
+const DEFAULT_DEFAULTZOOM = 8;
 const linestringOption = {
     fillColor: '#f03',
     fillOpacity: 0.5,
@@ -32,15 +35,16 @@ export default {
         initMap() {
             setTimeout(() => {
                 const center = this.field.center ?? this.center ?? DEFAULT_CENTER;
+                const defaultZoom = this.field.defaultZoom ?? DEFAULT_DEFAULTZOOM;
                 const linestringGeojson = this.field.geojson;
-                mapDiv = L.map(this.mapRef).setView(center, 13);
+                mapDiv = L.map(this.mapRef).setView(center, defaultZoom);
 
                 L.tileLayer(
                     this.field.tiles ?? DEFAULT_TILES,
                     {
                         attribution: this.field.attribution ?? DEFAULT_ATTRIBUTION,
-                        maxZoom: 15,
-                        minZoom: 11,
+                        maxZoom: this.field.maxZoom ?? DEFAULT_MAXZOOM,
+                        minZoom: this.field.minZoom ?? DEFAULT_MINZOOM,
                         id: "mapbox/streets-v11",
                     }
                 ).addTo(mapDiv);
