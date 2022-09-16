@@ -70,7 +70,6 @@ class Hut extends Resource
             Text::make(__('Owner'),'owner'),
             BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
             BelongsToMany::make(__('External Databases'),'ExternalDatabases'),
-
         ];
     }
 

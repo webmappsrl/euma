@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f998fa88db159effbead65c40a5bfd54",
+    "content-hash": "c5d6be4dab8ed06c393933b49fdcbdb5",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -6730,7 +6730,7 @@
         },
         {
             "name": "wm/map-multi-linestring",
-            "version": "dev-feature/eumadb.223.03.2",
+            "version": "dev-feature/eumadb.223.04.1",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/MapMultiLinestring",
@@ -6766,16 +6766,16 @@
         },
         {
             "name": "wm/map-point",
-            "version": "0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmappsrl/map-point.git",
-                "reference": "19438193601e52be9cc38635e6072cff9ac93a19"
+                "reference": "f5d21e9d9585e7f60d3c4d23369f6f01797102ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmappsrl/map-point/zipball/19438193601e52be9cc38635e6072cff9ac93a19",
-                "reference": "19438193601e52be9cc38635e6072cff9ac93a19",
+                "url": "https://api.github.com/repos/webmappsrl/map-point/zipball/f5d21e9d9585e7f60d3c4d23369f6f01797102ab",
+                "reference": "f5d21e9d9585e7f60d3c4d23369f6f01797102ab",
                 "shasum": ""
             },
             "require": {
@@ -6805,9 +6805,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmappsrl/map-point/issues",
-                "source": "https://github.com/webmappsrl/map-point/tree/0.0.2"
+                "source": "https://github.com/webmappsrl/map-point/tree/v0.0.3"
             },
-            "time": "2022-09-13T13:08:40+00:00"
+            "time": "2022-09-15T14:29:27+00:00"
         }
     ],
     "packages-dev": [
