@@ -62,7 +62,7 @@ class Hut extends Resource
                 'maxZoom' => 17,
                 'defaultZoom' => 13
             ])->rules('required'),
-            Number::make(__('Elevation'),'elevation')->rules('required'),
+            Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
             Text::make(__('URL'), 'url')->hideFromIndex(),
             // TODO: Relation Featured Image
             Boolean::make(__('Managed'),'managed'),
@@ -70,7 +70,7 @@ class Hut extends Resource
             Text::make(__('Operating name'),'operating_name')->hideFromIndex(),
             Text::make(__('Operating email'),'operating_email')->hideFromIndex(),
             Text::make(__('Operating phone'),'operating_phone')->hideFromIndex(),
-            Text::make(__('Owner'),'owner'),
+            Text::make(__('Owner'),'owner')->hideFromIndex(),
             BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
             BelongsToMany::make(__('External Databases'),'ExternalDatabases'),
         ];
