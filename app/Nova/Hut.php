@@ -29,7 +29,7 @@ class Hut extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -57,9 +57,12 @@ class Hut extends Resource
             MapPoint::make('geometry')->withMeta([
                 'center' => ["51", "4"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
+                'minZoom' => 8,
+                'maxZoom' => 17,
+                'defaultZoom' => 13
             ])->rules('required'),
-            Number::make(__('Elevation'),'elevation')->rules('required'),
+            Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
             Text::make(__('URL'), 'url')->hideFromIndex(),
             // TODO: Relation Featured Image
             Boolean::make(__('Managed'),'managed'),
@@ -67,10 +70,9 @@ class Hut extends Resource
             Text::make(__('Operating name'),'operating_name')->hideFromIndex(),
             Text::make(__('Operating email'),'operating_email')->hideFromIndex(),
             Text::make(__('Operating phone'),'operating_phone')->hideFromIndex(),
-            Text::make(__('Owner'),'owner'),
+            Text::make(__('Owner'),'owner')->hideFromIndex(),
             BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
             BelongsToMany::make(__('External Databases'),'ExternalDatabases'),
-
         ];
     }
 

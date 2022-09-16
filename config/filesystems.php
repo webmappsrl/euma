@@ -64,6 +64,10 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'importer' => [
+            'driver' => 'local',
+            'root' => storage_path('importer'),
+        ],
 
     ],
 
