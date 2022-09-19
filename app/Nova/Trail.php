@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Wm\MapMultiLinestring\MapMultiLinestring;
 
@@ -51,9 +52,9 @@ class Trail extends Resource
                 Text::make(__('Name'), 'name')->sortable(),
             ]),
             Text::make(__('REF'), 'ref'),
-            Text::make(__('URL'), 'url')->rules('required','url')->hideFromIndex(),
-            Text::make(__('Source geojson url'), 'source_geojson_url')->hideFromIndex(),
-            Text::make(__('Source gpx url'), 'source_gpx_url')->hideFromIndex(),
+            URL::make(__('URL'), 'url')->displayUsing(fn () => "$this->url")->rules('required','url')->hideFromIndex(),  
+            URL::make(__('Source geojson url'), 'source_geojson_url')->displayUsing(fn () => "$this->source_geojson_url")->hideFromIndex(),
+            URL::make(__('Source gpx url'), 'source_gpx_url')->displayUsing(fn () => "$this->source_gpx_url")->hideFromIndex(),
             MapMultiLinestring::make('geometry')->withMeta([
                 'center' => ["43", "10"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',

@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\URL;
 use Wm\MapPoint\MapPoint;
 
 class Hut extends Resource
@@ -63,7 +64,7 @@ class Hut extends Resource
                 'defaultZoom' => 13
             ])->rules('required'),
             Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
-            Text::make(__('URL'), 'url')->hideFromIndex(),
+            URL::make(__('URL'), 'url')->displayUsing(fn () => "$this->url")->hideFromIndex(),
             // TODO: Relation Featured Image
             Boolean::make(__('Managed'),'managed'),
             Text::make(__('Address'),'address')->hideFromIndex(),

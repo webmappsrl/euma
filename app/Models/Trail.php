@@ -16,7 +16,11 @@ class Trail extends Model
     ];
 
     protected $fillable = [
+        'name',
+        'ref',
         'url',
+        'source_geojson_url',
+        'source_gpx_url',
         'geometry',
         'geobox_location',
     ];

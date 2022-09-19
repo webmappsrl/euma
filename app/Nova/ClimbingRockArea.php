@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\URL;
 use Wm\MapPoint\MapPoint;
 
 class ClimbingRockArea extends Resource
@@ -63,7 +64,7 @@ class ClimbingRockArea extends Resource
                 'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
             ]),
 
-            Text::make(__('Local rules url'),'local_rules_url')->rules('required','url')->hideFromIndex(),
+            URL::make(__('Local rules url'),'local_rules_url')->displayUsing(fn () => "$this->local_rules_url")->rules('required','url')->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Local rules description'), 'local_rules_description'),
             ])->hideFromIndex(),

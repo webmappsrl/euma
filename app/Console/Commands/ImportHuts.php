@@ -25,7 +25,7 @@ class ImportHuts extends Command
      *
      * @var string
      */
-    protected $description = 'This command imports and syncs all the huts associated to a member from a given xls file';
+    protected $description = 'This command imports and syncs all the huts associated to a member from a given xlsx file';
 
     /**
      * Execute the console command.

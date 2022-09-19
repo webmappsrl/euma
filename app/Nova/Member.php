@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Member extends Resource
@@ -48,7 +49,7 @@ class Member extends Resource
             Text::make(__('Name Orig'),'name_orig')->rules('required')->hideFromIndex(),
             Text::make(__('Acronym'),'acronym')->rules('required'),
             Text::make(__('Country'),'country')->rules('required'),
-            Text::make(__('Web'),'web')->hideFromIndex(),
+            URL::make(__('Web'),'web')->displayUsing(fn () => "$this->web")->hideFromIndex(),  
             Number::make(__('Members'),'members'),
             Number::make(__('Since'),'since')->rules('required'),
             Select::make(__('Type'), 'type')->hideFromIndex()->options([
