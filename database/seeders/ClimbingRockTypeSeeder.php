@@ -51,9 +51,9 @@ class ClimbingRockTypeSeeder extends Seeder
             'description' => 'Like stones in concrete'
         ]);
         ClimbingRockType::factory()->create([
-            'name' => 'Abrasive',
-            'identifier' => 'abrasive',
-            'description' => 'Very hard and gritty sandstone'
+            'name' => 'Hard Sandstone',
+            'identifier' => 'hard-sandstone',
+            'description' => 'Very hard and gritty sandstone, abrasive'
         ]);
         ClimbingRockType::factory()->create([
             'name' => 'Sandstone',

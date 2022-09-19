@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('alternative_name')->nullable();
             $table->point('geometry');
-            $table->text('local_rules_url');
+            $table->text('local_rules_url')->nullable();
             $table->text('local_rules_description')->nullable();
             $table->text('local_rules_document')->nullable();
             $table->boolean('local_restricions')->default(false);

@@ -59,9 +59,9 @@ class Hut extends Resource
                 'center' => ["51", "4"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
                 'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
-                'minZoom' => 8,
-                'maxZoom' => 17,
-                'defaultZoom' => 13
+                'minZoom' => 5,
+                'maxZoom' => 16,
+                'defaultZoom' => 5
             ])->rules('required'),
             Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
             URL::make(__('URL'), 'url')->displayUsing(fn () => "$this->url")->hideFromIndex(),
