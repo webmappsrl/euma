@@ -48,6 +48,7 @@ class ClimbingStyle extends Resource
                 Text::make(__('Name'), 'name')->sortable(),
                 Textarea::make(__('Description'), 'description')->sortable(),
             ]),
+            Text::make(__('Identifier'), 'identifier'),
         ];
     }
 

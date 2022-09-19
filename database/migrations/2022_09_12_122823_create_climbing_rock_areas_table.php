@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('alternative_name');
+            $table->string('alternative_name')->nullable();
             $table->point('geometry');
             $table->text('local_rules_url');
             $table->text('local_rules_description')->nullable();
