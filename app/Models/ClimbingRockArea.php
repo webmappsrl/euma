@@ -40,12 +40,19 @@ class ClimbingRockArea extends Model
 
     ];
 
+    protected $casts = [
+        'location_quality' => 'int',
+        'routes_number' => 'int',
+        'elevation' => 'int',
+        'geobox_elevation' => 'int'
+    ];
+
     public function climbingStyles(){
-        return $this->belongsToMany(ClimbingStyle::class);
+        return $this->belongsToMany(ClimbingStyle::class,'climbing_rock_area_climbing_style');
     }
     
     public function climbingRockTypes(){
-        return $this->belongsToMany(ClimbingRockType::class);
+        return $this->belongsToMany(ClimbingRockType::class,'climbing_rock_area_climbing_rock_type');
     }
     
     public function member() {

@@ -22,6 +22,6 @@ class ClimbingStyle extends Model
     ];
 
     public function climbingRockAreas(){
-        return $this->belongsToMany(ClimbingRockArea::class);
+        return $this->belongsToMany(ClimbingRockArea::class,'climbing_rock_area_climbing_style');
     }
 }

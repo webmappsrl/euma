@@ -48,6 +48,7 @@ class ClimbingRockType extends Resource
                 Text::make(__('Name'), 'name')->sortable(),
                 Textarea::make(__('Description'), 'description'),
             ]),
+            Text::make(__('Identifier'), 'identifier'),
         ];
     }
 

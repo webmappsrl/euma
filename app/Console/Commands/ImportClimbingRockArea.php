@@ -36,8 +36,7 @@ class ImportClimbingRockArea extends Command
     {
         $path = Storage::disk('importer')->path($this->argument('path'));
         $member_id = $this->argument('member_id');
-        DB::table('huts')->where('member_id', '=', $member_id)->delete();
-        Log::info($path);
+        DB::table('climbing_rock_areas')->where('member_id', '=', $member_id)->delete();
         Excel::import(new ClimbingRockAreasImport, $path);
 
         return 0;

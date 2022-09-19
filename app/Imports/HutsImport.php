@@ -32,7 +32,7 @@ class HutsImport implements ToModel, WithHeadingRow
             'operating_phone' => ($row['operating_phone'])?$row['operating_phone']:'',
             'owner' => ($row['owner'])?$row['owner']:'',
             'geometry'    => DB::select("SELECT ST_GeomFromText('POINT($lng $lat)') As wkt")[0]->wkt, 
-            'elevation'    => $row['elevation'],
+            'elevation'    => ($row['elevation'])?$row['elevation']:0,
         ]);
 
         $hut->Member()->associate(Member::where('acronym',$row['member_acronym'])->get()[0]);
