@@ -61,10 +61,13 @@ class ClimbingRockArea extends Resource
             MapPoint::make('geometry')->withMeta([
                 'center' => ["42", "10"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
+                'minZoom' => 5,
+                'maxZoom' => 16,
+                'defaultZoom' => 5
             ]),
 
-            URL::make(__('Local rules url'),'local_rules_url')->displayUsing(fn () => "$this->local_rules_url")->rules('required','url')->hideFromIndex(),
+            URL::make(__('Local rules url'),'local_rules_url')->displayUsing(fn () => "$this->local_rules_url")->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Local rules description'), 'local_rules_description'),
             ])->hideFromIndex(),
@@ -79,7 +82,10 @@ class ClimbingRockArea extends Resource
             MapPoint::make(__('Parking position'),'parking_position')->withMeta([
                 'center' => ["42", "10"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
-                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png'
+                'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
+                'minZoom' => 5,
+                'maxZoom' => 16,
+                'defaultZoom' => 5
             ])->hideFromIndex(),
 
             Select::make(__('Location quality'), 'location_quality')->hideFromIndex()->options([
