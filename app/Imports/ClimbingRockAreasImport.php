@@ -46,7 +46,7 @@ class ClimbingRockAreasImport implements ToModel, WithHeadingRow
         $ClimbingRockArea->save();
         
         if ($row['climbing_style']) {
-            $styles = explode(':',$row['climbing_style']);
+            $styles = explode(',',$row['climbing_style']);
             foreach ($styles as $style) {
                 $ClimbingStyle = ClimbingStyle::where('identifier',strtolower($style))->get();
                 if (!empty($ClimbingStyle) && count($ClimbingStyle) > 0) {
