@@ -33,7 +33,7 @@ class ClimbingRockAreasImport implements ToModel, WithHeadingRow
             'geometry'    => DB::select("SELECT ST_GeomFromText('POINT($lng $lat)') As wkt")[0]->wkt, 
             'elevation'    => ($row['elevation'])?$row['elevation']:null,
             'local_restrictions'    => ($row['local_restrictions'] == 'yes')?true:false,
-            'local_restrictions_desctription' => ($row['local_restrictions_desctription'])?$row['local_restrictions_desctription']:'',
+            'local_restrictions_description' => ($row['local_restrictions_description'])?$row['local_restrictions_description']:'',
         ]);
         if ($row['parking_lat'] && $row['parking_lng']) {
             $parking_lat = $row['parking_lat'];

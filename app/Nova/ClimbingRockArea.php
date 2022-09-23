@@ -76,7 +76,7 @@ class ClimbingRockArea extends Resource
             
             Boolean::make(__('Local restrictions'),'local_restrictions')->hideFromIndex(),
             NovaTabTranslatable::make([
-                Textarea::make(__('Local restrictions desctription'), 'local_restrictions_desctription')->sortable(),
+                Textarea::make(__('Local restrictions description'), 'local_restrictions_description')->sortable(),
             ])->hideFromIndex(),
 
             MapPoint::make(__('Parking position'),'parking_position')->withMeta([
