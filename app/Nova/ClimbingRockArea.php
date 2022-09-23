@@ -74,7 +74,7 @@ class ClimbingRockArea extends Resource
             
             // TODO: local_rules_document upload file
             
-            Boolean::make(__('Local restricions'),'local_restricions')->hideFromIndex(),
+            Boolean::make(__('Local restrictions'),'local_restrictions')->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Local restrictions desctription'), 'local_restrictions_desctription')->sortable(),
             ])->hideFromIndex(),
