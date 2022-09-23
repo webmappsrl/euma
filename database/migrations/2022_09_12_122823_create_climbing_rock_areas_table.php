@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('local_rules_url')->nullable();
             $table->text('local_rules_description')->nullable();
             $table->text('local_rules_document')->nullable();
-            $table->boolean('local_restricions')->default(false);
+            $table->boolean('local_restrictions')->default(false);
             $table->text('local_restrictions_desctription')->nullable();
             $table->point('parking_position')->nullable();
             $table->integer('location_quality')->nullable();
