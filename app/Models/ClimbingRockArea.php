@@ -17,7 +17,7 @@ class ClimbingRockArea extends Model
         'alternative_name',
         'local_rules_description',
         'local_rules_document',
-        'local_restrictions_desctription'
+        'local_restrictions_description'
     ];
 
     protected $fillable = [
@@ -29,7 +29,7 @@ class ClimbingRockArea extends Model
         'local_rules_description',
         'local_rules_document',
         'local_restricions',
-        'local_restrictions_desctription',
+        'local_restrictions_description',
         'parking_position',
         'location_quality',
         'routes_number',
