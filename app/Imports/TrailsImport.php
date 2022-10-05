@@ -7,6 +7,7 @@ use App\Models\Trail;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Symm\Gisconverter\Gisconverter;
 
 class TrailsImport implements ToModel, WithHeadingRow
 {
@@ -18,10 +19,15 @@ class TrailsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         if (array_key_exists('source_geojson_url',$row) && $row['source_geojson_url']) {
-            $geojson = file_get_contents($row['source_geojson_url']);
-            $geojson = json_decode($geojson);
+            $geojson_content = file_get_contents($row['source_geojson_url']);
+            $geojson = json_decode($geojson_content);
             $geometry = json_encode($geojson->geometry);
+        } else {
+            $gpx_content = file_get_contents($row['source_gpx_url']);
+            $gpx = Gisconverter::gpxToGeojson($gpx_content);
+            $geometry = $gpx;
         }
+
         $trail = new Trail([
             'name'     => ($row['name'])?$row['name']:'',
             'ref' => ($row['ref'])?$row['ref']:'',
