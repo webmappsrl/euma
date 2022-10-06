@@ -70,7 +70,18 @@ class Trail extends Resource
                 Text::make(__('Name'), 'name')->sortable(),
             ]),
             Text::make(__('REF'), 'ref'),
-            URL::make(__('URL'), 'url')->displayUsing(fn () => "$this->url")->rules('required','url')->hideFromIndex(),  
+            Text::make(__('URL'), 'url', function () {
+                $urls = explode(',',$this->url);
+                $html = '';
+                foreach ($urls as $url) {
+                    if (strpos($url,'http') === false){
+                        $url = 'https://'.$url;
+                    }
+                    $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
+                }
+                return $html;
+            })->onlyOnDetail()->asHtml(),
+            Text::make(__('URL'), 'url')->onlyOnForms(),  
             URL::make(__('Source geojson url'), 'source_geojson_url')->displayUsing(fn () => "$this->source_geojson_url")->hideFromIndex(),
             URL::make(__('Source gpx url'), 'source_gpx_url')->displayUsing(fn () => "$this->source_gpx_url")->hideFromIndex(),
             MapMultiLinestring::make('geometry')->withMeta([

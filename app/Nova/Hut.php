@@ -82,7 +82,18 @@ class Hut extends Resource
                 'defaultZoom' => 5
             ])->rules('required'),
             Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
-            URL::make(__('URL'), 'url')->displayUsing(fn () => "$this->url")->hideFromIndex(),
+            Text::make(__('URL'), 'url', function () {
+                $urls = explode(',',$this->url);
+                $html = '';
+                foreach ($urls as $url) {
+                    if (strpos($url,'http') === false){
+                        $url = 'https://'.$url;
+                    }
+                    $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
+                }
+                return $html;
+            })->onlyOnDetail()->asHtml(),
+            Text::make(__('URL'), 'url')->onlyOnForms(),
             // TODO: Relation Featured Image
             Boolean::make(__('Managed'),'managed'),
             Text::make(__('Address'),'address')->hideFromIndex(),
