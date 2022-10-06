@@ -26,6 +26,7 @@ class ClimbingRockAreasImport implements ToModel, WithHeadingRow
             'name'     => $row['name'],
             'alternative_name' => ($row['alternative_name'])?$row['alternative_name']:'',
             'description' => ($row['description'])?$row['description']:'',
+            'url' => $row['url'],
             'local_rules_url' => ($row['local_rules_url'])?$row['local_rules_url']:'',
             'local_rules_description' => ($row['local_rules_description'])?$row['local_rules_description']:'',
             'location_quality' => ($row['location_quality'])?$row['location_quality']:null,
@@ -35,6 +36,7 @@ class ClimbingRockAreasImport implements ToModel, WithHeadingRow
             'local_restrictions'    => ($row['local_restrictions'] == 'yes')?true:false,
             'local_restrictions_description' => ($row['local_restrictions_description'])?$row['local_restrictions_description']:'',
         ]);
+
         if ($row['parking_lat'] && $row['parking_lng']) {
             $parking_lat = $row['parking_lat'];
             $parking_lng = $row['parking_lng'];

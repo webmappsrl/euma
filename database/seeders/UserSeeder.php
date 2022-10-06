@@ -27,8 +27,8 @@ class UserSeeder extends Seeder
             'is_admin' => true,
         ])->markEmailAsVerified();
         User::factory()->create([
-            'name' => 'Andrej',
-            'email' => 'andrej@webmapp.it',
+            'name' => 'Andrej Stritar',
+            'email' => 'astritar@gmail.com',
             'password' => bcrypt('webmapp'),
             'member_id' => 2
         ])->markEmailAsVerified();
@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
             'member_id' => 10
         ])->markEmailAsVerified();
         User::factory()->create([
-            'name' => 'hrvoje',
-            'email' => 'hrvoje@webmapp.it',
+            'name' => 'Hrvoje Gold',
+            'email' => 'hgold@fpz.unizg.hr',
             'password' => bcrypt('webmapp'),
             'member_id' => 6
         ])->markEmailAsVerified();

@@ -84,7 +84,7 @@ class ClimbingRockArea extends Resource
                 'maxZoom' => 16,
                 'defaultZoom' => 5
             ]),
-
+            URL::make(__('URL'), 'url')->displayUsing(fn () => "$this->url")->hideFromIndex(),
             URL::make(__('Local rules url'),'local_rules_url')->displayUsing(fn () => "$this->local_rules_url")->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Local rules description'), 'local_rules_description'),
