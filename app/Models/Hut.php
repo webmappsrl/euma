@@ -31,6 +31,8 @@ class Hut extends Model
         'operating_email',
         'operating_phone',
         'owner',
+        'member_id',
+        'import_id'
     ];
 
     public function member() {
