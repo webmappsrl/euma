@@ -8,66 +8,69 @@ use App\Models\ClimbingStyle;
 use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ClimbingRockAreasImport implements ToModel, WithHeadingRow
+class ClimbingRockAreasImport implements ToCollection, WithHeadingRow
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+    public function collection($rows)
     {
-        $lat = $row['lat'];
-        $lng = $row['lng'];
-        $ClimbingRockArea = new ClimbingRockArea([
-            'name'     => $row['name'],
-            'alternative_name' => ($row['alternative_name'])?$row['alternative_name']:'',
-            'description' => ($row['description'])?$row['description']:'',
-            'url' => $row['url'],
-            'local_rules_url' => ($row['local_rules_url'])?$row['local_rules_url']:'',
-            'local_rules_description' => ($row['local_rules_description'])?$row['local_rules_description']:'',
-            'location_quality' => ($row['location_quality'])?$row['location_quality']:null,
-            'routes_number' => ($row['routes_number'])?$row['routes_number']:null,
-            'geometry'    => DB::select("SELECT ST_GeomFromText('POINT($lng $lat)') As wkt")[0]->wkt, 
-            'elevation'    => ($row['elevation'])?$row['elevation']:null,
-            'local_restrictions'    => ($row['local_restrictions'] == 'yes')?true:false,
-            'local_restrictions_description' => ($row['local_restrictions_description'])?$row['local_restrictions_description']:'',
-        ]);
+        foreach ($rows as $row) 
+        {
+            $lat = $row['lat'];
+            $lng = $row['lng'];
+            $member = Member::where('acronym',$row['member_acronym'])->get()[0];
 
-        if ($row['parking_lat'] && $row['parking_lng']) {
-            $parking_lat = $row['parking_lat'];
-            $parking_lng = $row['parking_lng'];
-            $ClimbingRockArea->parking_position = DB::select("SELECT ST_GeomFromText('POINT($parking_lng $parking_lat)') As wkt")[0]->wkt;
-        }
+            $ClimbingRockArea = ClimbingRockArea::updateOrCreate(
+                [
+                    'import_id' => $row['id'],
+                    'member_id' => $member->id
+                ],
+                [
+                    'name'     => $row['name'],
+                    'alternative_name' => ($row['alternative_name'])?$row['alternative_name']:'',
+                    'description' => ($row['description'])?$row['description']:'',
+                    'url' => $row['url'],
+                    'local_rules_url' => ($row['local_rules_url'])?$row['local_rules_url']:'',
+                    'local_rules_description' => ($row['local_rules_description'])?$row['local_rules_description']:'',
+                    'location_quality' => ($row['location_quality'])?$row['location_quality']:null,
+                    'routes_number' => ($row['routes_number'])?$row['routes_number']:null,
+                    'geometry'    => DB::select("SELECT ST_GeomFromText('POINT($lng $lat)') As wkt")[0]->wkt, 
+                    'elevation'    => ($row['elevation'])?$row['elevation']:null,
+                    'local_restrictions'    => ($row['local_restrictions'] == 'yes')?true:false,
+                    'local_restrictions_description' => ($row['local_restrictions_description'])?$row['local_restrictions_description']:'',
+                ]
+            );
 
-        $ClimbingRockArea->Member()->associate(Member::where('acronym',$row['member_acronym'])->get()[0]);
-        
-        $ClimbingRockArea->save();
-        
-        if ($row['climbing_style']) {
-            $styles = explode(',',$row['climbing_style']);
-            foreach ($styles as $style) {
-                $ClimbingStyle = ClimbingStyle::where('identifier',strtolower($style))->get();
-                if (!empty($ClimbingStyle) && count($ClimbingStyle) > 0) {
-                    $ClimbingRockArea->climbingStyles()->attach($ClimbingStyle[0]->id);
+            if ($row['parking_lat'] && $row['parking_lng']) {
+                $parking_lat = $row['parking_lat'];
+                $parking_lng = $row['parking_lng'];
+                $ClimbingRockArea->parking_position = DB::select("SELECT ST_GeomFromText('POINT($parking_lng $parking_lat)') As wkt")[0]->wkt;
+            }
+            
+            if ($row['climbing_style']) {
+                $styles = explode(',',$row['climbing_style']);
+                foreach ($styles as $style) {
+                    $ClimbingStyle = ClimbingStyle::where('identifier',strtolower($style))->get();
+                    if (!empty($ClimbingStyle) && count($ClimbingStyle) > 0) {
+                        $ClimbingRockArea->climbingStyles()->attach($ClimbingStyle[0]->id);
+                    }
                 }
             }
-        }
-        
-        if ($row['climbing_rock_type']) {
-            $types = explode(',',$row['climbing_rock_type']);
-            foreach ($types as $type) {
-                $type = str_replace(' ', '-', $type);
-                $ClimbingRockType = ClimbingRockType::where('identifier',strtolower($type))->get();
-                if (!empty($ClimbingRockType) && count($ClimbingRockType) > 0) {
-                    $ClimbingRockArea->ClimbingRockTypes()->attach($ClimbingRockType[0]->id);
+            
+            if ($row['climbing_rock_type']) {
+                $types = explode(',',$row['climbing_rock_type']);
+                foreach ($types as $type) {
+                    $type = str_replace(' ', '-', $type);
+                    $ClimbingRockType = ClimbingRockType::where('identifier',strtolower($type))->get();
+                    if (!empty($ClimbingRockType) && count($ClimbingRockType) > 0) {
+                        $ClimbingRockArea->ClimbingRockTypes()->attach($ClimbingRockType[0]->id);
+                    }
                 }
             }
-        }
 
-        return $ClimbingRockArea;
-    }
+            $ClimbingRockArea->save();
+
+        }
+    } 
 }
