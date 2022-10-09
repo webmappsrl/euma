@@ -17,8 +17,7 @@ class ImportHuts extends Command
      * @var string
      */
     protected $signature = 'eumadb:import-huts
-                            {path : Set the path of file, it should be locataded in /storage/importer folder (ex. /huts/EUMA_HUTS_IMPORT_FILE_EXAMPLE.xlsx)}
-                            {member_id : id of the member that the huts are associated to}';
+                            {path : Set the path of file, it should be locataded in /storage/importer folder (ex. /huts/EUMA_HUTS_IMPORT_FILE_EXAMPLE.xlsx)}';
 
     /**
      * The console command description.
@@ -35,8 +34,6 @@ class ImportHuts extends Command
     public function handle()
     {
         $path = Storage::disk('importer')->path($this->argument('path'));
-        $member_id = $this->argument('member_id');
-        DB::table('huts')->where('member_id', '=', $member_id)->delete();
         Log::info($path);
         Excel::import(new HutsImport, $path);
 

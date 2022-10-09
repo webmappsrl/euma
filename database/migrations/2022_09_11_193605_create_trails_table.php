@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name')->nullable();
+            $table->string('import_id')->unique()->nullable();
             $table->string('ref')->nullable();
             $table->text('url');
             $table->text('source_geojson_url')->nullable();

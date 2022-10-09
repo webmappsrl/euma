@@ -37,7 +37,9 @@ class ClimbingRockArea extends Model
         'geobox_location',
         'elevation',
         'geobox_elevation',
-        'url'
+        'url',
+        'import_id',
+        'member_id'
     ];
 
     protected $casts = [

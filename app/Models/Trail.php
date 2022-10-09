@@ -23,6 +23,8 @@ class Trail extends Model
         'source_gpx_url',
         'geometry',
         'geobox_location',
+        'member_id',
+        'import_id'
     ];
 
     public function externalDatabases(){
