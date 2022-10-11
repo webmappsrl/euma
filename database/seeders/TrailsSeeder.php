@@ -14,6 +14,12 @@ class TrailsSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $import_cmd = 'php artisan eumadb:import-trails "/trails/EUMA_TRAILS_PZS.xlsx"';
+        echo "import trails 2 -> $import_cmd \n";
+        exec($import_cmd);
+        
+        $import_cmd = 'php artisan eumadb:import-trails "/trails/EUMA_TRAILS_HPS.xlsx"';
+        echo "import trails 6 -> $import_cmd \n";
+        exec($import_cmd);
     }
 }

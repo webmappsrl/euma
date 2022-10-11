@@ -17,7 +17,8 @@ class Hut extends Model
     ];
 
     protected $fillable = [
-        'name',
+        'official_name',
+        'second_official_name',
         'description',
         'geometry',
         'geobox_location',

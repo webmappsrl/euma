@@ -68,6 +68,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('importer'),
         ],
+        'exporter' => [
+            'driver' => 'local',
+            'root' => storage_path('exporter'),
+        ],
 
     ],
 
