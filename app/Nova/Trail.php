@@ -35,7 +35,7 @@ class Trail extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','ref'
+        'id','name','ref','member.acronym'
     ];
 
     /**

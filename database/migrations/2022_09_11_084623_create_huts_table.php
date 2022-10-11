@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('official_name');
             $table->string('second_official_name')->nullable();
-            $table->string('import_id')->unique()->nullable();
+            $table->string('import_id')->nullable();
             $table->text('description')->nullable();
             $table->point('geometry');
             $table->jsonb('geobox_location')->nullable();
