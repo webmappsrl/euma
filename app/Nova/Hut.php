@@ -70,7 +70,7 @@ class Hut extends Resource
         return [
             ID::make()->sortable(),
             Text::make(__('Official Name'), 'official_name')->sortable(),
-            Text::make(__('Second Official Name'), 'second_official_name'),
+            Text::make(__('Second Official Name'), 'second_official_name')->hideFromIndex(),
             Textarea::make(__('Description'), 'description')->sortable()->hideFromIndex(),
             MapPoint::make('geometry')->withMeta([
                 'center' => ["51", "4"],
