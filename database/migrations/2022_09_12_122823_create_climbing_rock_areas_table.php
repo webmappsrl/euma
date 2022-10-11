@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('import_id')->unique()->nullable();
+            $table->string('import_id')->nullable();
             $table->text('description')->nullable();
             $table->string('alternative_name')->nullable();
             $table->point('geometry');

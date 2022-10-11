@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Nova\Query\Search\SearchableRelation;
 
 class Member extends Model
 {
@@ -19,6 +20,16 @@ class Member extends Model
         'since',
         'type'
     ];
+
+    /**
+     * Get the searchable columns for the resource.
+     *
+     * @return array
+     */
+    public static function searchableColumns()
+    {
+        return ['id', new SearchableRelation('member', 'acronym')];
+    }
 
     public function huts(){
         return $this->hasMany(Hut::class);

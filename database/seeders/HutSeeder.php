@@ -21,5 +21,13 @@ class HutSeeder extends Seeder
         $import_cmd = 'php artisan eumadb:import-huts "/huts/EUMA_HUTS_PZS.xlsx"';
         echo "import huts 2 -> $import_cmd \n";
         exec($import_cmd);
+        
+        $import_cmd = 'php artisan eumadb:import-huts "/huts/EUMA_HUTS_FPSM.xlsx"';
+        echo "import huts 13 -> $import_cmd \n";
+        exec($import_cmd);
+        
+        $import_cmd = 'php artisan eumadb:import-huts "/huts/EUMA_HUTS_CAI.xlsx"';
+        echo "import huts 11 -> $import_cmd \n";
+        exec($import_cmd);
     }
 }
