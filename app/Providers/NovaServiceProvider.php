@@ -12,6 +12,7 @@ use App\Nova\Member;
 use Illuminate\Support\Facades\Gate;
 use App\Nova\User;
 use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova\Dashboards\Main;
 use Laravel\Nova\Menu\Menu;
 use Laravel\Nova\Menu\MenuItem;
@@ -46,7 +47,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(ExternalDatabase::class),
                     MenuItem::resource(Member::class),
                     MenuItem::resource(User::class),
-                ])->icon('user')->collapsable(),
+                ])->icon('user')->collapsable()->canSee(function (NovaRequest $request) {
+                    return $request->user()->is_admin;
+                }),
             ];
         });
     }
