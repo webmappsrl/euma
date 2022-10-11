@@ -31,7 +31,7 @@ class HutsImport implements ToCollection, WithHeadingRow
                     'second_official_name'     => ($row['second_official_name'])?$row['second_official_name']:'',
                     'description' => ($row['description'])?$row['description']:'',
                     'url' => ($row['url'])?$row['url']:'',
-                    'managed' => ($row['managed'] == 'yes')?true:false,
+                    'managed' => (strtolower($row['managed']) == 'yes')?true:false,
                     'address' => ($row['address'])?$row['address']:'',
                     'operating_name' => ($row['operating_name'])?$row['operating_name']:'',
                     'operating_email' => ($row['operating_email'])?$row['operating_email']:'',
