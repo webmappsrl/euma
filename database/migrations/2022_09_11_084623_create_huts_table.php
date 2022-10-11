@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('huts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
+            $table->string('official_name');
+            $table->string('second_official_name')->nullable();
             $table->string('import_id')->unique()->nullable();
             $table->text('description')->nullable();
             $table->point('geometry');
