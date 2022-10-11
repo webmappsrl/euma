@@ -69,10 +69,9 @@ class Hut extends Resource
     {
         return [
             ID::make()->sortable(),
-            NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->sortable(),
-                Textarea::make(__('Description'), 'description')->sortable()->hideFromIndex(),
-            ]),
+            Text::make(__('Official Name'), 'official_name')->sortable(),
+            Text::make(__('Second Official Name'), 'second_official_name'),
+            Textarea::make(__('Description'), 'description')->sortable()->hideFromIndex(),
             MapPoint::make('geometry')->withMeta([
                 'center' => ["51", "4"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',

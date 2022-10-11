@@ -27,7 +27,8 @@ class HutsImport implements ToCollection, WithHeadingRow
                     'member_id' => $member->id
                 ],
                 [
-                    'name'     => $row['name'],
+                    'official_name'     => $row['official_name'],
+                    'second_official_name'     => ($row['second_official_name'])?$row['second_official_name']:'',
                     'description' => ($row['description'])?$row['description']:'',
                     'url' => ($row['url'])?$row['url']:'',
                     'managed' => ($row['managed'] == 'yes')?true:false,

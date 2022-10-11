@@ -55,7 +55,8 @@ class Member extends Resource
             Select::make(__('Type'), 'type')->hideFromIndex()->options([
                 'FULL' => 'FULL',
                 'ASSOCIATED' => 'ASSOCIATED',
-                'COLLABORATING' => 'COLLABORATING'
+                'COLLABORATING' => 'COLLABORATING',
+                'EXTERNAL MEMBER' => 'EXTERNAL MEMBER',
             ])->displayUsingLabels()->rules('required'),
         ];
     }
