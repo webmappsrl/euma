@@ -13,7 +13,7 @@ class ClimbingRockAreasGeoJSONGeneratorCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'eumadb:climbing-rock-area-geojson-generator';
+    protected $signature = 'eumadb:climbing-rock-areas-geojson-generator';
 
     /**
      * The console command description.
