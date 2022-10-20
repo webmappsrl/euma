@@ -50,6 +50,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ])->icon('user')->collapsable()->canSee(function (NovaRequest $request) {
                     return $request->user()->is_admin;
                 }),
+                
+                MenuSection::make('Export', [
+                    'ciao',
+                ])->icon('download')->collapsable()->canSee(function (NovaRequest $request) {
+                    return $request->user()->is_admin;
+                }),
             ];
         });
     }
