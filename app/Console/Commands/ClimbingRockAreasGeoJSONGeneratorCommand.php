@@ -13,7 +13,7 @@ class ClimbingRockAreasGeoJSONGeneratorCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'eumadb:climbing-rock-area-geojson-generator';
+    protected $signature = 'eumadb:climbing-rock-areas-geojson-generator';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class ClimbingRockAreasGeoJSONGeneratorCommand extends Command
             'geometry',   ST_AsGeoJSON(geometry)::jsonb,
             'properties', to_jsonb(inputs) - 'geometry'
           ) AS feature
-          FROM (SELECT url, geometry FROM climbing_rock_areas) inputs) features;");
+          FROM (SELECT geometry, name::json->'en' as name, url, m.acronym as member_acronym, m.name_en as member_name, m.country as member_country FROM climbing_rock_areas as t LEFT JOIN members as m on t.member_id=m.id ) inputs) features;");
 
         $exporter->put('geojson/climbing_rock_areas/climbing_rock_areas.geojson', $results[0]->jsonb_build_object);
 

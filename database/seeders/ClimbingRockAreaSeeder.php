@@ -14,8 +14,8 @@ class ClimbingRockAreaSeeder extends Seeder
      */
     public function run()
     {
-        $import_cmd = 'php artisan eumadb:import-climbing-rock-areas "/climbing-rock-areas/EUMA_CLIMBING_ROCK_AREAS_IMPORT_FILE_EXAMPLE.xlsx"';
-        echo "import crags 7 -> $import_cmd \n";
+        $import_cmd = 'php artisan eumadb:import-climbing-rock-areas "/climbing-rock-areas/EUMA_CLIMBING_ROCK_AREAS_CHS.xlsx"';
+        echo "import crags 7 Czech Republic -> $import_cmd \n";
         exec($import_cmd);
     }
 }
