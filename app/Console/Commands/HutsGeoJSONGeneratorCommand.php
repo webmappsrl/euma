@@ -41,7 +41,7 @@ class HutsGeoJSONGeneratorCommand extends Command
             'geometry',   ST_AsGeoJSON(geometry)::jsonb,
             'properties', to_jsonb(inputs) - 'geometry'
           ) AS feature
-          FROM (SELECT url, geometry FROM huts) inputs) features;");
+          FROM (SELECT geometry, official_name, url, m.acronym as member_acronym, m.name_en as member_name, m.country as member_country FROM huts as t LEFT JOIN members as m on t.member_id=m.id ) inputs) features;");
 
         $exporter->put('geojson/huts/huts.geojson', $results[0]->jsonb_build_object);
 
