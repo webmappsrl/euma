@@ -39,9 +39,9 @@ class ClimbingRockAreasGeoJSONGeneratorCommand extends Command
           SELECT jsonb_build_object(
             'type',       'Feature',
             'geometry',   ST_AsGeoJSON(geometry)::jsonb,
-            'properties', to_jsonb(inputs) - 'geometry'
+            'properties', to_jsonb(inputs) - 'geometry' - 'id'
           ) AS feature
-          FROM (SELECT geometry, name::json->'en' as name, url, m.acronym as member_acronym, m.name_en as member_name, m.country as member_country FROM climbing_rock_areas as t LEFT JOIN members as m on t.member_id=m.id ) inputs) features;");
+          FROM (SELECT t.id, geometry, name::json->'en' as name, CONCAT('https://prod.eumadb.webmapp.it/resources/climbing-rock-areas/',t.id) as eumadb_url, url, m.acronym as member_acronym, m.name_en as member_name, m.country as member_country FROM climbing_rock_areas as t LEFT JOIN members as m on t.member_id=m.id ) inputs) features;");
 
         $exporter->put('geojson/climbing_rock_areas/climbing_rock_areas.geojson', $results[0]->jsonb_build_object);
 
