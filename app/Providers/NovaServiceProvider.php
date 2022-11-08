@@ -51,10 +51,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     return $request->user()->is_admin;
                 }),
                 
-                MenuSection::make('Export GeoJSON', [
-                    MenuItem::externalLink('Huts', '/api/v1/huts/geojson'),
-                    MenuItem::externalLink('Climbing Rock Areas', '/api/v1/climbingrockareas/geojson'),
-                    MenuItem::externalLink('Trails', '/api/v1/trails/geojson'),
+                MenuSection::make('Export', [
+                    MenuItem::externalLink('Huts GeoJSON', '/api/v1/huts/geojson'),
+                    MenuItem::externalLink('Climbing Rock Areas GeoJSON', '/api/v1/climbingrockareas/geojson'),
+                    MenuItem::externalLink('Trails CSV', '/api/v1/trails/csv'),
                 ])->icon('download')->collapsable()->canSee(function (NovaRequest $request) {
                     return $request->user()->is_admin;
                 }),

@@ -39,9 +39,9 @@ class HutsGeoJSONGeneratorCommand extends Command
           SELECT jsonb_build_object(
             'type',       'Feature',
             'geometry',   ST_AsGeoJSON(geometry)::jsonb,
-            'properties', to_jsonb(inputs) - 'geometry'
+            'properties', to_jsonb(inputs) - 'geometry' - 'id'
           ) AS feature
-          FROM (SELECT geometry, official_name, url, m.acronym as member_acronym, m.name_en as member_name, m.country as member_country FROM huts as t LEFT JOIN members as m on t.member_id=m.id ) inputs) features;");
+          FROM (SELECT t.id, geometry, official_name, CONCAT('https://prod.eumadb.webmapp.it/resources/huts/',t.id) as eumadb_url, url, m.acronym as member_acronym, m.name_en as member_name, m.country as member_country FROM huts as t LEFT JOIN members as m on t.member_id=m.id ) inputs) features;");
 
         $exporter->put('geojson/huts/huts.geojson', $results[0]->jsonb_build_object);
 
