@@ -27,5 +27,6 @@ Route::name('api.')->group(function () {
         Route::get('/huts/geojson', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
         Route::get('/climbingrockareas/geojson', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
         Route::get('/trails/geojson', [TrailsController::class, 'trailsgeojsonexport'])->name('trailsgeojsonexport');
+        Route::get('/trails/csv', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
     });
 });
