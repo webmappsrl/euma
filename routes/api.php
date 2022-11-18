@@ -24,9 +24,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::name('api.')->group(function () {
     Route::prefix('v1')->name('v1')->group(function () {
-        Route::get('/huts/geojson', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
-        Route::get('/climbingrockareas/geojson', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
-        Route::get('/trails/geojson', [TrailsController::class, 'trailsgeojsonexport'])->name('trailsgeojsonexport');
-        Route::get('/trails/csv', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
+        Route::prefix('hut')->name('hut.')->group(function () {
+            Route::get('geojson', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
+            Route::get('geojson/{id}', [HutsController::class, 'hutgeojsonefeature'])->name('hutgeojsonefeature');
+            Route::get('updated_at/{updated_at}', [HutsController::class, 'hutslistlastupdate'])->name('hutslistlastupdate');
+        });
+        Route::prefix('climbingrockarea')->name('climbingrockarea.')->group(function () {
+            Route::get('geojson', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
+        });
+        Route::prefix('trail')->name('trail.')->group(function () {
+            Route::get('geojson', [TrailsController::class, 'trailsgeojsonexport'])->name('trailsgeojsonexport');
+            Route::get('csv', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
+        });
     });
 });
