@@ -39,6 +39,7 @@ class TrailsController extends Controller
         // } else {
         //     array_push($list, 'No trails found');
         // }
+        
 
         return $this->paginate($list,$per_page);
     }
