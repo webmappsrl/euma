@@ -5,19 +5,28 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Trail;
+use App\Traits\ControllerTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Artisan;
 
+
 class TrailsController extends Controller
 {
+    use ControllerTrait;
 
     /**
      * Return an array of trails ID and updated_at key and values.
      *
      * @return array
      */
-    public function trailslistid() {
+    public function trailslistid(Request $request) {
         $list = [];
+
+        $per_page = 1000;
+
+        if ($request->per_page) {
+            $per_page = $request->per_page;
+        }
 
         $trails = Trail::all();
 
@@ -28,7 +37,8 @@ class TrailsController extends Controller
         } else {
             array_push($list, 'No trails found');
         }
-        return $list;
+
+        return $this->paginate($list,$per_page);
     }
 
     /**
