@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\GeometryFeatureTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,7 @@ class Hut extends Model
 {
     use HasFactory;
     use HasTranslations;
+    use GeometryFeatureTrait;
 
     public $translatable = [
         'name',
@@ -58,30 +60,6 @@ class Hut extends Model
 
             return $feature;
         } else return null;
-    }
-
-    /**
-     * Calculate the geojson of a model with only the geometry
-     *
-     * @return array
-     */
-    public function getEmptyGeojson(): ?array {
-        $model = get_class($this);
-        $geom = $model::where('id', '=', $this->id)
-            ->select(
-                DB::raw("ST_AsGeoJSON(geometry) as geom")
-            )
-            ->first()
-            ->geom;
-
-        if (isset($geom)) {
-            return [
-                "type" => "Feature",
-                "properties" => [],
-                "geometry" => json_decode($geom, true)
-            ];
-        } else
-            return null;
     }
 
     /**

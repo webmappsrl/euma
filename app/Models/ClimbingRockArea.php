@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\GeometryFeatureTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\Translatable\HasTranslations;
 
 class ClimbingRockArea extends Model
 {
     use HasFactory;
     use HasTranslations;
+    use GeometryFeatureTrait;
 
     public $translatable = [
         'name',
@@ -63,5 +66,74 @@ class ClimbingRockArea extends Model
     
     public function externalDatabases(){
         return $this->belongsToMany(ExternalDatabase::class);
+    }
+
+    /**
+     * Create a geojson from the hut
+     *
+     * @return array
+     */
+    public function getGeojson(): ?array
+    {
+        $feature = $this->getEmptyGeojson();
+        if (isset($feature["properties"])) {
+            $feature["properties"] = $this->getJson();
+
+            return $feature;
+        } else return null;
+    }
+
+    /**
+     * Return the json version of the hut, avoiding the geometry
+     *
+     * @return array
+     */
+    public function getJson(): array
+    {
+        $array = [];
+        
+        if ($this->name)
+            $array['name'] = $this->name;
+        
+        if ($this->alternative_name)
+            $array['alternative_name'] = $this->alternative_name;
+
+        if ($this->description)
+            $array['description'] = $this->description;
+
+        if ($this->elevation)
+            $array['elevation'] = $this->elevation;
+
+        if ($this->url)
+            $array['url'] = $this->url;
+
+        if ($this->local_rules_url)
+            $array['local_rules_url'] = $this->local_rules_url;
+
+        if ($this->local_rules_description)
+            $array['local_rules_description'] = $this->local_rules_description;
+
+        if ($this->local_rules_document)
+            $array['local_rules_document'] = $this->local_rules_document;
+
+        if ($this->local_restrictions)
+            $array['local_restrictions'] = $this->local_restrictions;
+
+        if ($this->local_restrictions_description)
+            $array['local_restrictions_description'] = $this->local_restrictions_description;
+
+        if ($this->location_quality)
+            $array['location_quality'] = $this->location_quality;
+        
+        if ($this->routes_number)
+            $array['routes_number'] = $this->routes_number;
+
+        if ($this->member_id) {
+            $array['member_id'] = $this->member_id;
+            $member = Member::find($this->member_id);
+            $array['member_acronym'] = $member->acronym;
+        }
+
+        return $array;
     }
 }
