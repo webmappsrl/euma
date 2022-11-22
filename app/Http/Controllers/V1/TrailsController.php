@@ -30,13 +30,15 @@ class TrailsController extends Controller
 
         $trails = Trail::all();
 
-        if (count($trails) > 0) {
-            foreach ($trails as $trail) {
-                $list[$trail['id']] = \Carbon\Carbon::parse($trail['updated_at'])->toDateTimeString();
-            }
-        } else {
-            array_push($list, 'No trails found');
-        }
+        $list = $trails->pluck('id')->toArray();
+
+        // if (count($trails) > 0) {
+        //     foreach ($trails as $trail) {
+        //         $list[$trail['id']] = \Carbon\Carbon::parse($trail['updated_at'])->toDateTimeString();
+        //     }
+        // } else {
+        //     array_push($list, 'No trails found');
+        // }
 
         return $this->paginate($list,$per_page);
     }
