@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TrailCollection;
 use App\Models\Trail;
 use App\Traits\ControllerTrait;
 use Illuminate\Http\JsonResponse;
@@ -28,9 +29,8 @@ class TrailsController extends Controller
             $per_page = $request->per_page;
         }
 
-        $trails = Trail::all();
-
-        $list = $trails->pluck('id')->toArray();
+        $trails = Trail::select('id','updated_at')->get();
+        // $trails = Trail::select('id','updated_at')->paginate($per_page);
 
         // if (count($trails) > 0) {
         //     foreach ($trails as $trail) {
@@ -39,9 +39,10 @@ class TrailsController extends Controller
         // } else {
         //     array_push($list, 'No trails found');
         // }
-        
 
-        return $this->paginate($list,$per_page);
+        // return $this->paginate($list,$per_page);
+
+        return $trails;
     }
 
     /**
