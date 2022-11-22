@@ -11,19 +11,52 @@ use Illuminate\Support\Facades\Artisan;
 
 class HutsController extends Controller
 {
+    
+    /**
+     * Return an array of huts ID and updated_at key and values.
+     *
+     * @return array
+     */
+    public function hutslistid() {
+        $list = [];
+
+        $huts = Hut::all();
+
+        if (count($huts) > 0) {
+            foreach ($huts as $hut) {
+                $list[$hut['id']] = \Carbon\Carbon::parse($hut['updated_at'])->toDateTimeString();
+            }
+        } else {
+            array_push($list, 'No huts found');
+        }
+        return $list;
+    }
+
+    /**
+     * Return a downloadable geojson file of all huts.
+     *
+     * @return JsonResponse
+     */
     public function hutsgeojsonexport() {
         Artisan::call('eumadb:huts-geojson-generator');
         $path = storage_path('exporter/geojson/huts/huts.geojson');
         return response()->download($path, 'huts.geojson', ['Content-type' => 'application/json']);
     }
-    
-    public function hutslistlastupdate( int $updated_at) {
+
+    /**
+     * Return an array of single huts geojson api based on the updated_at date as parameter.
+     *
+     * @param int $updated_at
+     *
+     * @return array
+     */
+    public function hutslistlastupdate( int $updated_at = null ) {
         $list = [];
 
-        $updated_at_string = \Carbon\Carbon::parse($updated_at)->toDateTimeString();
         // \Carbon\Carbon::parse('2022-10-24 09:43:04')->timestamp;
-
-        if ($updated_at_string) {
+        
+        if ($updated_at) {
+            $updated_at_string = \Carbon\Carbon::parse($updated_at)->toDateTimeString();
             $huts = Hut::where('updated_at', '>', $updated_at_string)->get();
         } else {
             $huts = Hut::all();
@@ -31,13 +64,14 @@ class HutsController extends Controller
 
         if (count($huts) > 0) {
             foreach ($huts as $hut) {
-                array_push($list, url('/').'/api/v1/huts/geojson/'.$hut->id);
+                array_push($list, url('/').'/api/v1/hut/geojson/'.$hut->id);
             }
         } else {
             array_push($list, 'No huts where updated after '.$updated_at_string);
         }
         return $list;
     }
+
     
     /**
      * Return Huts GEOJSON.

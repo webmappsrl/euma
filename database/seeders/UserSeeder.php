@@ -50,5 +50,17 @@ class UserSeeder extends Seeder
             'password' => bcrypt('webmapp123'),
             'is_admin' => true,
         ])->markEmailAsVerified();
+        User::factory()->create([
+            'name' => 'Petr Jandík',
+            'email' => 'jandik@cds.cz',
+            'password' => bcrypt('webmapp123'),
+            'is_admin' => true,
+        ])->markEmailAsVerified();
+        User::factory()->create([
+            'name' => 'Czech Member',
+            'email' => 'czech@webmapp.it',
+            'password' => bcrypt('webmapp123'),
+            'member_id' => 7
+        ])->markEmailAsVerified();
     }
 }
