@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Image;
 
 class Member extends Resource
 {
@@ -58,6 +59,13 @@ class Member extends Resource
                 'COLLABORATING' => 'COLLABORATING',
                 'EXTERNAL MEMBER' => 'EXTERNAL MEMBER',
             ])->displayUsingLabels()->rules('required'),
+            Image::make(__('Icon'), 'icon')
+                ->disk('public')
+                ->path('/member/' . $this->model()->id . '/resources')
+                ->storeAs(function () {
+                    return 'icon.png';
+                })
+                ->hideFromIndex(),
         ];
     }
 
