@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\ClimbingRockAreasController;
 use App\Http\Controllers\V1\HutsController;
+use App\Http\Controllers\V1\MemberController;
 use App\Http\Controllers\V1\StatisticController;
 use App\Http\Controllers\V1\TrailsController;
 use Illuminate\Http\Request;
@@ -46,6 +47,9 @@ Route::name('api.')->group(function () {
         });
         Route::prefix('statistic')->name('statistic.')->group(function () {
             Route::get('eumadb', [StatisticController::class, 'eumadbstatistics'])->name('eumadbstatistics');
+        });
+        Route::prefix('member')->name('member.')->group(function () {
+            Route::get('collection/{type?}', [MemberController::class, 'membercollection'])->name('membercollection');
         });
     });
 });
