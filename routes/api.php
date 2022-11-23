@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\ClimbingRockAreasController;
 use App\Http\Controllers\V1\HutsController;
+use App\Http\Controllers\V1\StatisticController;
 use App\Http\Controllers\V1\TrailsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,9 @@ Route::name('api.')->group(function () {
             Route::get('csv', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
             Route::get('geojson/{id}', [TrailsController::class, 'trailgeojsonefeature'])->name('trailgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [TrailsController::class, 'trailslistlastupdate'])->name('trailslistlastupdate');
+        });
+        Route::prefix('statistic')->name('statistic.')->group(function () {
+            Route::get('eumadb', [StatisticController::class, 'eumadbstatistics'])->name('eumadbstatistics');
         });
     });
 });
