@@ -39,7 +39,7 @@ class ClimbingRockArea extends Resource
      * @var array
      */
     public static $search = [
-        'id','name'
+        'id','name','member.acronym','second_official_name'
     ];
 
     /**
