@@ -38,7 +38,7 @@ class Hut extends Resource
      * @var array
      */
     public static $search = [
-        'id','name'
+        'id','official_name','member.acronym'
     ];
 
     /**
