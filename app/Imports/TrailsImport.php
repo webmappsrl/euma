@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Member;
 use App\Models\Trail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Symm\Gisconverter\Gisconverter;
@@ -14,6 +15,8 @@ class TrailsImport implements ToCollection, WithHeadingRow
 
     public function collection($rows)
     {
+        $count = 1;
+        $count_all = count($rows);
         foreach ($rows as $row) 
         {
             if ($row['source_geojson_url']) {
@@ -28,7 +31,7 @@ class TrailsImport implements ToCollection, WithHeadingRow
             
             $member = Member::where('acronym',$row['member_acronym'])->get()[0];
 
-            Trail::updateOrCreate(
+            $trail = Trail::updateOrCreate(
                 [
                     'import_id' => $row['id'],
                     'member_id' => $member->id
@@ -42,6 +45,9 @@ class TrailsImport implements ToCollection, WithHeadingRow
                     'geometry' => DB::select("SELECT ST_AsText(ST_GeomFromGeoJSON('$geometry')) As wkt")[0]->wkt,
                 ]
             );
+
+            Log::info('Imported row #'. $count . ' out of ' . $count_all);
+            $count++;
         }
     } 
 }
