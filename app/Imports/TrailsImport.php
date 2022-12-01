@@ -20,11 +20,13 @@ class TrailsImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) 
         {
             if ($row['source_geojson_url']) {
-                $geojson_content = file_get_contents($row['source_geojson_url']);
+                // $geojson_content = file_get_contents($row['source_geojson_url']);
+                $geojson_content = $this->getCurl($row['source_geojson_url']);
                 $geojson = json_decode($geojson_content);
                 $geometry = json_encode($geojson->geometry);
             } else {
-                $gpx_content = file_get_contents($row['source_gpx_url']);
+                // $gpx_content = file_get_contents($row['source_gpx_url']);
+                $gpx_content = $this->getCurl($row['source_gpx_url']);
                 $gpx = Gisconverter::gpxToGeojson($gpx_content);
                 $geometry = $gpx;
             }
@@ -50,4 +52,32 @@ class TrailsImport implements ToCollection, WithHeadingRow
             $count++;
         }
     } 
+
+    public function getCurl($url) {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET'
+        ));
+
+        $response = curl_exec($curl);
+
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpcode == 200) {
+            return $response;
+        }
+
+        return false;
+    }
 }
