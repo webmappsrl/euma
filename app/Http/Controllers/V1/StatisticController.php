@@ -25,12 +25,15 @@ class StatisticController extends Controller
      */
     public function eumadbstatistics() {
         $list = [];
+        $trails = DB::select("select count(*) from trails;");
+        $huts = DB::select("select count(*) from huts;");
+        $climbing_rock_areas = DB::select("select count(*) from climbing_rock_areas;");
 
         $list['individual_members'] = Member::sum('members');
         $list['members'] = Member::all()->count();
-        $list['trails'] = Trail::all()->count();
-        $list['huts'] = Hut::all()->count();
-        $list['climbingrockareas'] = ClimbingRockArea::all()->count();
+        $list['trails'] = $trails[0]->count;
+        $list['huts'] = $huts[0]->count;
+        $list['climbingrockareas'] = $climbing_rock_areas[0]->count;
 
         return $list;
     }
