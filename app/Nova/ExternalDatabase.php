@@ -46,9 +46,7 @@ class ExternalDatabase extends Resource
     {
         return [
             ID::make()->sortable(),
-            NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->sortable(),
-            ]),
+            Text::make(__('Name'), 'name')->sortable(),
             Text::make(__('URL'), 'url')->rules('required','url')->hideFromIndex(),
             Text::make(__('Mobile APP name'), 'mobile_app_name'),
             MultiSelect::make(__('Mobile APP OS'), 'mobile_app_os')->hideFromIndex()->options([
@@ -56,6 +54,11 @@ class ExternalDatabase extends Resource
                 'android' => 'Android',
                 'other' => 'Other'
             ]),
+            Select::make(__('Access'), 'access')->hideFromIndex()->options([
+                'free' => 'Free',
+                'commercial' => 'Commercial',
+                'partly_commercial' => 'Partly Commercial',
+            ])->displayUsingLabels(),
             Select::make(__('Offline'), 'offline')->hideFromIndex()->options([
                 'yes' => 'Yes',
                 'no' => 'No',
