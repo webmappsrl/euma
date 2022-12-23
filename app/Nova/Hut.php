@@ -79,16 +79,18 @@ class Hut extends Resource
                 'minZoom' => 5,
                 'maxZoom' => 16,
                 'defaultZoom' => 5
-            ])->rules('required'),
+            ]),
             Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',',$this->url);
                 $html = '';
                 foreach ($urls as $url) {
-                    if (strpos($url,'http') === false){
-                        $url = 'https://'.$url;
+                    if (!empty($url)) {
+                        if (strpos($url,'http') === false){
+                            $url = 'https://'.$url;
+                        }
+                        $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                     }
-                    $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                 }
                 return $html;
             })->onlyOnDetail()->asHtml(),
