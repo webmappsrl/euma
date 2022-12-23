@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Kongulov\NovaTabTranslatable\TranslatableTabToRowTrait;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Code;
@@ -11,10 +12,13 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Query\Search\SearchableText;
 use Wm\MapMultiLinestring\MapMultiLinestring;
 
 class Trail extends Resource
 {
+    use TranslatableTabToRowTrait;
+    
     /**
      * The model the resource corresponds to.
      *
