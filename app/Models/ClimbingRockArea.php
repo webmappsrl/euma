@@ -65,7 +65,8 @@ class ClimbingRockArea extends Model
     }
     
     public function externalDatabases(){
-        return $this->belongsToMany(ExternalDatabase::class);
+        return $this->belongsToMany(ExternalDatabase::class)
+            ->withPivot(['specific_url']);
     }
 
     /**

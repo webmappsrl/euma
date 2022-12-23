@@ -39,7 +39,7 @@ class ClimbingRockArea extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','member.acronym','second_official_name'
+        'id','name','member.acronym','alternative_name'
     ];
 
     /**
@@ -127,7 +127,11 @@ class ClimbingRockArea extends Resource
             Number::make(__('Elevation'),'elevation'),
 
             BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
-            BelongsToMany::make(__('External Databases'),'ExternalDatabases')->hideFromIndex(),
+            BelongsToMany::make(__('External Databases'),'ExternalDatabases')->fields(function ($request, $relatedModel) {
+                return [
+                    Text::make(__('Specific URL'),'specific_url'),
+                ];
+            })->hideFromIndex(),
             BelongsToMany::make(__('Climbing Styles'),'ClimbingStyles')->hideFromIndex(),
             BelongsToMany::make(__('Climbing Rock Types'),'ClimbingRockTypes')->hideFromIndex(),
 
