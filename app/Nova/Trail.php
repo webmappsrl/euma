@@ -4,7 +4,6 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
-use Kongulov\NovaTabTranslatable\TranslatableTabToRowTrait;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Code;
@@ -17,8 +16,6 @@ use Wm\MapMultiLinestring\MapMultiLinestring;
 
 class Trail extends Resource
 {
-    use TranslatableTabToRowTrait;
-    
     /**
      * The model the resource corresponds to.
      *
@@ -73,7 +70,10 @@ class Trail extends Resource
             NovaTabTranslatable::make([
                 Text::make(__('Name'), 'name')->sortable(),
             ]),
-            Text::make(__('REF'), 'ref'),
+            Text::make(__('REF'), 'ref',function () {
+                $boo = $this->ref;
+                return utf8_encode($this->ref);
+            }),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',',$this->url);
                 $html = '';
