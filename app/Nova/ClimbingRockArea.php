@@ -39,7 +39,7 @@ class ClimbingRockArea extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','member.acronym','alternative_name'
+        'id','name','member.acronym','alternative_name','original_name','english_name'
     ];
 
     /**
@@ -70,11 +70,11 @@ class ClimbingRockArea extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
+            Text::make(__('Original Name'), 'original_name')->rules('required_if:english_name,null')->sortable(),
             NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->sortable(),
-                Textarea::make(__('Description'), 'description')->hideFromIndex(),
-                Text::make(__('Alternative name'), 'alternative_name'),
-            ]),
+                Textarea::make(__('Description'), 'description'),
+            ])->hideFromIndex(),
 
             MapPoint::make('geometry')->withMeta([
                 'center' => ["42", "10"],

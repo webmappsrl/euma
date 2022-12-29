@@ -36,7 +36,7 @@ class Trail extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','ref','member.acronym'
+        'id','name','ref','member.acronym','original_name','english_name'
     ];
 
     /**
@@ -67,13 +67,9 @@ class Trail extends Resource
     {
         return [
             ID::make()->sortable(),
-            NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->sortable(),
-            ]),
-            Text::make(__('REF'), 'ref',function () {
-                $boo = $this->ref;
-                return utf8_encode($this->ref);
-            }),
+            Text::make(__('Original Name'), 'original_name')->rules('required')->sortable(),
+            Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
+            Text::make(__('REF'), 'ref'),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',',$this->url);
                 $html = '';
