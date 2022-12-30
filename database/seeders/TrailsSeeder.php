@@ -25,5 +25,9 @@ class TrailsSeeder extends Seeder
         $import_cmd = 'php artisan eumadb:import-trails "/trails/EUMA_TRAILS_CAI.xlsx"';
         echo "import trails 11 Italia -> $import_cmd \n";
         exec($import_cmd);
+        
+        $import_cmd = 'php artisan eumadb:import-trails-osmid "/trails/EUMA_TRAILS_ERA.csv"';
+        echo "import trails 36 Italia -> $import_cmd \n";
+        exec($import_cmd);
     }
 }
