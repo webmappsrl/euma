@@ -31,7 +31,7 @@ class ClimbingRockArea extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'original_name';
 
     /**
      * The columns that should be searched.
@@ -39,7 +39,7 @@ class ClimbingRockArea extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','member.acronym','alternative_name','original_name','english_name'
+        'id','member.acronym','original_name','english_name'
     ];
 
     /**
@@ -70,8 +70,8 @@ class ClimbingRockArea extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
             Text::make(__('Original Name'), 'original_name')->rules('required_if:english_name,null')->sortable(),
+            Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
             NovaTabTranslatable::make([
                 Textarea::make(__('Description'), 'description'),
             ])->hideFromIndex(),
@@ -88,7 +88,7 @@ class ClimbingRockArea extends Resource
                 $urls = explode(',',$this->url);
                 $html = '';
                 foreach ($urls as $url) {
-                    if (strpos($url,'http') === false){
+                    if ($url && strpos($url,'http') === false){
                         $url = 'https://'.$url;
                     }
                     $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';

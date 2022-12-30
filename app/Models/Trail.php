@@ -5,20 +5,13 @@ namespace App\Models;
 use App\Traits\GeometryFeatureTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
 
 class Trail extends Model
 {
     use HasFactory;
-    use HasTranslations;
     use GeometryFeatureTrait;
 
-    public $translatable = [
-        'name'
-    ];
-
     protected $fillable = [
-        'name',
         'ref',
         'url',
         'source_geojson_url',
@@ -26,7 +19,9 @@ class Trail extends Model
         'geometry',
         'geobox_location',
         'member_id',
-        'import_id'
+        'import_id',
+        'original_name',
+        'english_name'
     ];
 
     public function externalDatabases(){
@@ -66,9 +61,13 @@ class Trail extends Model
     public function getJson(): array
     {
         $array = [];
-        
-        if ($this->name)
-            $array['name'] = $this->name;
+        $array['name'] = '';
+        if ($array['name'] && $this->original_name) {
+            $array['name'] = $this->original_name;
+        }
+        if ($array['name'] && $this->english_name) {
+            $array['name'] = $this->english_name;
+        }
         
         if ($this->ref)
             $array['ref'] = $this->ref;

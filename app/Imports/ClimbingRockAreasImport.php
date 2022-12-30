@@ -27,8 +27,8 @@ class ClimbingRockAreasImport implements ToCollection, WithHeadingRow
                     'member_id' => $member->id
                 ],
                 [
-                    'name'     => $row['name'],
-                    'alternative_name' => ($row['alternative_name'])?$row['alternative_name']:'',
+                    'original_name' => ($row['original_name'])?$row['original_name']:'',
+                    'english_name' => ($row['english_name'])?$row['english_name']:'',
                     'description' => ($row['description'])?$row['description']:'',
                     'url' => $row['url'],
                     'local_rules_url' => ($row['local_rules_url'])?$row['local_rules_url']:'',
@@ -41,6 +41,11 @@ class ClimbingRockAreasImport implements ToCollection, WithHeadingRow
                     'local_restrictions_description' => ($row['local_restrictions_description'])?$row['local_restrictions_description']:'',
                 ]
             );
+            
+            if (isset($row['name']) && !empty($row['name'])){
+                $ClimbingRockArea->original_name = $row['name'];
+                $ClimbingRockArea->save();
+            }
 
             if ($row['parking_lat'] && $row['parking_lng']) {
                 $parking_lat = $row['parking_lat'];
