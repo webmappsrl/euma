@@ -15,19 +15,15 @@ class ClimbingRockArea extends Model
     use GeometryFeatureTrait;
 
     public $translatable = [
-        'name',
         'description',
-        'alternative_name',
         'local_rules_description',
         'local_rules_document',
         'local_restrictions_description'
     ];
 
     protected $fillable = [
-        'name',
         'description',
         'geometry',
-        'alternative_name',
         'local_rules_url',
         'local_rules_description',
         'local_rules_document',
@@ -42,7 +38,9 @@ class ClimbingRockArea extends Model
         'geobox_elevation',
         'url',
         'import_id',
-        'member_id'
+        'member_id',
+        'original_name',
+        'english_name'
     ];
 
     protected $casts = [
@@ -93,11 +91,13 @@ class ClimbingRockArea extends Model
     {
         $array = [];
         
-        if ($this->name)
-            $array['name'] = $this->name;
-        
-        if ($this->alternative_name)
-            $array['alternative_name'] = $this->alternative_name;
+        $array['name'] = '';
+        if ($array['name'] && $this->original_name) {
+            $array['name'] = $this->original_name;
+        }
+        if ($array['name'] && $this->english_name) {
+            $array['name'] = $this->english_name;
+        }
 
         if ($this->description)
             $array['description'] = $this->description;
