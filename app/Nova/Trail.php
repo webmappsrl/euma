@@ -4,7 +4,6 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
-use Kongulov\NovaTabTranslatable\TranslatableTabToRowTrait;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Code;
@@ -17,8 +16,6 @@ use Wm\MapMultiLinestring\MapMultiLinestring;
 
 class Trail extends Resource
 {
-    use TranslatableTabToRowTrait;
-    
     /**
      * The model the resource corresponds to.
      *
@@ -31,7 +28,7 @@ class Trail extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'original_name';
 
     /**
      * The columns that should be searched.
@@ -39,7 +36,7 @@ class Trail extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','ref','member.acronym'
+        'id','ref','member.acronym','original_name','english_name'
     ];
 
     /**
@@ -70,21 +67,20 @@ class Trail extends Resource
     {
         return [
             ID::make()->sortable(),
-            NovaTabTranslatable::make([
-                Text::make(__('Name'), 'name')->sortable(),
-            ]),
+            Text::make(__('Original Name'), 'original_name')->rules('required_if:english_name,null')->sortable(),
+            Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
             Text::make(__('REF'), 'ref'),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',',$this->url);
                 $html = '';
                 foreach ($urls as $url) {
-                    if (strpos($url,'http') === false){
+                    if ($url && strpos($url,'http') === false){
                         $url = 'https://'.$url;
                     }
                     $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                 }
                 return $html;
-            })->onlyOnDetail()->asHtml(),
+            })->onlyOnDetail()->rules('required')->asHtml(),
             Text::make(__('URL'), 'url')->onlyOnForms(),  
             URL::make(__('Source geojson url'), 'source_geojson_url')->displayUsing(fn () => "$this->source_geojson_url")->hideFromIndex(),
             URL::make(__('Source gpx url'), 'source_gpx_url')->displayUsing(fn () => "$this->source_gpx_url")->hideFromIndex(),

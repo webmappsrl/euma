@@ -117,6 +117,14 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'failed_import' => [
+            'driver' => 'single',
+            'days' => '1',
+            'level'  => 'debug',
+            'path'   => storage_path('logs/failed_import.log'),
+            'bubble' => false
+        ],
     ],
 
 ];
