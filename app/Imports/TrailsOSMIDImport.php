@@ -18,6 +18,7 @@ class TrailsOSMIDImport implements ToCollection, WithHeadingRow
 
     public function collection($rows)
     {
+        $failed_ids = [];
         foreach ($rows as $row) 
         {
             try {
@@ -62,7 +63,13 @@ class TrailsOSMIDImport implements ToCollection, WithHeadingRow
                     ]
                 );
             } catch (Exception $e) {
-                Log::error("Trail with osmid: $osmid not importer. $e");
+                array_push($failed_ids,$row['member_acronym'].' - '.$row['id']);
+                Log::info('Error creating Trails with OSMID from '. $row['member_acronym'] .' with id: '.$row['id']."\n ERROR: ".$e->getMessage());
+            }
+            if ($failed_ids) {
+                foreach ($failed_ids as $id) {
+                    Log::channel('failed_import')->info($id);
+                }
             }
         }
     } 
