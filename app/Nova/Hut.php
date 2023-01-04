@@ -30,7 +30,7 @@ class Hut extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'official_name';
 
     /**
      * The columns that should be searched.
