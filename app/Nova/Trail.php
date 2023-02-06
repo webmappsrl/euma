@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\Members;
 use Illuminate\Http\Request;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 use Laravel\Nova\Fields\BelongsTo;
@@ -114,7 +115,9 @@ class Trail extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new Members
+        ];
     }
 
     /**
