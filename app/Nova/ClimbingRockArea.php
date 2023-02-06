@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\Members;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -157,7 +158,9 @@ class ClimbingRockArea extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new Members
+        ];
     }
 
     /**

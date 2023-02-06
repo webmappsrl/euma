@@ -22,7 +22,7 @@
         "spatie/db-dumper": "^3.3",
         "spatie/laravel-translatable": "^6.0",
         "wm/map-multi-linestring": "*",
-        "wm/map-point": "0.0.3"
+        "wm/map-point": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
