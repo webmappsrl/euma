@@ -55,9 +55,13 @@ class Member extends Resource
             Number::make(__('Since'),'since')->rules('required'),
             Select::make(__('Type'), 'type')->hideFromIndex()->options([
                 'FULL' => 'FULL',
+                'SPONSOR' => 'SPONSOR',
+                'PARTNER' => 'PARTNER',
                 'ASSOCIATED' => 'ASSOCIATED',
                 'COLLABORATING' => 'COLLABORATING',
-                'EXTERNAL MEMBER' => 'EXTERNAL MEMBER',
+                'LOOSE-EXCHANGE' => 'LOOSE EXCHANGE',
+                'EUMA-IS-MEMBER' => 'EUMA IS MEMBER',
+                'EXTERNAL-MEMBER' => 'EXTERNAL MEMBER'
             ])->displayUsingLabels()->rules('required'),
             Image::make(__('Icon'), 'icon')
                 ->disk('public')
