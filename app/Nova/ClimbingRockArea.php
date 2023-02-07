@@ -158,9 +158,12 @@ class ClimbingRockArea extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [
-            new Members
-        ];
+        if ($request->user()->is_admin == true) {
+            return [
+                new Members
+            ];
+        } 
+        return [];
     }
 
     /**
