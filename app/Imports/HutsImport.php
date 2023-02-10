@@ -22,7 +22,7 @@ class HutsImport implements ToCollection, WithHeadingRow
                 $lat = $row['lat'];
                 $lng = $row['lng'];
                 $member = Member::where('acronym',$row['member_acronym'])->get()[0];
-    
+                
                 Hut::updateOrCreate(
                     [
                         'import_id' => $row['id'],
