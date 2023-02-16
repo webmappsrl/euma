@@ -45,7 +45,7 @@ class Members extends Filter
         SELECT id,name_en 
         FROM members;");
 
-        $members_list = Member::hydrate($members)->pluck('id','name_en')->toArray();
+        $members_list = Member::hydrate($members)->sortBy('name_en')->pluck('id','name_en')->toArray();
 
         return $members_list;
     }
