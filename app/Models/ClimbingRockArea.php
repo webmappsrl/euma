@@ -157,6 +157,15 @@ class ClimbingRockArea extends Model
                 $array['external_databases'][$key] = $database; 
             }
         }
+        
+        if (!empty($this->parking_position)) {
+            $geom = $this->parking_position;
+            $geojson = DB::select("SELECT ST_AsGeojson('$geom')")[0]->st_asgeojson;
+            if ($geojson) {
+                $json = json_decode($geojson);
+                $array['parking_position'] = $json->coordinates;
+            }
+        }
 
         return $array;
     }
