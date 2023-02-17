@@ -100,7 +100,7 @@ class ClimbingRockArea extends Model
         }
 
         if ($this->description)
-            $array['description'] = $this->description;
+            $array['description'] = $this->getTranslations('description');
 
         if ($this->elevation)
             $array['elevation'] = $this->elevation;
@@ -112,7 +112,7 @@ class ClimbingRockArea extends Model
             $array['local_rules_url'] = $this->local_rules_url;
 
         if ($this->local_rules_description)
-            $array['local_rules_description'] = $this->local_rules_description;
+            $array['local_rules_description'] = $this->getTranslations('local_rules_description');
 
         if ($this->local_rules_document)
             $array['local_rules_document'] = $this->local_rules_document;
@@ -121,7 +121,7 @@ class ClimbingRockArea extends Model
             $array['local_restrictions'] = $this->local_restrictions;
 
         if ($this->local_restrictions_description)
-            $array['local_restrictions_description'] = $this->local_restrictions_description;
+            $array['local_restrictions_description'] = $this->getTranslations('local_restrictions_description');
 
         if ($this->location_quality)
             $array['location_quality'] = $this->location_quality;
