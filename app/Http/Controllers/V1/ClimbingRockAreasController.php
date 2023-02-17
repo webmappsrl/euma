@@ -49,7 +49,7 @@ class ClimbingRockAreasController extends Controller
      *
      * @return array
      */
-    public function hutslistlastupdate( int $updated_at = null ) {
+    public function climbingrockareasslistlastupdate( int $updated_at = null ) {
         $list = [];
 
         // \Carbon\Carbon::parse('2022-10-24 09:43:04')->timestamp;

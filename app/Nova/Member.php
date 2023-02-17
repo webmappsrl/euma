@@ -58,6 +58,7 @@ class Member extends Resource
                 'SPONSOR' => 'SPONSOR',
                 'PARTNER' => 'PARTNER',
                 'ASSOCIATED' => 'ASSOCIATED',
+                'AGREEMENT' => 'AGREEMENT',
                 'COLLABORATING' => 'COLLABORATING',
                 'LOOSE-EXCHANGE' => 'LOOSE EXCHANGE',
                 'EUMA-IS-MEMBER' => 'EUMA IS MEMBER',
