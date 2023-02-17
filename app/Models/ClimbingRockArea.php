@@ -135,6 +135,29 @@ class ClimbingRockArea extends Model
             $array['member_acronym'] = $member->acronym;
         }
 
+        if (!empty($this->climbingStyles)) {
+            foreach ($this->climbingStyles as $key => $style) {
+                $array['styles'][$key]['name'] = $style->name; 
+                $array['styles'][$key]['description'] = $style->description; 
+            }
+        }
+        
+        if (!empty($this->climbingRockTypes)) {
+            foreach ($this->climbingRockTypes as $key => $type) {
+                $array['types'][$key]['name'] = $type->name; 
+                $array['types'][$key]['description'] = $type->description; 
+            }
+        }
+        
+        if (!empty($this->externalDatabases)) {
+            foreach ($this->externalDatabases as $key => $database) {
+                if (array_key_exists('pivot', $database->toArray())) {
+                    unset($database['pivot']);
+                }
+                $array['external_databases'][$key] = $database; 
+            }
+        }
+
         return $array;
     }
 }
