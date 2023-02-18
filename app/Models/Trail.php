@@ -62,10 +62,10 @@ class Trail extends Model
     {
         $array = [];
         $array['name'] = '';
-        if ($array['name'] && $this->original_name) {
+        if (empty($array['name']) && $this->original_name) {
             $array['name'] = $this->original_name;
         }
-        if ($array['name'] && $this->english_name) {
+        if (empty($array['name']) && $this->english_name) {
             $array['name'] = $this->english_name;
         }
         
