@@ -154,6 +154,7 @@ class ClimbingRockArea extends Model
                 if (array_key_exists('pivot', $database->toArray())) {
                     unset($database['pivot']);
                 }
+                $database = array_filter($database->toArray(), fn($value) => !is_null($value) && $value !== '' && $value !== false);
                 $array['external_databases'][$key] = $database; 
             }
         }
