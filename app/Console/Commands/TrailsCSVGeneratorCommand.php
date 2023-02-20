@@ -31,7 +31,7 @@ class TrailsCSVGeneratorCommand extends Command
     {
         $path = storage_path().'/exporter/csv/trails/trails.csv';
 
-        $results = DB::select("COPY (select t.id, name::json->'en' as name, ref, import_id, CONCAT('https://prod.eumadb.webmapp.it/resources/trails/',t.id) as eumadb_url, url, source_gpx_url, source_geojson_url, m.acronym as member_acronym from trails as t LEFT JOIN members as m on t.member_id=m.id) TO '$path'  WITH DELIMITER ',' CSV HEADER;");
+        $results = DB::select("COPY (select t.id, original_name, english_name, ref, import_id, CONCAT('https://prod.eumadb.webmapp.it/resources/trails/',t.id) as eumadb_url, url, source_gpx_url, source_geojson_url, m.acronym as member_acronym from trails as t LEFT JOIN members as m on t.member_id=m.id) TO '$path'  WITH DELIMITER ',' CSV HEADER;");
 
         return Command::SUCCESS;
     }
