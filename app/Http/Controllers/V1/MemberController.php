@@ -23,9 +23,9 @@ class MemberController extends Controller
         $list = [];
 
         if ($type) {
-            $members = Member::where('type', '=', strtoupper($type))->get();
+            $members = Member::where('type', '=', strtoupper($type))->orderBy('name_en')->get();
         } else {
-            $members = Member::all();
+            $members = Member::orderBy('name_en')->get();
         }
 
         if (count($members) > 0) {
