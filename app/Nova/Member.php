@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Enums\MemberTypeEnum;
+use App\Nova\Filters\MemberType;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -53,17 +55,7 @@ class Member extends Resource
             URL::make(__('Web'),'web')->displayUsing(fn () => "$this->web")->hideFromIndex(),  
             Number::make(__('Members'),'members'),
             Number::make(__('Since'),'since')->rules('required'),
-            Select::make(__('Type'), 'type')->hideFromIndex()->options([
-                'FULL' => 'FULL',
-                'SPONSOR' => 'SPONSOR',
-                'PARTNER' => 'PARTNER',
-                'ASSOCIATED' => 'ASSOCIATED',
-                'AGREEMENT' => 'AGREEMENT',
-                'COLLABORATING' => 'COLLABORATING',
-                'LOOSE-EXCHANGE' => 'LOOSE EXCHANGE',
-                'EUMA-IS-MEMBER' => 'EUMA IS MEMBER',
-                'EXTERNAL-MEMBER' => 'EXTERNAL MEMBER'
-            ])->displayUsingLabels()->rules('required'),
+            Select::make(__('Type'), 'type')->hideFromIndex()->options(MemberTypeEnum::getValueNames())->displayUsingLabels()->rules('required'),
             Image::make(__('Icon'), 'icon')
                 ->disk('public')
                 ->path('/member/' . $this->model()->id . '/resources')
@@ -93,6 +85,11 @@ class Member extends Resource
      */
     public function filters(NovaRequest $request)
     {
+        if ($request->user()->is_admin == true) {
+            return [
+                new MemberType
+            ];
+        } 
         return [];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\MemberTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,15 @@ class Member extends Model
         'members',
         'since',
         'type'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'type' => MemberTypeEnum::class,
     ];
 
     /**
