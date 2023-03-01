@@ -40,4 +40,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         key: ${{ secrets.SSHKEY }}
-        script: "cd /var/www/html/prod.eumadb.webmapp.it && ./scripts/deploy_prod.sh"
+        script: "cd /var/www/html/database.european-mountaineers.eu && ./scripts/deploy_prod.sh"
