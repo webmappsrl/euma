@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Query\Search\SearchableRelation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+use Laravel\Scout\Searchable;
 
 class Member extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'name_en',

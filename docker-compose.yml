@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  meilisearch:
+    container_name: meilisearch
+    image: getmeili/meilisearch:v1.1
+    environment:
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-masterKey}
+      - MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS:-true}
+    ports:
+      - ${MEILI_PORT:-7700}:7700
+    networks:
+      - meilisearch
+    volumes:
+      - ./data.ms:/data.ms
+    restart: unless-stopped
+
+networks:
+  meilisearch:
+    driver: bridge
