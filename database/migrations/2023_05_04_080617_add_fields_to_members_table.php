@@ -23,14 +23,12 @@ return new class extends Migration
             $table->text('responsible_for_trails_comments')->nullable();
             $table->decimal('trail_length_km', 10, 2)->nullable();
             $table->decimal('trail_network_area', 10, 2)->nullable();
-            $table->integer('trail_network_location_country')->nullable();
-            $table->integer('trail_network_location_state')->nullable();
-            $table->integer('trail_network_location_region')->nullable();
-            $table->integer('trails_area_mountains_percentage')->nullable();
-            $table->integer('trails_area_low_mountain_percentage')->nullable();
-            $table->integer('trails_area_lowland_percentage')->nullable();
+            $table->string('trail_network_location')->nullable(); //to cast as enum('Country', 'State', 'Region')
+            $table->decimal('trails_area_mountains_percentage', 10, 2)->nullable();
+            $table->decimal('trails_area_low_mountain_percentage', 10, 2)->nullable();
+            $table->decimal('trails_area_lowland_percentage', 10, 2)->nullable();
             $table->boolean('trails_on_sealed_roads')->nullable();
-            $table->integer('trails_on_sealed_roads_percentage')->nullable();
+            $table->decimal('trails_on_sealed_roads_percentage', 10, 2)->nullable();
             $table->boolean('via_ferratas_in_network')->nullable();
             $table->integer('via_ferratas_count')->nullable();
             $table->text('via_ferratas_managing_description')->nullable();
@@ -39,7 +37,7 @@ return new class extends Migration
             $table->boolean('trails_aligned_with_legislation')->nullable();
             $table->text('trails_aligned_with_legislation_comments')->nullable();
             $table->boolean('trails_for_hikers_only')->nullable();
-            $table->string('other_trail_users')->nullable(); //to be casted as enum ( trail runners, bikers, e-bikers, motorcyclists, horse riders, quad drivers, others) 
+            $table->string('other_trails_users')->nullable(); //to be casted as enum ( trail runners, bikers, e-bikers, motorcyclists, horse riders, quad drivers, others) 
             $table->boolean('trails_constructed_and_maintained_by_np_lc_so')->nullable(); //np = national parks, lc = local communities, so = state organisations
             $table->decimal('trails_constructed_by_national_parks_percentage', 10, 2)->nullable();
             $table->decimal('trails_constructed_by_local_communities_percentage', 10, 2)->nullable();
@@ -47,12 +45,12 @@ return new class extends Migration
             $table->decimal('trails_maintained_themself_by_national_parks_percentage', 10, 2)->nullable();
             $table->decimal('trails_maintained_themself_by_local_communities_percentage', 10, 2)->nullable();
             $table->decimal('trails_maintained_themself_by_state_organisation_percentage', 10, 2)->nullable();
-            $table->decimal('trails_maintained_MO_by_national_parks_percentage', 10, 2)->nullable();
-            $table->decimal('trails_maintained_MO_by_local_communities_percentage', 10, 2)->nullable();
-            $table->decimal('trails_maintained_MO_by_state_organisation_percentage', 10, 2)->nullable();
+            $table->decimal('trails_maintained_mo_by_national_parks_percentage', 10, 2)->nullable();
+            $table->decimal('trails_maintained_mo_by_local_communities_percentage', 10, 2)->nullable();
+            $table->decimal('trails_maintained_mo_by_state_organisation_percentage', 10, 2)->nullable();
             $table->text('trails_constructed_and_maintained_comments')->nullable();
             $table->boolean('approach_trails_to_climbing')->nullable();
-            $table->string('percentage_of_approach_trails_to_climbing')->nullable();
+            $table->decimal('percentage_of_approach_trails_to_climbing')->nullable();
             $table->boolean('grading_system_difficulty')->nullable();
             $table->text('difficulty_grading_system_description')->nullable();
             $table->boolean('trails_grading_system')->nullable();
@@ -81,7 +79,7 @@ return new class extends Migration
             $table->decimal('average_annual_sign_maintenance_cost_for_lowlands')->nullable(); // €/km
             $table->string('trails_maintenance_done_by')->nullable(); //to be casted as enum (volunteers, professionals, both)
             $table->text('trails_maintenance_system_description')->nullable();
-            $table->integer('trails_percentage_maintenance_costs_covered_by_public_funding')->nullable(); // %
+            $table->decimal('trails_percentage_maintenance_costs_covered_by_public_funding', 10, 2)->nullable(); // %
             $table->text('trails_maintenance_comments')->nullable();
             $table->boolean('trails_recognized_by_government')->nullable();
             $table->text('trails_recognized_by_government_comments')->nullable();
@@ -115,9 +113,7 @@ return new class extends Migration
             $table->dropColumn('responsible_for_trails_comments');
             $table->dropColumn('trail_length_km');
             $table->dropColumn('trail_network_area');
-            $table->dropColumn('trail_network_location_country');
-            $table->dropColumn('trail_network_location_state');
-            $table->dropColumn('trail_network_location_region');
+            $table->dropColumn('trail_network_location');
             $table->dropColumn('trails_area_mountains_percentage');
             $table->dropColumn('trails_area_low_mountain_percentage');
             $table->dropColumn('trails_area_lowland_percentage');
@@ -131,7 +127,7 @@ return new class extends Migration
             $table->dropColumn('trails_aligned_with_legislation');
             $table->dropColumn('trails_aligned_with_legislation_comments');
             $table->dropColumn('trails_for_hikers_only');
-            $table->dropColumn('other_trail_users');
+            $table->dropColumn('other_trails_users');
             $table->dropColumn('trails_constructed_and_maintained_by_np_lc_so');
             $table->dropColumn('trails_constructed_by_national_parks_percentage');
             $table->dropColumn('trails_constructed_by_local_communities_percentage');
@@ -139,9 +135,9 @@ return new class extends Migration
             $table->dropColumn('trails_maintained_themself_by_national_parks_percentage');
             $table->dropColumn('trails_maintained_themself_by_local_communities_percentage');
             $table->dropColumn('trails_maintained_themself_by_state_organisation_percentage');
-            $table->dropColumn('trails_maintained_MO_by_national_parks_percentage');
-            $table->dropColumn('trails_maintained_MO_by_local_communities_percentage');
-            $table->dropColumn('trails_maintained_MO_by_state_organisation_percentage');
+            $table->dropColumn('trails_maintained_mo_by_national_parks_percentage');
+            $table->dropColumn('trails_maintained_mo_by_local_communities_percentage');
+            $table->dropColumn('trails_maintained_mo_by_state_organisation_percentage');
             $table->dropColumn('trails_constructed_and_maintained_comments');
             $table->dropColumn('approach_trails_to_climbing');
             $table->dropColumn('percentage_of_approach_trails_to_climbing');
