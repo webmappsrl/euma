@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Query\Search\SearchableRelation;
+use Laravel\Scout\Searchable;
 
 class Member extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'name_en',

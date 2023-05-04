@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Traits\GeometryFeatureTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Trail extends Model
 {
     use HasFactory;
     use GeometryFeatureTrait;
+    use Searchable;
 
     protected $fillable = [
         'ref',
