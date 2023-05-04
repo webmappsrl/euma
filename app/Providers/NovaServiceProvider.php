@@ -31,6 +31,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
+        Nova::userTimezone(function (Request $request) {
+            return $request->user()?->timezone;
+        });
+
         Nova::mainMenu(function (Request $request) {
             return [
                 // MenuSection::dashboard(Main::class)->icon('chart-bar'),
@@ -50,7 +54,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ])->icon('user')->collapsable()->canSee(function (NovaRequest $request) {
                     return $request->user()->is_admin;
                 }),
-                
+
                 MenuSection::make('Export', [
                     MenuItem::externalLink('Huts GeoJSON', '/api/v1/hut/geojson'),
                     MenuItem::externalLink('Climbing Rock Areas GeoJSON', '/api/v1/climbingrockarea/geojson'),
@@ -70,9 +74,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
