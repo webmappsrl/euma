@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('contact_completion_date')->default(false);
             $table->boolean('responsible_for_trails')->default(false);
             $table->text('responsible_for_trails_comments')->nullable();
-            $table->decimal('trail_length_km', 10, 2)->ndefault(false);
+            $table->decimal('trail_length_km', 10, 2)->nullable();
             $table->decimal('trail_network_area', 10, 2)->nullable();
             $table->string('trail_network_location')->nullable(); //to cast as enum('Country', 'State', 'Region')
             $table->decimal('trails_area_mountains_percentage', 10, 2)->nullable();
