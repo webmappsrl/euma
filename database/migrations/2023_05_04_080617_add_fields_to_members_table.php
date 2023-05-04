@@ -38,6 +38,7 @@ return new class extends Migration
             $table->text('trails_aligned_with_legislation_comments')->nullable();
             $table->boolean('trails_for_hikers_only')->default(false);
             $table->string('other_trails_users')->nullable(); //to be casted as enum ( trail runners, bikers, e-bikers, motorcyclists, horse riders, quad drivers, others) 
+            $table->text('other_trails_users_comment')->nullable();
             $table->boolean('trails_constructed_and_maintained_by_np_lc_so')->default(false); //np = national parks, lc = local communities, so = state organisations
             $table->decimal('trails_constructed_by_national_parks_percentage', 10, 2)->nullable();
             $table->decimal('trails_constructed_by_local_communities_percentage', 10, 2)->nullable();
@@ -128,6 +129,7 @@ return new class extends Migration
             $table->dropColumn('trails_aligned_with_legislation_comments');
             $table->dropColumn('trails_for_hikers_only');
             $table->dropColumn('other_trails_users');
+            $table->dropColumn('other_trails_users_comment');
             $table->dropColumn('trails_constructed_and_maintained_by_np_lc_so');
             $table->dropColumn('trails_constructed_by_national_parks_percentage');
             $table->dropColumn('trails_constructed_by_local_communities_percentage');

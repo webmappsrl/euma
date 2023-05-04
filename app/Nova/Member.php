@@ -23,6 +23,7 @@ use Eminiarts\Tabs\Traits\HasTabs;
 use App\Enums\TrailNetworkLocation;
 use Laravel\Nova\Fields\MultiSelect;
 use App\Enums\MaintenanceOperatorTypes;
+use Carbon\Carbon;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Member extends Resource
@@ -60,7 +61,7 @@ class Member extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            new Tabs('Member', [
+            Tabs::make('Member', [
                 //create a tab for every status of epics
                 Tab::make('Member Info', [
                     ID::make()->sortable(),
@@ -91,8 +92,7 @@ class Member extends Resource
                         })
                         ->hideFromIndex(),
                     Text::make(__('Contact Name'), 'contact_name')
-                        ->sortable()
-                        ->rules('required', 'max:255')
+                        ->rules('max:255')
                         ->hideFromIndex(),
 
                     Text::make(__('Contact Role'), 'contact_role')
@@ -104,7 +104,7 @@ class Member extends Resource
                     Text::make(__('Contact Email'), 'contact_email')
                         ->hideFromIndex()
                         ->nullable()
-                        ->rules('email', 'max:255')
+                        ->rules('max:255')
                         ->hideFromIndex(),
 
                     Text::make(__('Contact Phone'), 'contact_phone')
@@ -113,9 +113,10 @@ class Member extends Resource
                         ->rules('max:255')
                         ->hideFromIndex(),
 
-                    DateTime::make(__('Contact Completion Date'), 'contact_completion_date')
+                    Date::make(__('Contact Completion Date'), 'contact_completion_date')
                         ->hideFromIndex()
-                        ->nullable(),
+                        ->nullable()
+                        ->withMeta(['value' => Carbon::now()]),
                     Boolean::make(__('Responsible for Trails'), 'responsible_for_trails')
                         ->hideFromIndex()
                         ->nullable(),
@@ -354,12 +355,15 @@ class Member extends Resource
                     TextArea::make('Free Access to Trails Comments')
                         ->nullable()
                         ->hideFromIndex(),
-                    Boolean::make('Trails for Hikers Only')
+                        Boolean::make('Trails for Hikers Only')
                         ->nullable()
                         ->hideFromIndex(),
                     MultiSelect::make('Trails Users', 'other_trails_users')
                         ->options(collect(TrailUserTypes::cases())->pluck('name', 'value'))
                         ->displayUsingLabels()
+                        ->nullable()
+                        ->hideFromIndex(),
+                    TextArea::make('Other trails users comment','other_trails_users_comment')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Approach Trails to Climbing', 'approach_trails_to_climbing')
@@ -471,8 +475,7 @@ class Member extends Resource
                             return $value . ' €/km';
                         }),
                 ]),
-
-            ]),
+            ])->withToolbar(),
         ];
     }
 
