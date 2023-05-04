@@ -6,6 +6,7 @@ use App\Traits\GeometryFeatureTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Laravel\Scout\Searchable;
 use Spatie\Translatable\HasTranslations;
 
 class Hut extends Model
@@ -13,9 +14,9 @@ class Hut extends Model
     use HasFactory;
     use HasTranslations;
     use GeometryFeatureTrait;
+    use Searchable;
 
     public $translatable = [
-        'name',
         'description'
     ];
 
@@ -45,6 +46,23 @@ class Hut extends Model
 
     public function externalDatabases(){
         return $this->belongsToMany(ExternalDatabase::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {   
+        $member = Member::find($this->member_id);
+        return [
+            'id' => (int) $this->id,
+            'name' => $this->official_name,
+            'url' => $this->url,
+            'member_name' => $member->name_en,
+            'member_acronym' => $member->acronym,
+        ];
     }
 
     /**
