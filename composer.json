@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "eminiarts/nova-tabs": "^2.2",
         "guzzlehttp/guzzle": "^7.2",
         "kongulov/nova-tab-translatable": "^2.0",
         "laravel/framework": "^9.19",
@@ -70,7 +71,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "dev",

@@ -2,20 +2,21 @@
 
 namespace App\Nova;
 
-use App\Nova\Filters\Members;
-use Illuminate\Http\Request;
+use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\URL;
+use App\Nova\Filters\Members;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Code;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\URL;
-use Wm\MapPoint\MapPoint;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 
 class Hut extends Resource
 {
@@ -39,7 +40,7 @@ class Hut extends Resource
      * @var array
      */
     public static $search = [
-        'id','official_name','member.acronym'
+        'id', 'official_name', 'member.acronym'
     ];
 
     /**
@@ -81,14 +82,14 @@ class Hut extends Resource
                 'maxZoom' => 16,
                 'defaultZoom' => 5
             ]),
-            Number::make(__('Elevation'),'elevation')->rules('required')->hideFromIndex(),
+            Number::make(__('Elevation'), 'elevation')->rules('required')->hideFromIndex(),
             Text::make(__('URL'), 'url', function () {
-                $urls = explode(',',$this->url);
+                $urls = explode(',', $this->url);
                 $html = '';
                 foreach ($urls as $url) {
                     if (!empty($url)) {
-                        if (strpos($url,'http') === false){
-                            $url = 'https://'.$url;
+                        if (strpos($url, 'http') === false) {
+                            $url = 'https://' . $url;
                         }
                         $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                     }
@@ -97,14 +98,42 @@ class Hut extends Resource
             })->onlyOnDetail()->asHtml(),
             Text::make(__('URL'), 'url')->onlyOnForms(),
             // TODO: Relation Featured Image
-            Boolean::make(__('Managed'),'managed'),
-            Text::make(__('Address'),'address')->hideFromIndex(),
-            Text::make(__('Operating name'),'operating_name')->hideFromIndex(),
-            Text::make(__('Operating email'),'operating_email')->hideFromIndex(),
-            Text::make(__('Operating phone'),'operating_phone')->hideFromIndex(),
-            Text::make(__('Owner'),'owner')->hideFromIndex(),
-            BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
-            BelongsToMany::make(__('External Databases'),'ExternalDatabases'),
+            Boolean::make(__('Managed'), 'managed'),
+            Text::make(__('Address'), 'address')
+                ->hideFromIndex(),
+            Text::make(__('Operating name'), 'operating_name')
+                ->hideFromIndex(),
+            Text::make(__('Operating email'), 'operating_email')
+                ->hideFromIndex(),
+            Text::make(__('Operating phone'), 'operating_phone')
+                ->hideFromIndex(),
+            Text::make(__('Owner'), 'owner')
+                ->hideFromIndex(),
+            BelongsTo::make(__('Member'), 'Member')
+                ->searchable()
+                ->rules('required'),
+            Boolean::make('Wastewater Treatment')
+                ->hideFromIndex()
+                ->nullable(),
+            Text::make('Waste Management System')
+                ->nullable()
+                ->hideFromIndex(),
+            Boolean::make('Water Supply')
+                ->nullable()
+                ->hideFromIndex(),
+            Boolean::make('Electric and Heating Energy Source')
+                ->nullable()
+                ->hideFromIndex(),
+            Text::make('Area Type')
+                ->nullable()
+                ->hideFromIndex(),
+            Boolean::make('Sanitary Facility')
+                ->nullable()
+                ->hideFromIndex(),
+            Boolean::make('Kitchen Facility')
+                ->nullable()
+                ->hideFromIndex(),
+            BelongsToMany::make(__('External Databases'), 'ExternalDatabases'),
         ];
     }
 
@@ -131,7 +160,7 @@ class Hut extends Resource
             return [
                 new Members
             ];
-        } 
+        }
         return [];
     }
 
