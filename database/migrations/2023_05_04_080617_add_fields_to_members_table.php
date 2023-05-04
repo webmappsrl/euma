@@ -18,27 +18,27 @@ return new class extends Migration
             $table->string('contact_role')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('contact_phone')->nullable();
-            $table->string('contact_completion_date')->nullable();
-            $table->boolean('responsible_for_trails')->nullable();
+            $table->string('contact_completion_date')->default(false);
+            $table->boolean('responsible_for_trails')->default(false);
             $table->text('responsible_for_trails_comments')->nullable();
-            $table->decimal('trail_length_km', 10, 2)->nullable();
+            $table->decimal('trail_length_km', 10, 2)->ndefault(false);
             $table->decimal('trail_network_area', 10, 2)->nullable();
             $table->string('trail_network_location')->nullable(); //to cast as enum('Country', 'State', 'Region')
             $table->decimal('trails_area_mountains_percentage', 10, 2)->nullable();
             $table->decimal('trails_area_low_mountain_percentage', 10, 2)->nullable();
             $table->decimal('trails_area_lowland_percentage', 10, 2)->nullable();
-            $table->boolean('trails_on_sealed_roads')->nullable();
+            $table->boolean('trails_on_sealed_roads')->default(false);
             $table->decimal('trails_on_sealed_roads_percentage', 10, 2)->nullable();
-            $table->boolean('via_ferratas_in_network')->nullable();
+            $table->boolean('via_ferratas_in_network')->default(false);
             $table->integer('via_ferratas_count')->nullable();
             $table->text('via_ferratas_managing_description')->nullable();
-            $table->boolean('free_access_to_trails')->nullable();
+            $table->boolean('free_access_to_trails')->default(false);
             $table->text('free_access_to_trails_comments')->nullable();
-            $table->boolean('trails_aligned_with_legislation')->nullable();
+            $table->boolean('trails_aligned_with_legislation')->default(false);
             $table->text('trails_aligned_with_legislation_comments')->nullable();
-            $table->boolean('trails_for_hikers_only')->nullable();
+            $table->boolean('trails_for_hikers_only')->default(false);
             $table->string('other_trails_users')->nullable(); //to be casted as enum ( trail runners, bikers, e-bikers, motorcyclists, horse riders, quad drivers, others) 
-            $table->boolean('trails_constructed_and_maintained_by_np_lc_so')->nullable(); //np = national parks, lc = local communities, so = state organisations
+            $table->boolean('trails_constructed_and_maintained_by_np_lc_so')->default(false); //np = national parks, lc = local communities, so = state organisations
             $table->decimal('trails_constructed_by_national_parks_percentage', 10, 2)->nullable();
             $table->decimal('trails_constructed_by_local_communities_percentage', 10, 2)->nullable();
             $table->decimal('trails_constructed_by_state_organisation_percentage', 10, 2)->nullable();
@@ -49,29 +49,29 @@ return new class extends Migration
             $table->decimal('trails_maintained_mo_by_local_communities_percentage', 10, 2)->nullable();
             $table->decimal('trails_maintained_mo_by_state_organisation_percentage', 10, 2)->nullable();
             $table->text('trails_constructed_and_maintained_comments')->nullable();
-            $table->boolean('approach_trails_to_climbing')->nullable();
+            $table->boolean('approach_trails_to_climbing')->default(false);
             $table->decimal('percentage_of_approach_trails_to_climbing')->nullable();
-            $table->boolean('grading_system_difficulty')->nullable();
+            $table->boolean('grading_system_difficulty')->default(false);
             $table->text('difficulty_grading_system_description')->nullable();
-            $table->boolean('trails_grading_system')->nullable();
+            $table->boolean('trails_grading_system')->default(false);
             $table->text('trails_grading_system_description')->nullable();
-            $table->boolean('trails_clearly_visible')->nullable();
+            $table->boolean('trails_clearly_visible')->default(false);
             $table->text('trails_clearly_visible_description')->nullable();
-            $table->boolean('trails_allowed_on_any_area')->nullable();
+            $table->boolean('trails_allowed_on_any_area')->default(false);
             $table->text('trails_allowed_on_any_area_description')->nullable();
-            $table->boolean('trails_keepers_specified')->nullable();
+            $table->boolean('trails_keepers_specified')->default(false);
             $table->text('trails_keepers_specified_description')->nullable();
             $table->decimal('mountain_trails_construction_cost', 10, 2)->nullable(); // €/km
             $table->decimal('low_mountain_trails_construction_cost', 10, 2)->nullable(); // €/km
             $table->decimal('lowland_trails_construction_cost', 10, 2)->nullable(); // €/km
-            $table->boolean('trails_construction_maintained_frequently')->nullable();
+            $table->boolean('trails_construction_maintained_frequently')->default(false);
             $table->string('average_trails_construction_maintenance_period')->nullable();
             $table->decimal('mountain_trails_maintenance_cost', 10, 2)->nullable(); // €/km
             $table->decimal('low_mountain_trails_maintenance_cost', 10, 2)->nullable(); // €/km
             $table->decimal('lowland_trails_maintenance_cost', 10, 2)->nullable(); // €/km
-            $table->boolean('trails_physically_marked')->nullable();
+            $table->boolean('trails_physically_marked')->default(false);
             $table->text('trails_marking_system_description')->nullable();
-            $table->boolean('trails_signs_maintained_frequently')->nullable();
+            $table->boolean('trails_signs_maintained_frequently')->default(false);
             $table->string('average_trails_signs_maintenance_period')->nullable();
             $table->text('trails_signs_maintenance_scope')->nullable();
             $table->decimal('average_annual_sign_maintenance_cost_for_mountains')->nullable(); // €/km
@@ -81,17 +81,17 @@ return new class extends Migration
             $table->text('trails_maintenance_system_description')->nullable();
             $table->decimal('trails_percentage_maintenance_costs_covered_by_public_funding', 10, 2)->nullable(); // %
             $table->text('trails_maintenance_comments')->nullable();
-            $table->boolean('trails_recognized_by_government')->nullable();
+            $table->boolean('trails_recognized_by_government')->default(false);
             $table->text('trails_recognized_by_government_comments')->nullable();
-            $table->boolean('new_paths_agreement')->nullable();
+            $table->boolean('new_paths_agreement')->default(false);
             $table->text('new_paths_agreement_comments')->nullable();
-            $table->boolean('liability_exempted')->nullable();
+            $table->boolean('liability_exempted')->default(false);
             $table->text('liability_exempted_comments')->nullable();
-            $table->boolean('trails_sustainability')->nullable();
+            $table->boolean('trails_sustainability')->default(false);
             $table->text('trails_sustainability_comments')->nullable();
-            $table->boolean('has_digital_database')->nullable();
+            $table->boolean('has_digital_database')->default(false);
             $table->text('digital_database_description')->nullable();
-            $table->boolean('hikers_have_free_access_to_database')->nullable();
+            $table->boolean('hikers_have_free_access_to_database')->default(false);
             $table->text('trails_issues')->nullable();
         });
     }

@@ -21,13 +21,13 @@ return new class extends Migration
         // sanitary_facility	boolean
         // kitchen_facility	boolean
         Schema::table('huts', function (Blueprint $table) {
-            $table->boolean('wastewater_treatment')->nullable();
+            $table->boolean('wastewater_treatment')->default(false);
             $table->text('waste_management_system')->nullable();
-            $table->boolean('water_supply')->nullable();
-            $table->boolean('electric_and_heating_energy_source')->nullable();
+            $table->boolean('water_supply')->default(false);
+            $table->boolean('electric_and_heating_energy_source')->default(false);
             $table->string('area_type')->nullable();
-            $table->boolean('sanitary_facility')->nullable();
-            $table->boolean('kitchen_facility')->nullable();
+            $table->boolean('sanitary_facility')->default(false);
+            $table->boolean('kitchen_facility')->default(false);
         });
     }
 
