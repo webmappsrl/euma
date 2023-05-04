@@ -17,7 +17,6 @@ class Hut extends Model
     use Searchable;
 
     public $translatable = [
-        'name',
         'description'
     ];
 
@@ -47,6 +46,23 @@ class Hut extends Model
 
     public function externalDatabases(){
         return $this->belongsToMany(ExternalDatabase::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {   
+        $member = Member::find($this->member_id);
+        return [
+            'id' => (int) $this->id,
+            'name' => $this->official_name,
+            'url' => $this->url,
+            'member_name' => $member->name_en,
+            'member_acronym' => $member->acronym,
+        ];
     }
 
     /**
