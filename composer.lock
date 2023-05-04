@@ -8295,11 +8295,7 @@
         },
         {
             "name": "wm/map-multi-linestring",
-<<<<<<< HEAD
-            "version": "dev-feature/EUMA_database_new_migration",
-=======
             "version": "dev-feature/meilisearch",
->>>>>>> feature/meilisearch
             "dist": {
                 "type": "path",
                 "url": "./nova-components/MapMultiLinestring",
