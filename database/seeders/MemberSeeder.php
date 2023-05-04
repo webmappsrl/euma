@@ -15,9 +15,9 @@ class MemberSeeder extends Seeder
     public function run()
     {
         Member::truncate();
-  
+
         $csvFile = fopen(base_path("storage/app/seeder/member.csv"), "r");
-  
+
         $firstline = true;
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
@@ -29,12 +29,12 @@ class MemberSeeder extends Seeder
                     'web' => $data['5'],
                     'members' => $data['6'],
                     'since' => $data['7'],
-                    'type' => $data['8']
-                ]);    
+                    'type' => $data['8'] === 'EXTERNAL MEMBER' ? 'EXTERNAL-MEMBER' : $data['8'],
+                ]);
             }
             $firstline = false;
         }
-   
+
         fclose($csvFile);
     }
 }
