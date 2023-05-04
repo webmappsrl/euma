@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use App\Enums\MemberTypeEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\TrailUserTypes;
+use App\Enums\TrailNetworkLocation;
+use App\Enums\MaintenanceOperatorTypes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Query\Search\SearchableRelation;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 
 class Member extends Model
 {
@@ -30,6 +34,10 @@ class Member extends Model
      */
     protected $casts = [
         'type' => MemberTypeEnum::class,
+        'trail_network_location' => TrailNetworkLocation::class,
+        'other_trail_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
+        'trails_maintenance_done_by' => AsEnumCollection::class . ':' . MaintenanceOperatorTypes::class,
+        'contact_completion_date' => 'datetime:Y-m-d'
     ];
 
     /**
@@ -42,15 +50,18 @@ class Member extends Model
         return ['id', new SearchableRelation('member', 'acronym')];
     }
 
-    public function huts(){
+    public function huts()
+    {
         return $this->hasMany(Hut::class);
     }
-    
-    public function trails(){
+
+    public function trails()
+    {
         return $this->hasMany(Trail::class);
     }
-    
-    public function users(){
+
+    public function users()
+    {
         return $this->hasMany(User::class);
     }
 
@@ -62,10 +73,10 @@ class Member extends Model
     public function getJson(): array
     {
         $array = [];
-        
+
         if ($this->id)
             $array['id'] = $this->id;
-        
+
         if ($this->name_en)
             $array['name_en'] = $this->name_en;
 
