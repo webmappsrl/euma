@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('contact_role')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('contact_phone')->nullable();
-            $table->string('contact_completion_date')->default(false);
+            $table->string('contact_completion_date')->nullable();
             $table->boolean('responsible_for_trails')->default(false);
             $table->text('responsible_for_trails_comments')->nullable();
             $table->decimal('trail_length_km', 10, 2)->nullable();
