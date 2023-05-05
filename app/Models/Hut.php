@@ -60,6 +60,7 @@ class Hut extends Model
             'id' => (int) $this->id,
             'name' => $this->official_name,
             'url' => $this->url,
+            'elevation' => $this->elevation,
             'member_name' => $member->name_en,
             'member_acronym' => $member->acronym,
         ];
