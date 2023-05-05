@@ -35,8 +35,9 @@ class Member extends Model
     protected $casts = [
         'type' => MemberTypeEnum::class,
         'trail_network_location' => TrailNetworkLocation::class,
-        'other_trail_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
+        'other_trails_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
         'trails_maintenance_done_by' => AsEnumCollection::class . ':' . MaintenanceOperatorTypes::class,
+
     ];
 
     /**

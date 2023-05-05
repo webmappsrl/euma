@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\URL;
@@ -18,6 +19,7 @@ use App\Nova\Filters\MemberType;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\Textarea;
 use Eminiarts\Tabs\Traits\HasTabs;
 use App\Enums\TrailNetworkLocation;
@@ -60,6 +62,7 @@ class Member extends Resource
     public function fields(NovaRequest $request)
     {
         return [
+            ID::make()->sortable(),
             new Tabs('Member', [
                 //create a tab for every status of epics
                 Tab::make('Member Info', [
@@ -113,8 +116,9 @@ class Member extends Resource
                         ->rules('max:255')
                         ->hideFromIndex(),
 
-                    DateTime::make(__('Contact Completion Date'), 'contact_completion_date')
+                    Text::make(__('Contact Completion Date'), 'contact_completion_date')
                         ->hideFromIndex()
+                        ->help('date format: dd-mm-yyyy')
                         ->nullable(),
                     Boolean::make(__('Responsible for Trails'), 'responsible_for_trails')
                         ->hideFromIndex()
@@ -348,7 +352,7 @@ class Member extends Resource
                         ->hideFromIndex(),
                 ]),
                 Tab::make('Trails Accessibility', [
-                    Boolean::make('Free Access to Trails')
+                    Boolean::make('Free Access to Trails', 'free_access_to_trails')
                         ->nullable()
                         ->hideFromIndex(),
                     TextArea::make('Free Access to Trails Comments')
@@ -420,7 +424,7 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' €/km';
                         }),
-                    Currency::make('Lowland trails construction cost by National Parks', 'lowland_trails_construction_cost')
+                    Currency::make('Lowland trails construction cost', 'lowland_trails_construction_cost')
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -442,7 +446,7 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' €/km';
                         }),
-                    Currency::make('Lowland trails maintenance cost yearly by National Parks', 'lowland_trails_maintenance_cost')
+                    Currency::make('Lowland trails maintenance cost yearly', 'lowland_trails_maintenance_cost')
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -470,6 +474,11 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' €/km';
                         }),
+                    Number::make('Trails Percentage Maintenance Costs Covered by Public Funding')
+                        ->nullable()
+                        ->hideFromIndex()
+                        ->max(100)
+                        ->step('any'),
                 ]),
 
             ]),

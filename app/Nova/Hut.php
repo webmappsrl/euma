@@ -125,6 +125,7 @@ class Hut extends Resource
                 ->nullable()
                 ->hideFromIndex(),
             Text::make('Area Type')
+                ->help('national park or other protected area')
                 ->nullable()
                 ->hideFromIndex(),
             Boolean::make('Sanitary Facility')
