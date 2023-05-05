@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Hut;
+
 return [
 
     /*
@@ -133,9 +135,10 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
-            // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
-            // ],
+            Hut::class => [
+                'filterableAttributes'=> ['member_name', 'name','elevation'],
+                'sortableAttributes' => ['member_name','name','elevation'],
+            ],
         ],
     ],
 
