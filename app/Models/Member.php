@@ -30,6 +30,14 @@ class Member extends Model
     ];
 
     /**
+     * Indicates whether Nova should check for modifications between viewing and updating a resource.
+     *
+     * @var bool
+     */
+    public static $trafficCop = false;
+
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
