@@ -54,7 +54,7 @@ class Hut extends Resource
     {
         if ($request->user()->is_admin == true) {
             return $query;
-        } else if ($request->user()->member) {
+        } elseif ($request->user()->member) {
             return $query->where('member_id', $request->user()->member->id);
         } else {
             return null;
@@ -79,9 +79,9 @@ class Hut extends Resource
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
                 'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
                 'minZoom' => 5,
-                'maxZoom' => 16,
+                'maxZoom' => 14,
                 'defaultZoom' => 5
-            ]),
+            ])->hideFromIndex(),
             Number::make(__('Elevation'), 'elevation')->rules('required')->hideFromIndex(),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',', $this->url);
@@ -125,6 +125,7 @@ class Hut extends Resource
                 ->nullable()
                 ->hideFromIndex(),
             Text::make('Area Type')
+                ->help('national park or other protected area')
                 ->nullable()
                 ->hideFromIndex(),
             Boolean::make('Sanitary Facility')
@@ -158,7 +159,7 @@ class Hut extends Resource
     {
         if ($request->user()->is_admin == true) {
             return [
-                new Members
+                new Members()
             ];
         }
         return [];
