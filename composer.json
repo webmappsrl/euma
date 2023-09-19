@@ -25,7 +25,7 @@
         "psr/simple-cache": "^2.0",
         "spatie/db-dumper": "^3.3",
         "spatie/laravel-translatable": "^6.0",
-        "wm/map-multi-linestring": "*",
+        "wm/map-multi-linestring": "^0.0.7",
         "wm/map-point": "*"
     },
     "require-dev": {
@@ -84,10 +84,6 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/MapMultiLinestring"
         }
     ]
 }

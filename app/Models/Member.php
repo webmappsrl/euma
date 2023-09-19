@@ -45,7 +45,7 @@ class Member extends Model
     protected $casts = [
         'type' => MemberTypeEnum::class,
         'trail_network_location' => TrailNetworkLocation::class,
-        'other_trail_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
+        'other_trails_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
         'trails_maintenance_done_by' => AsEnumCollection::class . ':' . MaintenanceOperatorTypes::class,
         'contact_completion_date' => 'datetime:Y-m-d'
     ];
@@ -84,38 +84,49 @@ class Member extends Model
     {
         $array = [];
 
-        if ($this->id)
+        if ($this->id) {
             $array['id'] = $this->id;
+        }
 
-        if ($this->name_en)
+        if ($this->name_en) {
             $array['name_en'] = $this->name_en;
+        }
 
-        if ($this->name_orig)
+        if ($this->name_orig) {
             $array['name_orig'] = $this->name_orig;
+        }
 
-        if ($this->acronym)
+        if ($this->acronym) {
             $array['acronym'] = $this->acronym;
+        }
 
-        if ($this->country)
+        if ($this->country) {
             $array['country'] = $this->country;
+        }
 
-        if ($this->web)
+        if ($this->web) {
             $array['web'] = $this->web;
+        }
 
-        if ($this->members)
+        if ($this->members) {
             $array['members'] = $this->members;
+        }
 
-        if ($this->since)
+        if ($this->since) {
             $array['since'] = $this->since;
+        }
 
-        if ($this->type)
+        if ($this->type) {
             $array['type'] = $this->type;
+        }
 
-        if ($this->operating_phone)
+        if ($this->operating_phone) {
             $array['operating_phone'] = $this->operating_phone;
+        }
 
-        if ($this->icon)
+        if ($this->icon) {
             $array['icon'] = url(Storage::url($this->icon));
+        }
 
         return $array;
     }
