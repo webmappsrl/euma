@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dd3821341fe8c7d79ea1f22dcc851d0",
+    "content-hash": "46375a08e441cce6312c1b951e1f309f",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8295,11 +8295,17 @@
         },
         {
             "name": "wm/map-multi-linestring",
-            "version": "dev-feature/meilisearch",
+            "version": "v0.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmappsrl/map-multi-linestring.git",
+                "reference": "1e1ae2b7ac53005af7115b46772be6c1e5474742"
+            },
             "dist": {
-                "type": "path",
-                "url": "./nova-components/MapMultiLinestring",
-                "reference": "8288aec76f02a0e2f3d07dea45d12908237ff0c0"
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmappsrl/map-multi-linestring/zipball/1e1ae2b7ac53005af7115b46772be6c1e5474742",
+                "reference": "1e1ae2b7ac53005af7115b46772be6c1e5474742",
+                "shasum": ""
             },
             "require": {
                 "php": "^7.3|^8.0"
@@ -8317,6 +8323,7 @@
                     "Wm\\MapMultiLinestring\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8325,22 +8332,24 @@
                 "laravel",
                 "nova"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/webmappsrl/map-multi-linestring/issues",
+                "source": "https://github.com/webmappsrl/map-multi-linestring/tree/v0.0.7"
+            },
+            "time": "2023-03-30T11:39:23+00:00"
         },
         {
             "name": "wm/map-point",
-            "version": "v0.0.5",
+            "version": "v0.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmappsrl/map-point.git",
-                "reference": "c69abab7bb667e34e508cb0f6698a9239d5317e6"
+                "reference": "eeceb44f2088955a33d28da77de04b075fd1adc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmappsrl/map-point/zipball/c69abab7bb667e34e508cb0f6698a9239d5317e6",
-                "reference": "c69abab7bb667e34e508cb0f6698a9239d5317e6",
+                "url": "https://api.github.com/repos/webmappsrl/map-point/zipball/eeceb44f2088955a33d28da77de04b075fd1adc0",
+                "reference": "eeceb44f2088955a33d28da77de04b075fd1adc0",
                 "shasum": ""
             },
             "require": {
@@ -8370,9 +8379,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmappsrl/map-point/issues",
-                "source": "https://github.com/webmappsrl/map-point/tree/v0.0.5"
+                "source": "https://github.com/webmappsrl/map-point/tree/v0.0.9"
             },
-            "time": "2023-02-06T14:49:19+00:00"
+            "time": "2023-03-16T14:26:41+00:00"
         }
     ],
     "packages-dev": [
