@@ -344,6 +344,9 @@ class Member extends Resource
                     Boolean::make('Hikers Have Free Access to Database')
                         ->nullable()
                         ->hideFromIndex(),
+                    TextArea::make('Hikers Free Access to Database Description', 'hikers_free_access_db_description')
+                        ->nullable()
+                        ->hideFromIndex(),
                     TextArea::make('Trails Issues')
                         ->nullable()
                         ->hideFromIndex(),
@@ -355,7 +358,7 @@ class Member extends Resource
                     TextArea::make('Free Access to Trails Comments')
                         ->nullable()
                         ->hideFromIndex(),
-                        Boolean::make('Trails for Hikers Only')
+                    Boolean::make('Trails for Hikers Only')
                         ->nullable()
                         ->hideFromIndex(),
                     MultiSelect::make('Trails Users', 'other_trails_users')
@@ -363,7 +366,7 @@ class Member extends Resource
                         ->displayUsingLabels()
                         ->nullable()
                         ->hideFromIndex(),
-                    TextArea::make('Other trails users comment','other_trails_users_comment')
+                    TextArea::make('Other trails users comment', 'other_trails_users_comment')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Approach Trails to Climbing', 'approach_trails_to_climbing')
