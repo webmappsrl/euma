@@ -51,7 +51,7 @@ class Trail extends Resource
     {
         if ($request->user()->is_admin == true) {
             return $query;
-        } else if ($request->user()->member) {
+        } elseif ($request->user()->member) {
             return $query->where('member_id', $request->user()->member->id);
         } else {
             return null;
@@ -72,17 +72,17 @@ class Trail extends Resource
             Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
             Text::make(__('REF'), 'ref'),
             Text::make(__('URL'), 'url', function () {
-                $urls = explode(',',$this->url);
+                $urls = explode(',', $this->url);
                 $html = '';
                 foreach ($urls as $url) {
-                    if ($url && strpos($url,'http') === false){
+                    if ($url && strpos($url, 'http') === false) {
                         $url = 'https://'.$url;
                     }
                     $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                 }
                 return $html;
             })->onlyOnDetail()->rules('required')->asHtml(),
-            Text::make(__('URL'), 'url')->onlyOnForms(),  
+            Text::make(__('URL'), 'url')->onlyOnForms(),
             URL::make(__('Source geojson url'), 'source_geojson_url')->displayUsing(fn () => "$this->source_geojson_url")->hideFromIndex(),
             URL::make(__('Source gpx url'), 'source_gpx_url')->displayUsing(fn () => "$this->source_gpx_url")->hideFromIndex(),
             MapMultiLinestring::make('geometry')->withMeta([
@@ -90,9 +90,9 @@ class Trail extends Resource
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
                 'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
                 'defaultZoom' => 10
-            ]),
-            BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
-            BelongsToMany::make(__('External Databases'),'ExternalDatabases')->hideFromIndex(),
+            ])->hideFromIndex(),
+            BelongsTo::make(__('Member'), 'Member')->searchable()->rules('required'),
+            BelongsToMany::make(__('External Databases'), 'ExternalDatabases')->hideFromIndex(),
         ];
     }
 
@@ -117,9 +117,9 @@ class Trail extends Resource
     {
         if ($request->user()->is_admin == true) {
             return [
-                new Members
+                new Members()
             ];
-        } 
+        }
         return [];
     }
 

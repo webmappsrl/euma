@@ -37,14 +37,23 @@ class Hut extends Model
         'operating_phone',
         'owner',
         'member_id',
-        'import_id'
+        'import_id',
+        'wastewater_treatment',
+        'waste_management_system',
+        'water_supply',
+        'electric_and_heating_energy_source',
+        'area_type',
+        'sanitary_facility',
+        'kitchen_facility',
     ];
 
-    public function member() {
+    public function member()
+    {
         return $this->belongsTo(Member::class);
     }
 
-    public function externalDatabases(){
+    public function externalDatabases()
+    {
         return $this->belongsToMany(ExternalDatabase::class);
     }
 
@@ -54,7 +63,7 @@ class Hut extends Model
      * @return array<string, mixed>
      */
     public function toSearchableArray(): array
-    {   
+    {
         $member = Member::find($this->member_id);
         return [
             'id' => (int) $this->id,
@@ -78,7 +87,9 @@ class Hut extends Model
             $feature["properties"] = $this->getJson();
 
             return $feature;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -89,39 +100,50 @@ class Hut extends Model
     public function getJson(): array
     {
         $array = [];
-        
-        if ($this->official_name)
+
+        if ($this->official_name) {
             $array['official_name'] = $this->official_name;
-        
-        if ($this->second_official_name)
+        }
+
+        if ($this->second_official_name) {
             $array['second_official_name'] = $this->second_official_name;
+        }
 
-        if ($this->description)
+        if ($this->description) {
             $array['description'] = $this->description;
+        }
 
-        if ($this->elevation)
+        if ($this->elevation) {
             $array['elevation'] = $this->elevation;
+        }
 
-        if ($this->url)
+        if ($this->url) {
             $array['url'] = $this->url;
+        }
 
-        if ($this->managed)
+        if ($this->managed) {
             $array['managed'] = $this->managed;
+        }
 
-        if ($this->address)
+        if ($this->address) {
             $array['address'] = $this->address;
+        }
 
-        if ($this->operating_name)
+        if ($this->operating_name) {
             $array['operating_name'] = $this->operating_name;
+        }
 
-        if ($this->operating_email)
+        if ($this->operating_email) {
             $array['operating_email'] = $this->operating_email;
+        }
 
-        if ($this->operating_phone)
+        if ($this->operating_phone) {
             $array['operating_phone'] = $this->operating_phone;
+        }
 
-        if ($this->owner)
+        if ($this->owner) {
             $array['owner'] = $this->owner;
+        }
 
         if ($this->member_id) {
             $array['member_id'] = $this->member_id;
