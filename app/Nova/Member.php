@@ -151,7 +151,7 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' km²';
                         }),
-                    Text::make('Trail Network Location Country', 'trail_network_location')
+                    Text::make('Trail Network Location Country', 'trail_network_location_country')
                         ->nullable()
                         ->hideFromIndex(),
                     Text::make('Trail Network Location State', 'trail_network_location_state')
