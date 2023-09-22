@@ -44,7 +44,6 @@ class Member extends Model
      */
     protected $casts = [
         'type' => MemberTypeEnum::class,
-        'trail_network_location' => TrailNetworkLocation::class,
         'other_trails_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
         'trails_maintenance_done_by' => AsEnumCollection::class . ':' . MaintenanceOperatorTypes::class,
         'contact_completion_date' => 'datetime:Y-m-d'

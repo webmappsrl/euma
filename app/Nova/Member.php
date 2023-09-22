@@ -20,7 +20,6 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use Eminiarts\Tabs\Traits\HasTabs;
-use App\Enums\TrailNetworkLocation;
 use Laravel\Nova\Fields\MultiSelect;
 use App\Enums\MaintenanceOperatorTypes;
 use Carbon\Carbon;
@@ -152,9 +151,13 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' km²';
                         }),
-                    Select::make('Trail Network Location', 'trail_network_location')
-                        ->options(collect(TrailNetworkLocation::cases())->pluck('name', 'value'))
-                        ->displayUsingLabels()
+                    Text::make('Trail Network Location Country', 'trail_network_location')
+                        ->nullable()
+                        ->hideFromIndex(),
+                    Text::make('Trail Network Location State', 'trail_network_location_state')
+                        ->nullable()
+                        ->hideFromIndex(),
+                    Text::make('Trail Network Location Region', 'trail_network_location_region')
                         ->nullable()
                         ->hideFromIndex(),
                     Number::make('Trails mountain area percentage', 'trails_area_mountains_percentage')
