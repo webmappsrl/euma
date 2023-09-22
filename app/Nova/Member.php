@@ -201,7 +201,7 @@ class Member extends Resource
                     Number::make('Via Ferratas count', 'via_ferratas_count')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Via Ferratas Managing Description')
+                    Textarea::make('Via Ferratas Managing Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Aligned with Legislation')
@@ -297,7 +297,7 @@ class Member extends Resource
                     Boolean::make('Trails Physically Marked')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Marking System Description')
+                    Textarea::make('Trails Marking System Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Signs Maintained Frequently')
@@ -307,7 +307,7 @@ class Member extends Resource
                         ->nullable()
                         ->hideFromIndex()
                         ->step('any'),
-                    Text::make('Trails Signs Maintenance Scope')
+                    Textarea::make('Trails Signs Maintenance Scope')
                         ->nullable()
                         ->hideFromIndex(),
                     MultiSelect::make('Trails maintenance operators', 'trails_maintenance_done_by')
@@ -315,7 +315,7 @@ class Member extends Resource
                         ->displayUsingLabels()
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Maintenance System Description')
+                    Textarea::make('Trails Maintenance System Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Number::make('Trails Percentage Maintenance Costs Covered by Public Funding')
@@ -329,13 +329,13 @@ class Member extends Resource
                     Boolean::make('Trails Recognized by Government')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Recognized by Government Comments')
+                    Textarea::make('Trails Recognized by Government Comments')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Sustainability')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Sustainability Comments')
+                    Textarea::make('Trails Sustainability Comments')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Digital Trails Database', 'has_digital_database')
@@ -386,31 +386,31 @@ class Member extends Resource
                     Boolean::make('Grading System Difficulty')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Difficulty Grading System Description')
+                    Textarea::make('Difficulty Grading System Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Grading System')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Grading System Description')
+                    Textarea::make('Trails Grading System Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Clearly Visible')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Clearly Visible Description')
+                    Textarea::make('Trails Clearly Visible Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Allowed on Any Area')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Allowed on Any Area Description')
+                    Textarea::make('Trails Allowed on Any Area Description')
                         ->nullable()
                         ->hideFromIndex(),
                     Boolean::make('Trails Keepers Specified')
                         ->nullable()
                         ->hideFromIndex(),
-                    Text::make('Trails Keepers Specified Description')
+                    Textarea::make('Trails Keepers Specified Description')
                         ->nullable()
                         ->hideFromIndex(),
 
