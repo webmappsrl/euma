@@ -83,7 +83,7 @@ class ClimbingRockArea extends Resource
                 'minZoom' => 5,
                 'maxZoom' => 16,
                 'defaultZoom' => 5
-            ]),
+            ])->hideFromIndex(),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',', $this->url);
                 $html = '';
