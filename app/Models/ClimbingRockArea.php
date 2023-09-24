@@ -81,6 +81,7 @@ class ClimbingRockArea extends Model
             'name' => $this->english_name,
             'original_name' => $this->original_name,
             'url' => $this->url,
+            'routes_number' => $this->routes_number,
             'elevation' => $this->elevation,
             'member_name' => $member->name_en,
             'member_acronym' => $member->acronym,
