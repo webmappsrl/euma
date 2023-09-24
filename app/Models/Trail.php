@@ -26,15 +26,36 @@ class Trail extends Model
         'english_name'
     ];
 
-    public function externalDatabases(){
+    public function externalDatabases()
+    {
         return $this->belongsToMany(ExternalDatabase::class);
     }
 
-    public function member() {
+    public function member()
+    {
         return $this->belongsTo(Member::class);
     }
 
-        /**
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        $member = Member::find($this->member_id);
+        return [
+            'id' => (int) $this->id,
+            'name' => $this->original_name,
+            'english_name' => $this->english_name,
+            'url' => $this->url,
+            'ref' => $this->ref,
+            'member_name' => $member->name_en,
+            'member_acronym' => $member->acronym,
+        ];
+    }
+
+    /**
      * Create a geojson from the trail
      *
      * @return array
@@ -52,7 +73,9 @@ class Trail extends Model
             }
 
             return $feature;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -70,12 +93,14 @@ class Trail extends Model
         if (empty($array['name']) && $this->english_name) {
             $array['name'] = $this->english_name;
         }
-        
-        if ($this->ref)
-            $array['ref'] = $this->ref;
 
-        if ($this->url)
+        if ($this->ref) {
+            $array['ref'] = $this->ref;
+        }
+
+        if ($this->url) {
             $array['url'] = $this->url;
+        }
 
         if ($this->member_id) {
             $array['member_id'] = $this->member_id;

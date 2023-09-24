@@ -69,6 +69,25 @@ class ClimbingRockArea extends Model
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        $member = Member::find($this->member_id);
+        return [
+            'id' => (int) $this->id,
+            'name' => $this->english_name,
+            'original_name' => $this->original_name,
+            'url' => $this->url,
+            'elevation' => $this->elevation,
+            'member_name' => $member->name_en,
+            'member_acronym' => $member->acronym,
+        ];
+    }
+
+    /**
      * Create a geojson from the hut
      *
      * @return array
