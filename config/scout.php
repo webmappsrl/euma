@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\ClimbingRockArea;
 use App\Models\Hut;
+use App\Models\Trail;
 
 return [
 
@@ -136,7 +138,15 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             Hut::class => [
-                'filterableAttributes'=> ['member_name', 'name','elevation'],
+                'filterableAttributes' => ['member_name', 'name','elevation'],
+                'sortableAttributes' => ['member_name','name','elevation'],
+            ],
+            Trail::class => [
+                'filterableAttributes' => ['member_name', 'name','ref'],
+                'sortableAttributes' => ['member_name','name','ref'],
+            ],
+            ClimbingRockArea::class => [
+                'filterableAttributes' => ['member_name', 'name','elevation'],
                 'sortableAttributes' => ['member_name','name','elevation'],
             ],
         ],

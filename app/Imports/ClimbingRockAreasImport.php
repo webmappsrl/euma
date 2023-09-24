@@ -29,19 +29,19 @@ class ClimbingRockAreasImport implements ToCollection, WithHeadingRow
                         'member_id' => $member->id
                     ],
                     [
-                        'english_description' => ($row['english_description']) ? $row['english_description'] : '',
-                        'original_description' => ($row['original_description']) ? $row['original_description'] : '',
+                        'english_description' => ($row->has('english_description')) ? $row['english_description'] : '',
+                        'original_description' => ($row->has('original_description')) ? $row['original_description'] : '',
                         'url' => $row['url'],
-                        'local_rules_url' => ($row['local_rules_url']) ? $row['local_rules_url'] : '',
-                        'english_local_rules_description' => ($row['english_local_rules_description']) ? $row['english_local_rules_description'] : '',
-                        'original_local_rules_description' => ($row['original_local_rules_description']) ? $row['original_local_rules_description'] : '',
-                        'location_quality' => ($row['location_quality']) ? $row['location_quality'] : null,
-                        'routes_number' => ($row['routes_number']) ? $row['routes_number'] : null,
+                        'local_rules_url' => ($row->has('local_rules_url')) ? $row['local_rules_url'] : '',
+                        'english_local_rules_description' => ($row->has('english_local_rules_description')) ? $row['english_local_rules_description'] : '',
+                        'original_local_rules_description' => ($row->has('original_local_rules_description')) ? $row['original_local_rules_description'] : '',
+                        'location_quality' => ($row->has('location_quality')) ? $row['location_quality'] : null,
+                        'routes_number' => ($row->has('routes_number')) ? $row['routes_number'] : null,
                         'geometry'    => DB::select("SELECT ST_GeomFromText('POINT($lng $lat)') As wkt")[0]->wkt,
-                        'elevation'    => ($row['elevation']) ? $row['elevation'] : null,
-                        'local_restrictions'    => ($row['local_restrictions'] == 'yes') ? true : false,
-                        'english_local_restrictions_description' => ($row['english_local_restrictions_description']) ? $row['english_local_restrictions_description'] : '',
-                        'original_local_restrictions_description' => ($row['original_local_restrictions_description']) ? $row['original_local_restrictions_description'] : '',
+                        'elevation'    => ($row->has('elevation')) ? $row['elevation'] : null,
+                        'local_restrictions'    => ($row->has('local_restrictions') == 'yes') ? true : false,
+                        'english_local_restrictions_description' => ($row->has('english_local_restrictions_description')) ? $row['english_local_restrictions_description'] : '',
+                        'original_local_restrictions_description' => ($row->has('original_local_restrictions_description')) ? $row['original_local_restrictions_description'] : '',
                     ]
                 );
 
