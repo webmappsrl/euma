@@ -68,6 +68,7 @@ class Hut extends Model
         return [
             'id' => (int) $this->id,
             'name' => $this->official_name,
+            'second_name' => $this->second_official_name,
             'url' => $this->url,
             'elevation' => $this->elevation,
             'member_name' => $member->name_en,

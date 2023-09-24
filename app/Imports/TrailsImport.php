@@ -44,10 +44,10 @@ class TrailsImport implements ToCollection, WithHeadingRow
                         'member_id' => $member->id
                     ],
                     [
-                        'ref' => ($row->contains('ref')) ? $row['ref'] : '',
-                        'url' => ($row->contains('url')) ? $row['url'] : '',
-                        'source_geojson_url' => ($row->contains('source_geojson_url')) ? $row['source_geojson_url'] : '',
-                        'source_gpx_url' => ($row->contains('source_gpx_url')) ? $row['source_gpx_url'] : '',
+                        'ref' => ($row->has('ref')) ? $row['ref'] : '',
+                        'url' => ($row->has('url')) ? $row['url'] : '',
+                        'source_geojson_url' => ($row->has('source_geojson_url')) ? $row['source_geojson_url'] : '',
+                        'source_gpx_url' => ($row->has('source_gpx_url')) ? $row['source_gpx_url'] : '',
                         'geometry' => DB::select("SELECT ST_AsText(ST_Force2D(ST_GeomFromGeoJSON('$geometry'))) As wkt")[0]->wkt,
                     ]
                 );
