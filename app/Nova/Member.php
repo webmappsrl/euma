@@ -65,20 +65,25 @@ class Member extends Resource
                 Tab::make('Member Info', [
                     ID::make()->sortable(),
                     Text::make(__('Name en'), 'name_en')
-                        ->rules('required'),
+                        ->rules('required')
+                        ->sortable(),
                     Text::make(__('Name Orig'), 'name_orig')
                         ->rules('required')
                         ->hideFromIndex(),
                     Text::make(__('Acronym'), 'acronym')
-                        ->rules('required'),
+                        ->rules('required')
+                        ->sortable(),
                     Text::make(__('Country'), 'country')
-                        ->rules('required'),
+                        ->rules('required')
+                        ->sortable(),
                     URL::make(__('Web'), 'web')
                         ->displayUsing(fn () => "$this->web")
                         ->hideFromIndex(),
-                    Number::make(__('Members'), 'members'),
+                    Number::make(__('Members'), 'members')
+                        ->sortable(),
                     Number::make(__('Since'), 'since')
-                        ->rules('required'),
+                        ->rules('required')
+                        ->sortable(),
                     Select::make(__('Type'), 'type')
                         ->hideFromIndex()->options(MemberTypeEnum::getValueNames())
                         ->displayUsingLabels()
@@ -416,7 +421,7 @@ class Member extends Resource
 
                 ]),
                 Tab::make('Costs', [
-                    Currency::make('Mountain trails construction cost', 'mountain_trails_construction_cost',)
+                    Currency::make('Mountain trails construction cost', 'mountain_trails_construction_cost', )
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -438,7 +443,7 @@ class Member extends Resource
                             return $value . ' €/km';
                         }),
 
-                    Currency::make('Mountain trails maintenance cost yearly', 'mountain_trails_maintenance_cost',)
+                    Currency::make('Mountain trails maintenance cost yearly', 'mountain_trails_maintenance_cost', )
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -459,7 +464,7 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' €/km';
                         }),
-                    Currency::make('Average Annual Sign Maintenance Cost for Mountains', 'average_annual_sign_maintenance_cost_for_mountains',)
+                    Currency::make('Average Annual Sign Maintenance Cost for Mountains', 'average_annual_sign_maintenance_cost_for_mountains', )
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -506,7 +511,7 @@ class Member extends Resource
     {
         if ($request->user()->is_admin == true) {
             return [
-                new MemberType
+                new MemberType()
             ];
         }
         return [];
