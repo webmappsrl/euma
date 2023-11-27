@@ -34,7 +34,7 @@ Route::name('api.')->group(function () {
         });
         Route::prefix('climbingrockarea')->name('climbingrockarea.')->group(function () {
             Route::get('list', [ClimbingRockAreasController::class, 'climbingrockareaslistid'])->name('climbingrockareaslistid');
-            Route::get('geojson', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
+            Route::get('geojson/member/{member_id?}', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
             Route::get('geojson/{id}', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonefeature'])->name('climbingrockareasgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [ClimbingRockAreasController::class, 'climbingrockareasslistlastupdate'])->name('climbingrockareasslistlastupdate');
         });
