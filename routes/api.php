@@ -28,20 +28,20 @@ Route::name('api.')->group(function () {
     Route::prefix('v1')->name('v1')->group(function () {
         Route::prefix('hut')->name('hut.')->group(function () {
             Route::get('list', [HutsController::class, 'hutslistid'])->name('hutslistid');
-            Route::get('geojson', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
+            Route::get('geojson/member/{member_id?}', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
             Route::get('geojson/{id}', [HutsController::class, 'hutgeojsonefeature'])->name('hutgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [HutsController::class, 'hutslistlastupdate'])->name('hutslistlastupdate');
         });
         Route::prefix('climbingrockarea')->name('climbingrockarea.')->group(function () {
             Route::get('list', [ClimbingRockAreasController::class, 'climbingrockareaslistid'])->name('climbingrockareaslistid');
-            Route::get('geojson', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
+            Route::get('geojson/member/{member_id?}', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonexport'])->name('climbingrockareasgeojsonexport');
             Route::get('geojson/{id}', [ClimbingRockAreasController::class, 'climbingrockareasgeojsonefeature'])->name('climbingrockareasgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [ClimbingRockAreasController::class, 'climbingrockareasslistlastupdate'])->name('climbingrockareasslistlastupdate');
         });
         Route::prefix('trail')->name('trail.')->group(function () {
             Route::get('list', [TrailsController::class, 'trailslistid'])->name('trailslistid');
             Route::get('geojson', [TrailsController::class, 'trailsgeojsonexport'])->name('trailsgeojsonexport');
-            Route::get('csv', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
+            Route::get('csv/member/{member_id?}', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
             Route::get('geojson/{id}', [TrailsController::class, 'trailgeojsonefeature'])->name('trailgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [TrailsController::class, 'trailslistlastupdate'])->name('trailslistlastupdate');
         });

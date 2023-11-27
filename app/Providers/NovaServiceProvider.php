@@ -36,6 +36,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         });
 
         Nova::mainMenu(function (Request $request) {
+            $user = $request->user();
+            $hutsPath = $user && $user->member ? '/api/v1/hut/geojson/member/' . $user->member->id : '/api/v1/hut/geojson/member';
+            $climbingRockAreasPath = $user && $user->member ? '/api/v1/climbingrockarea/geojson/member/' . $user->member->id : '/api/v1/climbingrockarea/geojson/member';
+            $trailsPath = $user && $user->member ? '/api/v1/trail/csv/member/' . $user->member->id : '/api/v1/trail/csv/member';
             return [
                 // MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
@@ -43,25 +47,57 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Hut::class),
                     MenuItem::resource(Trail::class),
                     MenuItem::resource(ClimbingRockArea::class),
+                    MenuItem::resource(Member::class)->canSee(function (NovaRequest $request) {
+                        return !$request->user()->is_admin;
+                    }),
                 ])->icon('document-text')->collapsable(),
+
 
                 MenuSection::make('Admin', [
                     MenuItem::resource(ClimbingRockType::class),
                     MenuItem::resource(ClimbingStyle::class),
                     MenuItem::resource(ExternalDatabase::class),
-                    MenuItem::resource(Member::class),
                     MenuItem::resource(User::class),
+                    MenuItem::resource(Member::class)->canSee(function (NovaRequest $request) {
+                        return $request->user()->is_admin;
+                    }),
                 ])->icon('user')->collapsable()->canSee(function (NovaRequest $request) {
                     return $request->user()->is_admin;
                 }),
 
                 MenuSection::make('Export', [
-                    MenuItem::externalLink('Huts GeoJSON', '/api/v1/hut/geojson'),
-                    MenuItem::externalLink('Climbing Rock Areas GeoJSON', '/api/v1/climbingrockarea/geojson'),
-                    MenuItem::externalLink('Trails CSV', '/api/v1/trail/csv'),
-                ])->icon('download')->collapsable()->canSee(function (NovaRequest $request) {
-                    return $request->user()->is_admin;
-                }),
+                    MenuItem::externalLink('Huts GeoJSON', $hutsPath)->canSee(function (NovaRequest $request) {
+                        if ($request->user()->is_admin == true)
+                            return true;
+                        else {
+                            $member = $request->user()->member;
+                            if ($member && $member->huts->count() > 0) {
+                                return true;
+                            }
+                        }
+                    }),
+                    MenuItem::externalLink('Climbing Rock Areas GeoJSON', $climbingRockAreasPath)
+                        ->canSee(function (NovaRequest $request) {
+                            if ($request->user()->is_admin == true)
+                                return true;
+                            else {
+                                $member = $request->user()->member;
+                                if ($member->climbingRockAreas->count() > 0) {
+                                    return true;
+                                }
+                            }
+                        }),
+                    MenuItem::externalLink('Trails CSV', $trailsPath)->canSee(function (NovaRequest $request) {
+                        if ($request->user()->is_admin == true)
+                            return true;
+                        else {
+                            $member = $request->user()->member;
+                            if ($member->trails->count() > 0) {
+                                return true;
+                            }
+                        }
+                    }),
+                ])->icon('download')->collapsable(),
             ];
         });
     }

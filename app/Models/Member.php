@@ -69,6 +69,11 @@ class Member extends Model
         return $this->hasMany(Trail::class);
     }
 
+    public function climbingRockAreas()
+    {
+        return $this->hasMany(ClimbingRockArea::class);
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);
