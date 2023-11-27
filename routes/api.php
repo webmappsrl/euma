@@ -41,7 +41,7 @@ Route::name('api.')->group(function () {
         Route::prefix('trail')->name('trail.')->group(function () {
             Route::get('list', [TrailsController::class, 'trailslistid'])->name('trailslistid');
             Route::get('geojson', [TrailsController::class, 'trailsgeojsonexport'])->name('trailsgeojsonexport');
-            Route::get('csv', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
+            Route::get('csv/member/{member_id?}', [TrailsController::class, 'trailscsvexport'])->name('trailscsvexport');
             Route::get('geojson/{id}', [TrailsController::class, 'trailgeojsonefeature'])->name('trailgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [TrailsController::class, 'trailslistlastupdate'])->name('trailslistlastupdate');
         });

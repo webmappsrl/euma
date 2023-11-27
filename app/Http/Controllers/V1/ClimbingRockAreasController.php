@@ -37,7 +37,7 @@ class ClimbingRockAreasController extends Controller
      *
      * @return JsonResponse
      */
-    public function climbingrockareasgeojsonexport($member_id)
+    public function climbingrockareasgeojsonexport($member_id = null)
     {
         if ($member_id) {
             Artisan::call('eumadb:climbing-rock-areas-geojson-generator', ['member_id' => $member_id]);

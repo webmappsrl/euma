@@ -39,6 +39,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             $user = $request->user();
             $hutsPath = $user && $user->member ? '/api/v1/hut/geojson/member/' . $user->member->id : '/api/v1/hut/geojson/member';
             $climbingRockAreasPath = $user && $user->member ? '/api/v1/climbingrockarea/geojson/member/' . $user->member->id : '/api/v1/climbingrockarea/geojson/member';
+            $trailsPath = $user && $user->member ? '/api/v1/trail/csv/member/' . $user->member->id : '/api/v1/trail/csv/member';
             return [
                 // MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
@@ -86,7 +87,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 }
                             }
                         }),
-                    MenuItem::externalLink('Trails CSV', '/api/v1/trail/csv')->canSee(function (NovaRequest $request) {
+                    MenuItem::externalLink('Trails CSV', $trailsPath)->canSee(function (NovaRequest $request) {
                         if ($request->user()->is_admin == true)
                             return true;
                         else {

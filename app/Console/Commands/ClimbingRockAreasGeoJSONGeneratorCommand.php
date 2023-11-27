@@ -32,6 +32,7 @@ class ClimbingRockAreasGeoJSONGeneratorCommand extends Command
     $exporter = Storage::disk('exporter');
 
     $member_id = $this->argument('member_id');
+    $parameters = $member_id ? ['member_id' => $member_id] : [];
 
     $query = "SELECT jsonb_build_object(
             'type',     'FeatureCollection',
@@ -51,7 +52,7 @@ class ClimbingRockAreasGeoJSONGeneratorCommand extends Command
 
     $query .= ") inputs) features;";
 
-    $results = DB::select($query, ['member_id' => $member_id]);
+    $results = DB::select($query, $parameters);
 
     $path = $member_id ? "geojson/climbing_rock_areas/{$member_id}/climbing_rock_areas.geojson" : 'geojson/climbing_rock_areas/climbing_rock_areas.geojson';
 
