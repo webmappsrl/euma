@@ -43,14 +43,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Hut::class),
                     MenuItem::resource(Trail::class),
                     MenuItem::resource(ClimbingRockArea::class),
+                    MenuItem::resource(Member::class)->canSee(function (NovaRequest $request) {
+                        return !$request->user()->is_admin;
+                    }),
                 ])->icon('document-text')->collapsable(),
+
 
                 MenuSection::make('Admin', [
                     MenuItem::resource(ClimbingRockType::class),
                     MenuItem::resource(ClimbingStyle::class),
                     MenuItem::resource(ExternalDatabase::class),
-                    MenuItem::resource(Member::class),
                     MenuItem::resource(User::class),
+                    MenuItem::resource(Member::class)->canSee(function (NovaRequest $request) {
+                        return $request->user()->is_admin;
+                    }),
                 ])->icon('user')->collapsable()->canSee(function (NovaRequest $request) {
                     return $request->user()->is_admin;
                 }),

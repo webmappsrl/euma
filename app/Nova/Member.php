@@ -51,6 +51,22 @@ class Member extends Resource
         'id', 'name_en', 'acronym'
     ];
 
+    public static function label()
+    {
+        if (auth()->user()->is_admin == true) {
+            return 'Members';
+        }
+        return 'My Member';
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->is_admin == true) {
+            return $query;
+        }
+        return $query->where('id', $request->user()->member_id);
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -421,7 +437,7 @@ class Member extends Resource
 
                 ]),
                 Tab::make('Costs', [
-                    Currency::make('Mountain trails construction cost', 'mountain_trails_construction_cost', )
+                    Currency::make('Mountain trails construction cost', 'mountain_trails_construction_cost',)
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -443,7 +459,7 @@ class Member extends Resource
                             return $value . ' €/km';
                         }),
 
-                    Currency::make('Mountain trails maintenance cost yearly', 'mountain_trails_maintenance_cost', )
+                    Currency::make('Mountain trails maintenance cost yearly', 'mountain_trails_maintenance_cost',)
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -464,7 +480,7 @@ class Member extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' €/km';
                         }),
-                    Currency::make('Average Annual Sign Maintenance Cost for Mountains', 'average_annual_sign_maintenance_cost_for_mountains', )
+                    Currency::make('Average Annual Sign Maintenance Cost for Mountains', 'average_annual_sign_maintenance_cost_for_mountains',)
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
