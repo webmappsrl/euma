@@ -20,7 +20,8 @@ class TrailsController extends Controller
      *
      * @return array
      */
-    public function trailslistid(Request $request) {
+    public function trailslistid(Request $request)
+    {
         $list = [];
 
         $per_page = 1000;
@@ -29,7 +30,7 @@ class TrailsController extends Controller
             $per_page = $request->per_page;
         }
 
-        $trails = Trail::select('id','updated_at')->get();
+        $trails = Trail::select('id', 'updated_at')->get();
         // $trails = Trail::select('id','updated_at')->paginate($per_page);
 
         // if (count($trails) > 0) {
@@ -50,7 +51,8 @@ class TrailsController extends Controller
      *
      * @return JsonResponse
      */
-    public function trailsgeojsonexport() {
+    public function trailsgeojsonexport()
+    {
         Artisan::call('eumadb:trails-geojson-generator');
         $path = storage_path('exporter/geojson/trails/trails.geojson');
         return response()->download($path, 'trails.geojson', ['Content-type' => 'application/json']);
@@ -61,9 +63,15 @@ class TrailsController extends Controller
      *
      * @return JsonResponse
      */
-    public function trailscsvexport() {
-        Artisan::call('eumadb:trails-csv-generator');
-        $path = storage_path('exporter/csv/trails/trails.csv');
+    public function trailscsvexport($member_id = null)
+    {
+        if ($member_id) {
+            Artisan::call('eumadb:trails-csv-generator', ['member_id' => $member_id]);
+            $path = storage_path('exporter/csv/trails/' . $member_id . '/trails.csv');
+        } else {
+            Artisan::call('eumadb:trails-csv-generator');
+            $path = storage_path('exporter/csv/trails/trails.csv');
+        }
         return response()->download($path, 'trails.csv', ['Content-type' => 'text/csv']);
     }
 
@@ -74,11 +82,12 @@ class TrailsController extends Controller
      *
      * @return array
      */
-    public function trailslistlastupdate( int $updated_at = null ) {
+    public function trailslistlastupdate(int $updated_at = null)
+    {
         $list = [];
 
         // \Carbon\Carbon::parse('2022-10-24 09:43:04')->timestamp;
-        
+
         if ($updated_at) {
             $updated_at_string = \Carbon\Carbon::parse($updated_at)->toDateTimeString();
             $trails = Trail::where('updated_at', '>', $updated_at_string)->get();
@@ -88,15 +97,15 @@ class TrailsController extends Controller
 
         if (count($trails) > 0) {
             foreach ($trails as $trail) {
-                array_push($list, url('/').'/api/v1/trail/geojson/'.$trail->id);
+                array_push($list, url('/') . '/api/v1/trail/geojson/' . $trail->id);
             }
         } else {
-            array_push($list, 'No trails where updated after '.$updated_at_string);
+            array_push($list, 'No trails where updated after ' . $updated_at_string);
         }
         return $list;
     }
 
-    
+
     /**
      * Return Trails GEOJSON.
      *
@@ -106,7 +115,8 @@ class TrailsController extends Controller
      *
      * @return JsonResponse
      */
-    public function trailgeojsonefeature(Request $request, int $id, array $headers = []): JsonResponse {
+    public function trailgeojsonefeature(Request $request, int $id, array $headers = []): JsonResponse
+    {
         $trail = Trail::find($id);
         if (is_null($trail))
             return response()->json(['code' => 404, 'error' => "Not Found"], 404);
