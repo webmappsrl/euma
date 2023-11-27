@@ -51,13 +51,13 @@ class Member extends Resource
         'id', 'name_en', 'acronym'
     ];
 
-    public static function label()
-    {
-        if (auth()->user()->is_admin == true) {
-            return 'Members';
-        }
-        return 'My Member';
-    }
+    // public static function label()
+    // {
+    //     if (!auth()->user()->is_admin == true) {
+    //         return 'My Member';
+    //     }
+    //     return 'Members';
+    // }
 
     public static function indexQuery(NovaRequest $request, $query)
     {

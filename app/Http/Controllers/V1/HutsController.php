@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Artisan;
 
 class HutsController extends Controller
 {
-    
+
     /**
      * Return an array of huts ID and updated_at key and values.
      *
      * @return array
      */
-    public function hutslistid() {
+    public function hutslistid()
+    {
         $list = [];
 
         $huts = Hut::all();
@@ -37,9 +38,15 @@ class HutsController extends Controller
      *
      * @return JsonResponse
      */
-    public function hutsgeojsonexport() {
-        Artisan::call('eumadb:huts-geojson-generator');
-        $path = storage_path('exporter/geojson/huts/huts.geojson');
+    public function hutsgeojsonexport($member_id = null)
+    {
+        if ($member_id) {
+            Artisan::call('eumadb:huts-geojson-generator', ['member_id' => $member_id]);
+            $path = storage_path('exporter/geojson/huts/' . $member_id . '/huts.geojson');
+        } else {
+            Artisan::call('eumadb:huts-geojson-generator');
+            $path = storage_path('exporter/geojson/huts/huts.geojson');
+        }
         return response()->download($path, 'huts.geojson', ['Content-type' => 'application/json']);
     }
 
@@ -50,11 +57,12 @@ class HutsController extends Controller
      *
      * @return array
      */
-    public function hutslistlastupdate( int $updated_at = null ) {
+    public function hutslistlastupdate(int $updated_at = null)
+    {
         $list = [];
 
         // \Carbon\Carbon::parse('2022-10-24 09:43:04')->timestamp;
-        
+
         if ($updated_at) {
             $updated_at_string = \Carbon\Carbon::parse($updated_at)->toDateTimeString();
             $huts = Hut::where('updated_at', '>', $updated_at_string)->get();
@@ -64,15 +72,15 @@ class HutsController extends Controller
 
         if (count($huts) > 0) {
             foreach ($huts as $hut) {
-                array_push($list, url('/').'/api/v1/hut/geojson/'.$hut->id);
+                array_push($list, url('/') . '/api/v1/hut/geojson/' . $hut->id);
             }
         } else {
-            array_push($list, 'No huts where updated after '.$updated_at_string);
+            array_push($list, 'No huts where updated after ' . $updated_at_string);
         }
         return $list;
     }
 
-    
+
     /**
      * Return Huts GEOJSON.
      *
@@ -82,7 +90,8 @@ class HutsController extends Controller
      *
      * @return JsonResponse
      */
-    public function hutgeojsonefeature(Request $request, int $id, array $headers = []): JsonResponse {
+    public function hutgeojsonefeature(Request $request, int $id, array $headers = []): JsonResponse
+    {
         $hut = Hut::find($id);
         if (is_null($hut))
             return response()->json(['code' => 404, 'error' => "Not Found"], 404);

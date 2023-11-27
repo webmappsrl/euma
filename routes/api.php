@@ -28,7 +28,7 @@ Route::name('api.')->group(function () {
     Route::prefix('v1')->name('v1')->group(function () {
         Route::prefix('hut')->name('hut.')->group(function () {
             Route::get('list', [HutsController::class, 'hutslistid'])->name('hutslistid');
-            Route::get('geojson', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
+            Route::get('geojson/member/{member_id?}', [HutsController::class, 'hutsgeojsonexport'])->name('hutsgeojsonexport');
             Route::get('geojson/{id}', [HutsController::class, 'hutgeojsonefeature'])->name('hutgeojsonefeature');
             Route::get('updated_at/{updated_at?}', [HutsController::class, 'hutslistlastupdate'])->name('hutslistlastupdate');
         });
