@@ -87,6 +87,10 @@ class CragSurvey extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new Actions\ImportCragSurvey)->canSee(function ($request) {
+                return $request->user()->is_admin == true;
+            })->standalone(),
+        ];
     }
 }
