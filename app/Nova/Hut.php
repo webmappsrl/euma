@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadExcelAction;
 use App\Nova\Filters\ElectricHeatingEnergySourceFilter;
 use App\Nova\Filters\HutsManagedFilter;
 use App\Nova\Filters\KitchenFacilityFilter;
@@ -228,6 +229,8 @@ class Hut extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new DownloadExcelAction)
+        ];
     }
 }

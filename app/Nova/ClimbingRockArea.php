@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadExcelAction;
 use App\Nova\Filters\ClimbingRockTypesFilter;
 use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
@@ -240,6 +241,8 @@ class ClimbingRockArea extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new DownloadExcelAction)
+        ];
     }
 }
