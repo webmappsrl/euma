@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Rosamarsky\RangeFilter\RangeFilter;
+use App\Nova\Filters\ClimbingStyleFilter;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Filters\LocalRestrictionsFilter;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
@@ -184,6 +185,7 @@ class ClimbingRockArea extends Resource
                         'tooltip' => 'hover'
                     ]
                 ),
+                new ClimbingStyleFilter,
             ];
         }
         return [];
