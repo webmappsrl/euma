@@ -164,29 +164,49 @@ class Hut extends Resource
      */
     public function filters(NovaRequest $request)
     {
+        $adminFilters = [
+            new Members(),
+            new HutsManagedFilter,
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new WasteWaterTreatmentFilter,
+            new WaterSupplyFilter,
+            new ElectricHeatingEnergySourceFilter,
+            new SanitaryFacilityFilter,
+            new KitchenFacilityFilter,
+        ];
+        $userFilters = [
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new HutsManagedFilter,
+            new WasteWaterTreatmentFilter,
+            new WaterSupplyFilter,
+            new ElectricHeatingEnergySourceFilter,
+            new SanitaryFacilityFilter,
+            new KitchenFacilityFilter,
+        ];
         if ($request->user()->is_admin == true) {
-            return [
-                new Members(),
-                RangeFilter::make(
-                    'elevation',
-                    'elevation',
-                    [
-                        'min' => 0,
-                        'max' => 5000,
-                        'interval' => 100,
-                        'clickable' => true,
-                        'tooltip' => 'hover'
-                    ]
-                ),
-                new HutsManagedFilter,
-                new WasteWaterTreatmentFilter,
-                new WaterSupplyFilter,
-                new ElectricHeatingEnergySourceFilter,
-                new SanitaryFacilityFilter,
-                new KitchenFacilityFilter,
-            ];
+            return $adminFilters;
         }
-        return [];
+        return $userFilters;
     }
 
     /**

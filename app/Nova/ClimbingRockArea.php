@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\ClimbingRockTypesFilter;
 use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -158,37 +159,66 @@ class ClimbingRockArea extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        if ($request->user()->is_admin == true) {
-            return [
-                new Members(),
-                new LocalRestrictionsFilter,
-                RangeFilter::make(
-                    'Routes Number',
-                    'routes_number',
-                    [
-                        'min' => 0,
-                        'max' => 10000,
-                        'interval' => 100,
-                        'clickable' => true,
-                        'tooltip' => 'hover'
-                    ]
+        $adminFilters = [
+            new Members(),
+            new LocalRestrictionsFilter,
+            RangeFilter::make(
+                'Routes Number',
+                'routes_number',
+                [
+                    'min' => 0,
+                    'max' => 10000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
 
-                ),
-                RangeFilter::make(
-                    'elevation',
-                    'elevation',
-                    [
-                        'min' => 0,
-                        'max' => 5000,
-                        'interval' => 100,
-                        'clickable' => true,
-                        'tooltip' => 'hover'
-                    ]
-                ),
-                new ClimbingStyleFilter,
-            ];
+            ),
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new ClimbingStyleFilter,
+            new ClimbingRockTypesFilter,
+        ];
+        $userFilter = [
+            new LocalRestrictionsFilter,
+            RangeFilter::make(
+                'Routes Number',
+                'routes_number',
+                [
+                    'min' => 0,
+                    'max' => 10000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new ClimbingStyleFilter,
+            new ClimbingRockTypesFilter,
+        ];
+        if ($request->user()->is_admin == true) {
+            return $adminFilters;
         }
-        return [];
+        return $userFilter;
     }
 
     /**
