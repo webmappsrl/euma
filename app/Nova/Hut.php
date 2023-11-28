@@ -2,12 +2,15 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\ElectricHeatingEnergySourceFilter;
 use App\Nova\Filters\HutsManagedFilter;
+use App\Nova\Filters\KitchenFacilityFilter;
 use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\URL;
 use App\Nova\Filters\Members;
+use App\Nova\Filters\SanitaryFacilityFilter;
 use App\Nova\Filters\WasteWaterTreatmentFilter;
 use App\Nova\Filters\WaterSupplyFilter;
 use Laravel\Nova\Fields\Code;
@@ -172,11 +175,15 @@ class Hut extends Resource
                         'max' => 5000,
                         'interval' => 100,
                         'clickable' => true,
+                        'tooltip' => 'hover'
                     ]
                 ),
                 new HutsManagedFilter,
                 new WasteWaterTreatmentFilter,
                 new WaterSupplyFilter,
+                new ElectricHeatingEnergySourceFilter,
+                new SanitaryFacilityFilter,
+                new KitchenFacilityFilter,
             ];
         }
         return [];
