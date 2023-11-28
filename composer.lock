@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46375a08e441cce6312c1b951e1f309f",
+    "content-hash": "4e11d62fb0db173dae9e66468e4c5c64",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5516,6 +5516,55 @@
                 }
             ],
             "time": "2023-09-01T06:07:32+00:00"
+        },
+        {
+            "name": "rosamarsky/nova-range-filter",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rosamarsky/nova-range-filter.git",
+                "reference": "d04e5db21b8daafc22929fce72568c85ba42fd75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rosamarsky/nova-range-filter/zipball/d04e5db21b8daafc22929fce72568c85ba42fd75",
+                "reference": "d04e5db21b8daafc22929fce72568c85ba42fd75",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rosamarsky\\RangeFilter\\FilterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rosamarsky\\RangeFilter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova range filter.",
+            "keywords": [
+                "filter",
+                "laravel",
+                "nova",
+                "range",
+                "slider"
+            ],
+            "support": {
+                "issues": "https://github.com/rosamarsky/nova-range-filter/issues",
+                "source": "https://github.com/rosamarsky/nova-range-filter/tree/v1.0.0"
+            },
+            "time": "2023-01-23T16:01:03+00:00"
         },
         {
             "name": "spatie/db-dumper",

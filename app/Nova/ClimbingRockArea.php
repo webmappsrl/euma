@@ -2,21 +2,26 @@
 
 namespace App\Nova;
 
-use App\Nova\Filters\Members;
-use Illuminate\Http\Request;
+use App\Nova\Actions\DownloadExcelAction;
+use App\Nova\Filters\ClimbingRockTypesFilter;
+use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Boolean;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\URL;
+use App\Nova\Filters\Members;
 use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\URL;
-use Wm\MapPoint\MapPoint;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Rosamarsky\RangeFilter\RangeFilter;
+use App\Nova\Filters\ClimbingStyleFilter;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Filters\LocalRestrictionsFilter;
+use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 
 class ClimbingRockArea extends Resource
 {
@@ -40,7 +45,7 @@ class ClimbingRockArea extends Resource
      * @var array
      */
     public static $search = [
-        'id','member.acronym','original_name','english_name'
+        'id', 'member.acronym', 'original_name', 'english_name'
     ];
 
     /**
@@ -89,7 +94,7 @@ class ClimbingRockArea extends Resource
                 $html = '';
                 foreach ($urls as $url) {
                     if ($url && strpos($url, 'http') === false) {
-                        $url = 'https://'.$url;
+                        $url = 'https://' . $url;
                     }
                     $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                 }
@@ -155,12 +160,66 @@ class ClimbingRockArea extends Resource
      */
     public function filters(NovaRequest $request)
     {
+        $adminFilters = [
+            new Members(),
+            new LocalRestrictionsFilter,
+            RangeFilter::make(
+                'Routes Number',
+                'routes_number',
+                [
+                    'min' => 0,
+                    'max' => 10000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+
+            ),
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new ClimbingStyleFilter,
+            new ClimbingRockTypesFilter,
+        ];
+        $userFilter = [
+            new LocalRestrictionsFilter,
+            RangeFilter::make(
+                'Routes Number',
+                'routes_number',
+                [
+                    'min' => 0,
+                    'max' => 10000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new ClimbingStyleFilter,
+            new ClimbingRockTypesFilter,
+        ];
         if ($request->user()->is_admin == true) {
-            return [
-                new Members()
-            ];
+            return $adminFilters;
         }
-        return [];
+        return $userFilter;
     }
 
     /**
@@ -182,6 +241,8 @@ class ClimbingRockArea extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new DownloadExcelAction)
+        ];
     }
 }

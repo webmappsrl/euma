@@ -23,6 +23,7 @@
         "meilisearch/meilisearch-php": "^1.1",
         "ndamiens/gisconverter": "^1.0",
         "psr/simple-cache": "^2.0",
+        "rosamarsky/nova-range-filter": "^1.0",
         "spatie/db-dumper": "^3.3",
         "spatie/laravel-translatable": "^6.0",
         "wm/map-multi-linestring": "^0.0.7",
