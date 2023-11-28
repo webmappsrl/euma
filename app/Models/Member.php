@@ -79,6 +79,21 @@ class Member extends Model
         return $this->hasMany(User::class);
     }
 
+    public function HutSurvey()
+    {
+        return $this->hasOne(HutSurvey::class);
+    }
+
+    public function TrailSurvey()
+    {
+        return $this->hasOne(TrailSurvey::class);
+    }
+
+    public function CragSurvey()
+    {
+        return $this->hasOne(CragSurvey::class);
+    }
+
     /**
      * Return the json version of the hut, avoiding the geometry
      *
