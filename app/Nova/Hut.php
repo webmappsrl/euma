@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\URL;
 use App\Nova\Filters\Members;
 use App\Nova\Filters\WasteWaterTreatmentFilter;
+use App\Nova\Filters\WaterSupplyFilter;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
@@ -175,6 +176,7 @@ class Hut extends Resource
                 ),
                 new HutsManagedFilter,
                 new WasteWaterTreatmentFilter,
+                new WaterSupplyFilter,
             ];
         }
         return [];
