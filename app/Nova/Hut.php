@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\HutsManagedFilter;
 use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Rosamarsky\RangeFilter\RangeFilter;
 
 class Hut extends Resource
 {
@@ -159,7 +161,18 @@ class Hut extends Resource
     {
         if ($request->user()->is_admin == true) {
             return [
-                new Members()
+                new Members(),
+                RangeFilter::make(
+                    'elevation',
+                    'elevation',
+                    [
+                        'min' => 0,
+                        'max' => 5000,
+                        'interval' => 100,
+                        'clickable' => true,
+                    ]
+                ),
+                new HutsManagedFilter
             ];
         }
         return [];
