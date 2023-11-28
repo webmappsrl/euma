@@ -173,6 +173,17 @@ class ClimbingRockArea extends Resource
                     ]
 
                 ),
+                RangeFilter::make(
+                    'elevation',
+                    'elevation',
+                    [
+                        'min' => 0,
+                        'max' => 5000,
+                        'interval' => 100,
+                        'clickable' => true,
+                        'tooltip' => 'hover'
+                    ]
+                ),
             ];
         }
         return [];
