@@ -96,6 +96,7 @@ return new class extends Migration
             $table->text('digital_database_description')->nullable();
             $table->boolean('hikers_have_free_access_to_database')->default(false);
             $table->text('trails_issues')->nullable();
+            $table->text("hikers_free_access_db_description")->nullable();
         });
     }
 

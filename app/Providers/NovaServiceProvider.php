@@ -98,6 +98,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         }
                     }),
                 ])->icon('download')->collapsable(),
+
+                MenuSection::make('Surveys', [
+                    MenuItem::resource(\App\Nova\TrailSurvey::class),
+                ])
             ];
         });
     }
