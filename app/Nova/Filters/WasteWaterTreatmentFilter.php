@@ -5,7 +5,7 @@ namespace App\Nova\Filters;
 use Laravel\Nova\Filters\BooleanFilter;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class HutsManagedFilter extends BooleanFilter
+class WasteWaterTreatmentFilter extends BooleanFilter
 {
     /**
      * Apply the filter to the given query.
@@ -19,13 +19,13 @@ class HutsManagedFilter extends BooleanFilter
     {
 
         //if 2 values are selected, we want to show all huts
-        if ($value['Managed'] && $value['Not Managed'] || $value == null || !$value['Managed']  && !$value['Not Managed']) {
+        if ($value['True'] && $value['False'] || $value == null || !$value['True']  && !$value['False']) {
             return $query;
         }
-        if ($value['Not Managed'])
-            return $query->where('managed', false);
-        if ($value['Managed'])
-            return $query->where('managed', true);
+        if ($value['False'])
+            return $query->where('wastewater_treatment', false);
+        if ($value['True'])
+            return $query->where('wastewater_treatment', true);
     }
 
     /**
@@ -37,13 +37,13 @@ class HutsManagedFilter extends BooleanFilter
     public function options(NovaRequest $request)
     {
         return [
-            true => 'Managed',
-            false => 'Not Managed'
+            true => 'True',
+            false => 'False'
         ];
     }
 
     public function name()
     {
-        return __('Managed');
+        return __('Wastewater Treatment');
     }
 }

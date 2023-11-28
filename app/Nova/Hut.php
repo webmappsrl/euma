@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\URL;
 use App\Nova\Filters\Members;
+use App\Nova\Filters\WasteWaterTreatmentFilter;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
@@ -172,7 +173,8 @@ class Hut extends Resource
                         'clickable' => true,
                     ]
                 ),
-                new HutsManagedFilter
+                new HutsManagedFilter,
+                new WasteWaterTreatmentFilter,
             ];
         }
         return [];
