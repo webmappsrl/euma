@@ -77,7 +77,13 @@ class Member extends Resource
                         ->rules('required')
                         ->sortable(),
                     URL::make(__('Web'), 'web')
-                        ->displayUsing(fn () => "$this->web")
+                        ->displayUsing(fn() => "$this->web")
+                        ->hideFromIndex(),
+                    URL::make(__('API tracks list URL'), 'api_tracks_list_url')
+                        ->displayUsing(fn() => "$this->api_tracks_list_url")
+                        ->hideFromIndex(),
+                    URL::make(__('API single track URL'), 'api_single_track_url')
+                        ->displayUsing(fn() => "$this->api_single_track_url")
                         ->hideFromIndex(),
                     Number::make(__('Members'), 'members')
                         ->sortable(),
