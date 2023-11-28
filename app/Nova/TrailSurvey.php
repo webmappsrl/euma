@@ -40,7 +40,7 @@ class TrailSurvey extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'member.name'
     ];
 
     /**
@@ -53,7 +53,7 @@ class TrailSurvey extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsTo::make('Member'),
+            BelongsTo::make('Member')->searchable(),
             Tabs::make('Trail Survey', [
                 Tab::make('Member Info', [
                     Textarea::make(__('Responsible for Trails Comments'), 'responsible_for_trails_comments')

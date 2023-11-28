@@ -18,7 +18,7 @@ class HutSurveyPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class HutSurveyPolicy
      */
     public function view(User $user, HutSurvey $hutSurvey)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class HutSurveyPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -53,7 +53,7 @@ class HutSurveyPolicy
      */
     public function update(User $user, HutSurvey $hutSurvey)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -65,7 +65,7 @@ class HutSurveyPolicy
      */
     public function delete(User $user, HutSurvey $hutSurvey)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +89,6 @@ class HutSurveyPolicy
      */
     public function forceDelete(User $user, HutSurvey $hutSurvey)
     {
-        //
+        return false;
     }
 }

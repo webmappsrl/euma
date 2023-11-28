@@ -10,11 +10,6 @@ class TrailSurveyPolicy
 {
     use HandlesAuthorization;
 
-    public function before()
-    {
-        return true;
-    }
-
     /**
      * Determine whether the user can view any models.
      *
@@ -23,7 +18,7 @@ class TrailSurveyPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -35,7 +30,7 @@ class TrailSurveyPolicy
      */
     public function view(User $user, TrailSurvey $trailSurvey)
     {
-        //
+        return true;
     }
 
     /**
@@ -46,7 +41,7 @@ class TrailSurveyPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -58,7 +53,7 @@ class TrailSurveyPolicy
      */
     public function update(User $user, TrailSurvey $trailSurvey)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -70,7 +65,7 @@ class TrailSurveyPolicy
      */
     public function delete(User $user, TrailSurvey $trailSurvey)
     {
-        //
+        return false;
     }
 
     /**
@@ -94,6 +89,6 @@ class TrailSurveyPolicy
      */
     public function forceDelete(User $user, TrailSurvey $trailSurvey)
     {
-        //
+        return false;
     }
 }

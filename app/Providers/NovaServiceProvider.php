@@ -101,6 +101,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 MenuSection::make('Surveys', [
                     MenuItem::resource(\App\Nova\TrailSurvey::class),
+                    MenuItem::resource(\App\Nova\HutSurvey::class),
+                    MenuItem::resource(\App\Nova\CragSurvey::class),
                 ])
             ];
         });

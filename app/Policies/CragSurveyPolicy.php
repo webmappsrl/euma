@@ -9,7 +9,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class CragSurveyPolicy
 {
     use HandlesAuthorization;
-
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +17,7 @@ class CragSurveyPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +29,7 @@ class CragSurveyPolicy
      */
     public function view(User $user, CragSurvey $cragSurvey)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +40,7 @@ class CragSurveyPolicy
      */
     public function create(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +52,7 @@ class CragSurveyPolicy
      */
     public function update(User $user, CragSurvey $cragSurvey)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -65,7 +64,7 @@ class CragSurveyPolicy
      */
     public function delete(User $user, CragSurvey $cragSurvey)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +88,6 @@ class CragSurveyPolicy
      */
     public function forceDelete(User $user, CragSurvey $cragSurvey)
     {
-        //
+        return false;
     }
 }

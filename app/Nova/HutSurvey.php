@@ -2,8 +2,9 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class HutSurvey extends Resource
@@ -28,7 +29,7 @@ class HutSurvey extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'member.name'
     ];
 
     /**
@@ -41,6 +42,7 @@ class HutSurvey extends Resource
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('Member')->searchable(),
         ];
     }
 
