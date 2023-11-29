@@ -2,8 +2,9 @@
 
 namespace App\Imports;
 
-use App\Models\CragSurvey;
+use Carbon\Carbon;
 use App\Models\Member;
+use App\Models\CragSurvey;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -16,19 +17,23 @@ class CragSurveyImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $member = Member::where('name_en', 'ilike', '%' . $row['member_name'] . '%')->first();
+        $member = Member::search($row['member_name'])->first();
+
+        // Handle the date field
+        if (isset($row['created_at'])) {
+            $dateString = str_replace('OEZ', 'EET', $row['created_at']);
+            $row['created_at'] = Carbon::createFromFormat('Y/m/d g:i:s A T', $dateString);
+        }
+
         //get all the columns from the cragsurvey table
         $surveyTableColumns = \Schema::getColumnListing('crag_surveys');
-        //get all the columns from the excel file
-        $excelColumns = array_keys($row);
-        //compare the 2 arrays and remove the columns from the excel file that are not in the cragsurvey table
-        $columnsToImport = array_intersect($surveyTableColumns, $excelColumns);
-        //create a new array with the columns that are in the cragsurvey table
-        $row = array_intersect_key($row, array_flip($columnsToImport));
+        // Create a new array with the columns that are in the cragsurvey table
+        $finalArray = array_intersect_key($row, array_flip($surveyTableColumns));
 
-        //create an array that has keys from the cragsurvey table and values from the excel file
-        $finalArray = array_combine($surveyTableColumns, $row);
-        $finalArray['member_id'] = $member ?  $member->id : null;
+        // If a member was found, add the member_id to the array
+        if ($member) {
+            $finalArray['member_id'] = $member->id;
+        }
 
         return new CragSurvey($finalArray);
     }
