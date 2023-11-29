@@ -71,10 +71,14 @@ class DownloadExcelAction extends Action
             $filename = 'crags_' . now()->format('d_m_Y') . '.xlsx';
         }
 
-        Excel::store($export, $filename, 'public');
-
-        return Action::download(url('storage/' . $filename), $filename);
+        try {
+            Excel::store($export, $filename, 'public');
+            return Action::download(url('storage/' . $filename), $filename);
+        } catch (\Exception $e) {
+            return Action::danger('Error: ' . $e->getMessage());
+        }
     }
+
 
     /**
      * Get the fields available on the action.

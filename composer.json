@@ -26,6 +26,7 @@
         "rosamarsky/nova-range-filter": "^1.0",
         "spatie/db-dumper": "^3.3",
         "spatie/laravel-translatable": "^6.0",
+        "teamtnt/laravel-scout-tntsearch-driver": "^13.2",
         "wm/map-multi-linestring": "^0.0.7",
         "wm/map-point": "*"
     },
