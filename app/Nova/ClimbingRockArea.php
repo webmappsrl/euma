@@ -242,7 +242,9 @@ class ClimbingRockArea extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            (new DownloadExcelAction)
+            (new DownloadExcelAction)->canRun(function ($request) {
+                return true;
+            })
         ];
     }
 }
