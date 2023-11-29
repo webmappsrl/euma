@@ -16,7 +16,6 @@ return new class extends Migration
         // columns: created_at	member_name	respondent_name_and_role	respondent_mail	climbing_frequency	equipping_routes_frequency	managing_rock_climbing_areas_frequency	most_popular_climbing_spot	managing_rock_climbing_areas_description	other_groups_managing_rock_climbing_areas_description	money_source_bolting_infrastructure	legal_responsibility_equippers	rock_climbing_areas_bans	rock_climbing_areas_limitations	limitations_imposing_authority	limitations_efficiency	micro_zoning_examples	disputes_nature_protection	disputes_local_population	disputes_overcrowding	disputes_ownership	disputes_access	disputes_littering	disputes_wild_camping	other_problems	liability_climbing_accidents	good_practice_examples	bad_practice_examples	is_climbing_tourism_country	climbing_destination_season_preferred_regions_countries	regions_with_significant_climbing_tourism_income	crags_developed_with_tourism_funds	experiences_with_climbing_tourists	countries_visited_by_climbers	tourist_associations_promoting_climbing	assessing_climbing_tourism_potential	official_climbing_ethics	obedience_to_climbing_ethics	area_specific_climbing_ethics	bolting_licences_and_manuals	responsibility_for_equipment_failure	potential_for_new_climbing_areas	cooperation_with_climbing_stakeholders	cooperation_with_non_climbing_stakeholders	association_involvement_outdoor_rock_climbing_area	procedure_to_create_new_climbing_areas	statistics_databases_rock_climbing_areas	guidebooks_in_country	other_sources_on_rock_climbing	estimated_people_sport_climbing	estimated_people_climbing_in_gym	estimated_people_bouldering	estimated_people_alpine_climbing	estimated_people_ice_climbing	estimated_people_drytooling	estimated_people_via_ferrata	trends_sport_climbing	trends_gym_climbing	trends_bouldering 
         // trends_alpine_climbing	trends_ice_climbing_dry_tooling	other_climbing_sport_trends	significance_of_trad_aid_climbing	development_of_climbers_in_last_20_years	number_of_climbing_gyms	artificial_climbing_infrastructure_description	association_members_climbers	people_climbing_in_country	is_official_number	number_of_rock_climbing_areas	number_of_bouldering_spots_problems	other_climbing_related_sports	additional_information	
         Schema::table('crag_surveys', function (Blueprint $table) {
-            $table->timestamp('created_at')->nullable();
             $table->string('respondent_name_and_role', 2000)->nullable();
             $table->string('respondent_mail', 2000)->nullable();
             $table->string('climbing_frequency', 2000)->nullable();
@@ -99,7 +98,6 @@ return new class extends Migration
     public function down()
     {
         Schema::table('crag_surveys', function (Blueprint $table) {
-            $table->dropColumn('created_at');
             $table->dropColumn('respondent_name_and_role');
             $table->dropColumn('respondent_mail');
             $table->dropColumn('climbing_frequency');
