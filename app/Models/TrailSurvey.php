@@ -13,7 +13,6 @@ class TrailSurvey extends Model
     protected $casts = [
         'other_trails_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
         'trails_maintenance_done_by' => AsEnumCollection::class . ':' . MaintenanceOperatorTypes::class,
-        'contact_completion_date' => 'datetime:Y-m-d'
     ];
     use HasFactory;
 
