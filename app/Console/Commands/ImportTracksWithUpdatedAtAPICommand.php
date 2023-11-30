@@ -59,6 +59,17 @@ class ImportTracksWithUpdatedAtAPICommand extends Command
                     $updateIDs[$id] = $updated_at;
                 }
             }
+            $updateIDs = [
+                3407 => "2023-09-28 00:59:48",
+                86400000 => "2023-08-07 13:21:21",
+                24651 => "2023-06-01 13:21:04",
+                16808 => "2023-10-05 00:55:42",
+                21833 => "2023-09-28 00:59:48",
+                235050000 => "2023-08-10 18:57:23",
+                24657 => "2023-09-16 23:43:07",
+                5400 => "2023-09-28 00:59:48",
+                12988 => "2023-08-07 13:32:09"
+            ];
             if (!empty($updateIDs)) {
                 $importTrailsApi->sync($updateIDs);
             } else {
@@ -73,7 +84,7 @@ class ImportTracksWithUpdatedAtAPICommand extends Command
             }
         }
         if (!empty($deleteIDs)) {
-            // $importTrailsApi->delete($deleteIDs);
+            $importTrailsApi->delete($deleteIDs);
         } else {
             Log::info("No Trails to be deleted for member with id $member_id");
         }

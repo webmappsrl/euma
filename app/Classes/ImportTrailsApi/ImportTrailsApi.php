@@ -2,13 +2,14 @@
 
 namespace App\Classes\ImportTrailsApi;
 
+use App\Jobs\ImportSingleTrailAPIJob;
 use App\Models\Member;
 use App\Models\Trail;
-use App\Nova\Filters\Members;
 use Exception;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class ImportTrailsApi
 {
@@ -65,7 +66,7 @@ class ImportTrailsApi
             if (empty($api_tracks_list_url->json())) {
                 throw new Exception('The API tracks list URL provided for member with ID ' . $this->id . ' is not valid!');
             }
-            $array = $api_tracks_list_url;
+            $array = $api_tracks_list_url->json();
         }
 
         return $array;
@@ -92,54 +93,36 @@ class ImportTrailsApi
      */
     public function sync(array $ids_array)
     {
-        $count = 1;
-        $count_all = count($ids_array);
-        $failed_ids = [];
-        $single_track_bsae_url = rtrim($this->member->api_single_track_url, '/') . '/';
+    $count = 1;
+    $count_all = count($ids_array);
+    $count_job_processed_key = $this->id.'_count_job_processed'; 
+    $count_job_failed_key = $this->id.'_count_job_failed';
+    $failed_job_data_key = $this->id.'_failed_job_data';
+    Cache::put($count_job_processed_key, 0);
+    Cache::put($count_job_failed_key, 0);
+    Cache::put($failed_job_data_key, []);
+    $single_track_base_url = rtrim($this->member->api_single_track_url, '/');
 
-        foreach ($ids_array as $id => $updated_at) {
-            try {
-                $feature = Http::get($single_track_bsae_url.'/'.$id);
-                if ($feature->json()) {
-                    $geometry = json_encode($feature['geometry']);
-                } 
-
-                $trail = Trail::updateOrCreate(
-                    [
-                        'import_id' => $id,
-                        'member_id' => $this->member->id
-                    ],
-                    [
-                        'ref' => ($feature['properties']['ref']) ? $feature['properties']['ref'] : '',
-                        'url' => ($feature['properties']['url']) ? $feature['properties']['url'] : '',
-                        'source_geojson_url' => $single_track_bsae_url.'/'.$id,
-                        'geometry' => DB::select("SELECT ST_AsText(ST_Force2D(ST_GeomFromGeoJSON('$geometry'))) As wkt")[0]->wkt,
-                    ]
-                );
-
-                if (isset($feature['properties']['original_name']) && !empty($feature['properties']['original_name'])) {
-                    $trail->original_name = $feature['properties']['original_name'];
-                }
-                if (isset($feature['properties']['english_name']) && !empty($feature['properties']['english_name'])) {
-                    $trail->original_name = $feature['properties']['english_name'];
-                }
-                if (isset($feature['properties']['name']) && !empty($feature['properties']['name'])) {
-                    $trail->original_name = $feature['properties']['name'];
-                }
-                $trail->save();
-
-                Log::info('Imported row #'. $count . ' out of ' . $count_all);
-                $count++;
-            } catch (Exception $e) {
-                array_push($failed_ids, $single_track_bsae_url.'/'.$id);
-                Log::info('Error creating Trail from '. $single_track_bsae_url.'/'.$id ."\n ERROR: ".$e->getMessage());
+    foreach ($ids_array as $id => $updated_at) {
+        
+        ImportSingleTrailAPIJob::dispatch($id, $single_track_base_url, $this->member,$count_job_processed_key,$count_job_failed_key,$failed_job_data_key);
+        Log::info('Imported ID ' . $this->id . ' -- ' . $count . ' out of ' . $count_all);
+        $count++;
+    }
+    while(true) {
+        $job_processed = cache::get($count_job_processed_key);
+        $job_failed = cache::get($count_job_failed_key);
+        $failedJobData = cache::get($failed_job_data_key);
+        if ($job_processed === null ||  $job_failed === null) {
+            break;
+        } elseif ($count_all === $job_processed + $job_failed) {
+            // Send an email about the failed job
+            if (!empty($failedJobData)) {
+                \Mail::to($this->member->contact_email)->send(new \App\Mail\TrailImportApiFailedJobs($failedJobData, $this->member));
             }
+            break;
         }
-        if ($failed_ids) {
-            foreach ($failed_ids as $id) {
-                Log::channel('failed_import')->info($id);
-            }
-        }
+    }
     }
     
     /**
@@ -150,7 +133,7 @@ class ImportTrailsApi
      */
     public function delete(array $ids_array)
     {
-        $single_track_bsae_url = rtrim($this->member->api_single_track_url, '/') . '/';
+        $single_track_bsae_url = rtrim($this->member->api_single_track_url, '/');
 
         foreach ($ids_array as $id => $updated_at) {
             Log::info('Deleting '.$single_track_bsae_url.'/'.$id);
