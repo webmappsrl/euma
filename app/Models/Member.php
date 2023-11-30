@@ -25,6 +25,7 @@ class Member extends Model
         'type'
     ];
 
+
     /**
      * Indicates whether Nova should check for modifications between viewing and updating a resource.
      *
@@ -40,6 +41,7 @@ class Member extends Model
      */
     protected $casts = [
         'type' => MemberTypeEnum::class,
+        'contact_completion_date' => 'datetime:Y-m-d'
     ];
 
     /**
