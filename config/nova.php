@@ -163,7 +163,7 @@ return [
     */
 
     'brand' => [
-        'logo' => storage_path('app/public/euma_logo.svg'),
+        'logo' => public_path('images/euma_logo.svg'),
 
 
         //     'colors' => [
