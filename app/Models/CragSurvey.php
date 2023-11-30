@@ -11,6 +11,11 @@ class CragSurvey extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'updated_at' => 'datetime:Y-m-d',
+        'created_at' => 'datetime:Y-m-d',
+    ];
+
     public function member()
     {
         return $this->belongsTo(Member::class);
