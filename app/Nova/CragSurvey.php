@@ -130,8 +130,8 @@ class CragSurvey extends Resource
             Textarea::make('Most Popular Climbing Spot')->nullable()->alwaysShow(),
             Textarea::make('Managing Rock Climbing Areas Description')->nullable()->alwaysShow(),
             Textarea::make('Other Groups Managing Rock Climbing Areas Description')->nullable()->alwaysShow(),
-            Textarea::make('Money Source for Bolting and Infrastructure')->nullable()->alwaysShow(),
-            Textarea::make('Legal Responsibility of Equippers')->nullable()->alwaysShow(),
+            Textarea::make('Money Source for Bolting and Infrastructure', 'money_source_bolting_infrastructure')->nullable()->alwaysShow(),
+            Textarea::make('Legal Responsibility of Equippers', 'legal_responsibility_equippers')->nullable()->alwaysShow(),
             Textarea::make('Liability Climbing Accidents')->nullable()->alwaysShow(),
             TextArea::make('Is Climbing Tourism Country')->nullable()->alwaysShow(),
             Textarea::make('Climbing Destination Season Preferred Regions Countries')->nullable()->alwaysShow(),
@@ -143,7 +143,7 @@ class CragSurvey extends Resource
             Textarea::make('Assessing Climbing Tourism Potential')->nullable()->alwaysShow(),
             Textarea::make('Potential for New Climbing Areas')->nullable()->alwaysShow(),
             Textarea::make('Cooperation with Climbing Stakeholders')->nullable()->alwaysShow(),
-            Textarea::make('Cooperation with Non-Climbing Stakeholders')->nullable()->alwaysShow(),
+            Textarea::make('Cooperation with Non-Climbing Stakeholders', 'cooperation_with_non_climbing_stakeholders')->nullable()->alwaysShow(),
             Textarea::make('Association Involvement Outdoor Rock Climbing Area')->nullable()->alwaysShow(),
             Textarea::make('Procedure to Create New Climbing Areas')->nullable()->alwaysShow(),
             Textarea::make('Statistics Databases Rock Climbing Areas')->nullable()->alwaysShow(),
@@ -219,7 +219,7 @@ class CragSurvey extends Resource
             Textarea::make('Rock Climbing Areas Limitations')->nullable()->alwaysShow(),
             Textarea::make('Limitations Imposing Authority')->nullable()->alwaysShow(),
             Textarea::make('Limitations Efficiency')->nullable()->alwaysShow(),
-            Textarea::make('Micro-Zoning Examples')->nullable()->alwaysShow(),
+            Textarea::make('Micro-Zoning Examples', 'micro_zoning_examples')->nullable()->alwaysShow(),
         ];
     }
 }
