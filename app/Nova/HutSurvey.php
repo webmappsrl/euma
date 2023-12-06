@@ -32,7 +32,7 @@ class HutSurvey extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'member.name'
+        'id', 'member.name_en'
     ];
 
     /**
