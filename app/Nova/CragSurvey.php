@@ -34,8 +34,18 @@ class CragSurvey extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'member.name'
+        'id', 'member.name_en'
     ];
+
+    /**
+     * The columns that should be searched.
+     *
+     * @var array
+     */
+    public static function label()
+    {
+        return 'Climbing Rock Area Surveys';
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -100,7 +110,7 @@ class CragSurvey extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            (new Actions\ImportCragSurvey)->canSee(function ($request) {
+            (new Actions\ImportCragSurvey())->canSee(function ($request) {
                 return $request->user()->is_admin == true;
             })->standalone(),
         ];

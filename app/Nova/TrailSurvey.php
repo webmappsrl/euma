@@ -40,7 +40,7 @@ class TrailSurvey extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'member.name'
+        'id', 'member.name_en'
     ];
 
     /**
@@ -352,7 +352,7 @@ class TrailSurvey extends Resource
 
                 ]),
                 Tab::make('Costs', [
-                    Currency::make('Mountain trails construction cost', 'mountain_trails_construction_cost',)
+                    Currency::make('Mountain trails construction cost', 'mountain_trails_construction_cost', )
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -374,7 +374,7 @@ class TrailSurvey extends Resource
                             return $value . ' €/km';
                         }),
 
-                    Currency::make('Mountain trails maintenance cost yearly', 'mountain_trails_maintenance_cost',)
+                    Currency::make('Mountain trails maintenance cost yearly', 'mountain_trails_maintenance_cost', )
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
@@ -395,7 +395,7 @@ class TrailSurvey extends Resource
                         ->displayUsing(function ($value) {
                             return $value . ' €/km';
                         }),
-                    Currency::make('Average Annual Sign Maintenance Cost for Mountains', 'average_annual_sign_maintenance_cost_for_mountains',)
+                    Currency::make('Average Annual Sign Maintenance Cost for Mountains', 'average_annual_sign_maintenance_cost_for_mountains', )
                         ->nullable()
                         ->hideFromIndex()
                         ->currency('EUR')
