@@ -3,18 +3,16 @@
 namespace App\Models;
 
 use App\Enums\MemberTypeEnum;
-use App\Enums\TrailUserTypes;
-use App\Enums\TrailNetworkLocation;
-use App\Enums\MaintenanceOperatorTypes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Query\Search\SearchableRelation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+use Laravel\Scout\Searchable;
 
 class Member extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'name_en',
@@ -27,6 +25,15 @@ class Member extends Model
         'type'
     ];
 
+
+    /**
+     * Indicates whether Nova should check for modifications between viewing and updating a resource.
+     *
+     * @var bool
+     */
+    public static $trafficCop = false;
+
+
     /**
      * The attributes that should be cast.
      *
@@ -37,6 +44,7 @@ class Member extends Model
         'trail_network_location' => TrailNetworkLocation::class,
         'other_trails_users' => AsEnumCollection::class . ':' . TrailUserTypes::class,
         'trails_maintenance_done_by' => AsEnumCollection::class . ':' . MaintenanceOperatorTypes::class,
+        'contact_completion_date' => 'datetime:Y-m-d'
 
     ];
 
@@ -60,9 +68,29 @@ class Member extends Model
         return $this->hasMany(Trail::class);
     }
 
+    public function climbingRockAreas()
+    {
+        return $this->hasMany(ClimbingRockArea::class);
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function HutSurvey()
+    {
+        return $this->hasOne(HutSurvey::class);
+    }
+
+    public function TrailSurvey()
+    {
+        return $this->hasOne(TrailSurvey::class);
+    }
+
+    public function CragSurvey()
+    {
+        return $this->hasOne(CragSurvey::class);
     }
 
     /**
@@ -74,38 +102,49 @@ class Member extends Model
     {
         $array = [];
 
-        if ($this->id)
+        if ($this->id) {
             $array['id'] = $this->id;
+        }
 
-        if ($this->name_en)
+        if ($this->name_en) {
             $array['name_en'] = $this->name_en;
+        }
 
-        if ($this->name_orig)
+        if ($this->name_orig) {
             $array['name_orig'] = $this->name_orig;
+        }
 
-        if ($this->acronym)
+        if ($this->acronym) {
             $array['acronym'] = $this->acronym;
+        }
 
-        if ($this->country)
+        if ($this->country) {
             $array['country'] = $this->country;
+        }
 
-        if ($this->web)
+        if ($this->web) {
             $array['web'] = $this->web;
+        }
 
-        if ($this->members)
+        if ($this->members) {
             $array['members'] = $this->members;
+        }
 
-        if ($this->since)
+        if ($this->since) {
             $array['since'] = $this->since;
+        }
 
-        if ($this->type)
+        if ($this->type) {
             $array['type'] = $this->type;
+        }
 
-        if ($this->operating_phone)
+        if ($this->operating_phone) {
             $array['operating_phone'] = $this->operating_phone;
+        }
 
-        if ($this->icon)
+        if ($this->icon) {
             $array['icon'] = url(Storage::url($this->icon));
+        }
 
         return $array;
     }

@@ -18,6 +18,7 @@ class MemberPolicy
      */
     public function viewAny(User $user)
     {
+
         return true;
     }
 
@@ -30,7 +31,11 @@ class MemberPolicy
      */
     public function view(User $user, Member $member)
     {
-        return true;
+        if ($user->is_admin == true) {
+            return true;
+        }
+        $userMember = $user->member;
+        return $userMember->id === $member->id;
     }
 
     /**
@@ -43,7 +48,7 @@ class MemberPolicy
     {
         if ($user->is_admin == true) {
             return true;
-        } 
+        }
 
         return false;
     }
@@ -59,7 +64,7 @@ class MemberPolicy
     {
         if ($user->is_admin == true) {
             return true;
-        } 
+        }
 
         return false;
     }
@@ -75,7 +80,7 @@ class MemberPolicy
     {
         if ($user->is_admin == true) {
             return true;
-        } 
+        }
 
         return false;
     }
@@ -91,7 +96,7 @@ class MemberPolicy
     {
         if ($user->is_admin == true) {
             return true;
-        } 
+        }
 
         return false;
     }
@@ -107,7 +112,7 @@ class MemberPolicy
     {
         if ($user->is_admin == true) {
             return true;
-        } 
+        }
 
         return false;
     }

@@ -2,11 +2,18 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadExcelAction;
+use App\Nova\Filters\ElectricHeatingEnergySourceFilter;
+use App\Nova\Filters\HutsManagedFilter;
+use App\Nova\Filters\KitchenFacilityFilter;
 use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\URL;
 use App\Nova\Filters\Members;
+use App\Nova\Filters\SanitaryFacilityFilter;
+use App\Nova\Filters\WasteWaterTreatmentFilter;
+use App\Nova\Filters\WaterSupplyFilter;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
@@ -17,6 +24,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
+use Rosamarsky\RangeFilter\RangeFilter;
 
 class Hut extends Resource
 {
@@ -54,7 +62,7 @@ class Hut extends Resource
     {
         if ($request->user()->is_admin == true) {
             return $query;
-        } else if ($request->user()->member) {
+        } elseif ($request->user()->member) {
             return $query->where('member_id', $request->user()->member->id);
         } else {
             return null;
@@ -79,9 +87,9 @@ class Hut extends Resource
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
                 'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
                 'minZoom' => 5,
-                'maxZoom' => 16,
+                'maxZoom' => 14,
                 'defaultZoom' => 5
-            ]),
+            ])->hideFromIndex(),
             Number::make(__('Elevation'), 'elevation')->rules('required')->hideFromIndex(),
             Text::make(__('URL'), 'url', function () {
                 $urls = explode(',', $this->url);
@@ -157,12 +165,49 @@ class Hut extends Resource
      */
     public function filters(NovaRequest $request)
     {
+        $adminFilters = [
+            new Members(),
+            new HutsManagedFilter,
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new WasteWaterTreatmentFilter,
+            new WaterSupplyFilter,
+            new ElectricHeatingEnergySourceFilter,
+            new SanitaryFacilityFilter,
+            new KitchenFacilityFilter,
+        ];
+        $userFilters = [
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new HutsManagedFilter,
+            new WasteWaterTreatmentFilter,
+            new WaterSupplyFilter,
+            new ElectricHeatingEnergySourceFilter,
+            new SanitaryFacilityFilter,
+            new KitchenFacilityFilter,
+        ];
         if ($request->user()->is_admin == true) {
-            return [
-                new Members
-            ];
+            return $adminFilters;
         }
-        return [];
+        return $userFilters;
     }
 
     /**
@@ -184,6 +229,10 @@ class Hut extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new DownloadExcelAction)->canRun(function ($request) {
+                return true;
+            })
+        ];
     }
 }

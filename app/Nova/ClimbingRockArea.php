@@ -2,21 +2,26 @@
 
 namespace App\Nova;
 
-use App\Nova\Filters\Members;
-use Illuminate\Http\Request;
+use App\Nova\Actions\DownloadExcelAction;
+use App\Nova\Filters\ClimbingRockTypesFilter;
+use Wm\MapPoint\MapPoint;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Boolean;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\URL;
+use App\Nova\Filters\Members;
 use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\URL;
-use Wm\MapPoint\MapPoint;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Rosamarsky\RangeFilter\RangeFilter;
+use App\Nova\Filters\ClimbingStyleFilter;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Filters\LocalRestrictionsFilter;
+use Kongulov\NovaTabTranslatable\NovaTabTranslatable;
 
 class ClimbingRockArea extends Resource
 {
@@ -40,7 +45,7 @@ class ClimbingRockArea extends Resource
      * @var array
      */
     public static $search = [
-        'id','member.acronym','original_name','english_name'
+        'id', 'member.acronym', 'original_name', 'english_name'
     ];
 
     /**
@@ -54,7 +59,7 @@ class ClimbingRockArea extends Resource
     {
         if ($request->user()->is_admin == true) {
             return $query;
-        } else if ($request->user()->member) {
+        } elseif ($request->user()->member) {
             return $query->where('member_id', $request->user()->member->id);
         } else {
             return null;
@@ -73,9 +78,8 @@ class ClimbingRockArea extends Resource
             ID::make()->sortable(),
             Text::make(__('Original Name'), 'original_name')->rules('required_if:english_name,null')->sortable(),
             Text::make(__('English Name'), 'english_name')->sortable()->hideFromIndex(),
-            NovaTabTranslatable::make([
-                Textarea::make(__('Description'), 'description'),
-            ])->hideFromIndex(),
+            Textarea::make(__('English Description'), 'english_description')->hideFromIndex(),
+            Textarea::make(__('Original Description'), 'original_description')->hideFromIndex(),
 
             MapPoint::make('geometry')->withMeta([
                 'center' => ["42", "10"],
@@ -84,32 +88,30 @@ class ClimbingRockArea extends Resource
                 'minZoom' => 5,
                 'maxZoom' => 16,
                 'defaultZoom' => 5
-            ]),
+            ])->hideFromIndex(),
             Text::make(__('URL'), 'url', function () {
-                $urls = explode(',',$this->url);
+                $urls = explode(',', $this->url);
                 $html = '';
                 foreach ($urls as $url) {
-                    if ($url && strpos($url,'http') === false){
-                        $url = 'https://'.$url;
+                    if ($url && strpos($url, 'http') === false) {
+                        $url = 'https://' . $url;
                     }
                     $html .= '<a class="link-default" target="_blank" href="' . $url . '">' . $url . '</a></br>';
                 }
                 return $html;
             })->onlyOnDetail()->asHtml(),
             Text::make(__('URL'), 'url')->onlyOnForms(),
-            URL::make(__('Local rules url'),'local_rules_url')->displayUsing(fn () => "$this->local_rules_url")->hideFromIndex(),
-            NovaTabTranslatable::make([
-                Textarea::make(__('Local rules description'), 'local_rules_description'),
-            ])->hideFromIndex(),
-            
-            // TODO: local_rules_document upload file
-            
-            Boolean::make(__('Local restrictions'),'local_restrictions')->hideFromIndex(),
-            NovaTabTranslatable::make([
-                Textarea::make(__('Local restrictions description'), 'local_restrictions_description')->sortable(),
-            ])->hideFromIndex(),
+            URL::make(__('Local rules url'), 'local_rules_url')->displayUsing(fn () => "$this->local_rules_url")->hideFromIndex(),
+            Textarea::make(__('English local rules description'), 'english_local_rules_description')->hideFromIndex(),
+            Textarea::make(__('Original local rules description'), 'original_local_rules_description')->hideFromIndex(),
 
-            MapPoint::make(__('Parking position'),'parking_position')->withMeta([
+            // TODO: local_rules_document upload file
+
+            Boolean::make(__('Local restrictions'), 'local_restrictions')->hideFromIndex(),
+            Textarea::make(__('English local restrictions description'), 'english_local_restrictions_description')->hideFromIndex(),
+            Textarea::make(__('Original local restrictions description'), 'original_local_restrictions_description')->hideFromIndex(),
+
+            MapPoint::make(__('Parking position'), 'parking_position')->withMeta([
                 'center' => ["42", "10"],
                 'attribution' => '<a href="https://webmapp.it/">Webmapp</a> contributors',
                 'tiles' => 'https://api.webmapp.it/tiles/{z}/{x}/{y}.png',
@@ -124,17 +126,17 @@ class ClimbingRockArea extends Resource
                 3 => 'An exceptional location with memorable routes'
             ])->displayUsingLabels(),
 
-            Number::make(__('Routes number'),'routes_number'),
-            Number::make(__('Elevation'),'elevation'),
+            Number::make(__('Routes number'), 'routes_number'),
+            Number::make(__('Elevation'), 'elevation'),
 
-            BelongsTo::make(__('Member'),'Member')->searchable()->rules('required'),
-            BelongsToMany::make(__('External Databases'),'ExternalDatabases')->fields(function ($request, $relatedModel) {
+            BelongsTo::make(__('Member'), 'Member')->searchable()->rules('required'),
+            BelongsToMany::make(__('External Databases'), 'ExternalDatabases')->fields(function ($request, $relatedModel) {
                 return [
-                    Text::make(__('Specific URL'),'specific_url'),
+                    Text::make(__('Specific URL'), 'specific_url'),
                 ];
             })->hideFromIndex(),
-            BelongsToMany::make(__('Climbing Styles'),'ClimbingStyles')->hideFromIndex(),
-            BelongsToMany::make(__('Climbing Rock Types'),'ClimbingRockTypes')->hideFromIndex(),
+            BelongsToMany::make(__('Climbing Styles'), 'ClimbingStyles')->hideFromIndex(),
+            BelongsToMany::make(__('Climbing Rock Types'), 'ClimbingRockTypes')->hideFromIndex(),
 
         ];
     }
@@ -158,12 +160,66 @@ class ClimbingRockArea extends Resource
      */
     public function filters(NovaRequest $request)
     {
+        $adminFilters = [
+            new Members(),
+            new LocalRestrictionsFilter,
+            RangeFilter::make(
+                'Routes Number',
+                'routes_number',
+                [
+                    'min' => 0,
+                    'max' => 10000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+
+            ),
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new ClimbingStyleFilter,
+            new ClimbingRockTypesFilter,
+        ];
+        $userFilter = [
+            new LocalRestrictionsFilter,
+            RangeFilter::make(
+                'Routes Number',
+                'routes_number',
+                [
+                    'min' => 0,
+                    'max' => 10000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            RangeFilter::make(
+                'elevation',
+                'elevation',
+                [
+                    'min' => 0,
+                    'max' => 5000,
+                    'interval' => 100,
+                    'clickable' => true,
+                    'tooltip' => 'hover'
+                ]
+            ),
+            new ClimbingStyleFilter,
+            new ClimbingRockTypesFilter,
+        ];
         if ($request->user()->is_admin == true) {
-            return [
-                new Members
-            ];
-        } 
-        return [];
+            return $adminFilters;
+        }
+        return $userFilter;
     }
 
     /**
@@ -185,6 +241,10 @@ class ClimbingRockArea extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new DownloadExcelAction)->canRun(function ($request) {
+                return true;
+            })
+        ];
     }
 }

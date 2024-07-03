@@ -17,29 +17,27 @@ jobs:
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      with:
-        php-version: '8.0'
-    - uses: actions/checkout@v3
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Update Dependencies
-      run: composer update
-    - name: Install Dependencies
-      run: composer install
-    - name: Generate key
-      run: php artisan key:generate
-    - name: Migrate
-      run: php artisan migrate:fresh --seed
-      env:
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: "8.0"
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer install
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Migrate
+        run: php artisan migrate:fresh --seed
+        env:
           PGPASSWORD: postgres
-    - name: Laravel Tests
-      run: php artisan test
-    - name: Deploy to server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        port: ${{ secrets.PORT }}
-        key: ${{ secrets.SSHKEY }}
-        script: "cd /var/www/html/dev.eumadb.webmapp.it && ./scripts/deploy_dev.sh"
+      - name: Laravel Tests
+        run: php artisan test
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          script: "cd /var/www/html/dev.eumadb.webmapp.it && ./scripts/deploy_dev.sh"

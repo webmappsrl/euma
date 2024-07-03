@@ -14,6 +14,8 @@ enum MemberTypeEnum: string
     case EUMA_IS_MEMBER_OF = 'EUMA-IS-MEMBER';
     case EUMA_IS_OBSERVER_OF = 'EUMA-IS-OBSERVER';
     case EXTERNAL_MEMBER = 'EXTERNAL-MEMBER';
+    case DATA_CONTRIBUTING_ASSOCIATION = 'DATA-CONTRIBUTING-ASSOCIATION';
+    case OTHER = 'OTHER';
 
     public static function getNameValues(): array
     {
