@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\URL;
@@ -18,6 +19,7 @@ use App\Nova\Filters\MemberType;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\Textarea;
 use Eminiarts\Tabs\Traits\HasTabs;
 use Laravel\Nova\Fields\MultiSelect;
@@ -77,7 +79,6 @@ class Member extends Resource
     {
         return [
             Tabs::make('Member', [
-                //create a tab for every status of epics
                 Tab::make('Member Info', [
                     ID::make()->sortable(),
                     Text::make(__('Name en'), 'name_en')
@@ -132,6 +133,7 @@ class Member extends Resource
                         ->nullable()
                         ->rules('max:255')
                         ->hideFromIndex(),
+
 
                     Date::make(__('Contact Completion Date'), 'contact_completion_date')
                         ->hideFromIndex()
