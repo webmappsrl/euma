@@ -137,9 +137,6 @@ class Member extends Resource
                         ->hideFromIndex()
                         ->nullable()
                         ->withMeta(['value' => Carbon::now()]),
-                    Boolean::make(__('Responsible for Trails'), 'responsible_for_trails')
-                        ->hideFromIndex()
-                        ->nullable(),
                 ]),
             ])->withToolbar(),
         ];
