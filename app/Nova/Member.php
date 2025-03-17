@@ -111,7 +111,9 @@ class Member extends Resource
                         ->storeAs(function () {
                             return 'icon.png';
                         })
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->rules('mimes:png')
+                        ->help('Upload a PNG file for the member icon.'),
                     Text::make(__('Contact Name'), 'contact_name')
                         ->rules('max:255')
                         ->hideFromIndex(),
