@@ -36,7 +36,11 @@ class TrailsImport implements ToCollection, WithHeadingRow
                     $geometry = $gpx;
                 }
 
-                $member = Member::where('acronym', $row['member_acronym'])->get()[0];
+                $member = Member::where('acronym', $row['member_acronym'])->first();
+
+                if (!$member) {
+                    throw new Exception('Member not found ' . $row['member_acronym'] . ' at row ' . $count . ' out of ' . $count_all);
+                }
 
                 $trail = Trail::updateOrCreate(
                     [
@@ -63,11 +67,11 @@ class TrailsImport implements ToCollection, WithHeadingRow
                 }
                 $trail->save();
 
-                Log::info('Imported row #'. $count . ' out of ' . $count_all);
+                Log::info('Imported row #' . $count . ' out of ' . $count_all);
                 $count++;
             } catch (Exception $e) {
-                array_push($failed_ids, $row['member_acronym'].' - '.$row['id']);
-                Log::info('Error creating Trail from '. $row['member_acronym'] .' with id: '.$row['id']."\n ERROR: ".$e->getMessage());
+                array_push($failed_ids, $row['member_acronym'] . ' - ' . $row['id']);
+                Log::info('Error creating Trail from ' . $row['member_acronym'] . ' with id: ' . $row['id'] . "\n ERROR: " . $e->getMessage());
             }
         }
         if ($failed_ids) {
