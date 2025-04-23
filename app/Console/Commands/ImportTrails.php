@@ -33,10 +33,30 @@ class ImportTrails extends Command
      */
     public function handle()
     {
-        $path = Storage::disk('importer')->path($this->argument('path'));
-        Log::info($path);
-        Excel::import(new TrailsImport, $path);
+        $filePath = $this->argument('path');
+        $disk = Storage::disk('importer');
 
-        return 0;
+        // Check if the file exists on the specified disk
+        if (!$disk->exists($filePath)) {
+            $errorMessage = "File not found: {$filePath} on disk 'importer'. Please ensure the file exists in the storage/importer directory.";
+            Log::error($errorMessage);
+            $this->error($errorMessage);
+            return 1; // Indicate failure
+        }
+
+        $fullPath = $disk->path($filePath);
+        Log::info("Starting import from: {$fullPath}");
+
+        try {
+            Excel::import(new TrailsImport, $fullPath);
+            Log::info("Import completed successfully from: {$fullPath}");
+            $this->info("Import completed successfully.");
+            return 0; // Indicate success
+        } catch (\Exception $e) {
+            $errorMessage = "Error during import from {$fullPath}: " . $e->getMessage();
+            Log::error($errorMessage);
+            $this->error($errorMessage);
+            return 1; // Indicate failure
+        }
     }
 }
