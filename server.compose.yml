@@ -1,0 +1,29 @@
+# oc:8845 — motore PHP in container sul server euma (157.90.232.94).
+# network_mode: host: Postgres (12, host) e Meilisearch (processo host) restano su
+# 127.0.0.1 senza rebind; FPM ascolta solo su loopback (9000 prod, 9001 dev).
+# Il codice è montato ALLO STESSO path assoluto dell'host: cache Laravel e sessioni
+# su file restano valide attraverso il confine host/container.
+services:
+  phpfpm_prod:
+    image: euma-phpfpm:8.2.35
+    build:
+      context: ./docker
+    container_name: euma_phpfpm_prod
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /var/www/html/database.european-mountaineers.eu:/var/www/html/database.european-mountaineers.eu
+      - ./docker/php-fpm/prod.conf:/usr/local/etc/php-fpm.d/prod.conf:ro
+    working_dir: /var/www/html/database.european-mountaineers.eu
+
+  phpfpm_dev:
+    image: euma-phpfpm:8.2.35
+    build:
+      context: ./docker
+    container_name: euma_phpfpm_dev
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /var/www/html/dev.eumadb.webmapp.it:/var/www/html/dev.eumadb.webmapp.it
+      - ./docker/php-fpm/dev.conf:/usr/local/etc/php-fpm.d/dev.conf:ro
+    working_dir: /var/www/html/dev.eumadb.webmapp.it
