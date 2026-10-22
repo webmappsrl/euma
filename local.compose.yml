@@ -1,0 +1,51 @@
+# oc:8845 — ambiente locale per la verifica su PHP 8.2.35 con dati reali.
+# Bridge (non host: in locale serve isolamento, e su macOS host-network non esiste);
+# gli override di ambiente evitano di toccare il .env locale del dev.
+services:
+  php:
+    image: euma-phpfpm:8.2.35
+    build:
+      context: ./docker
+    container_name: euma_php_local
+    volumes:
+      - .:/var/www/html/euma
+      - ./docker/php-fpm/dev.conf:/usr/local/etc/php-fpm.d/dev.conf:ro
+    working_dir: /var/www/html/euma
+    environment:
+      DB_HOST: postgis
+      DB_PORT: 5432
+      DB_DATABASE: eumadb
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      MEILISEARCH_HOST: http://meilisearch:7700
+    # Non `artisan serve`: rilegge il .env e lo inietta nel figlio, scavalcando
+    # gli override di ambiente qui sopra (vedi docker/local-router.php).
+    command: php -S 0.0.0.0:8000 -t public docker/local-router.php
+    ports:
+      - "127.0.0.1:8008:8000"
+    depends_on:
+      - postgis
+      - meilisearch
+
+  postgis:
+    image: postgis/postgis:12-3.4
+    container_name: euma_postgis_local
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: eumadb
+    ports:
+      - "127.0.0.1:5439:5432"
+    volumes:
+      - euma_pgdata:/var/lib/postgresql/data
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.1
+    container_name: euma_meilisearch_local
+    environment:
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-masterKey}
+      - MEILI_NO_ANALYTICS=true
+    ports:
+      - "127.0.0.1:7708:7700"
+
+volumes:
+  euma_pgdata:
